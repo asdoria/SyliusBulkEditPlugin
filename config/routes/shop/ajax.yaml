@@ -1,0 +1,12 @@
+sylius_shop_ajax_quote_add_item:
+    path: /add
+    methods: [POST]
+    defaults:
+        _controller: Asdoria\SyliusBulkEditPlugin\Controller\Shop\AddToQuoteController
+        _format: json
+        _sylius:
+            redirect:
+                route: asdoria_shop_bulk_edit_index
+                parameters: {}
+            flash: asdoria_bulk_edit.ui.shop.quote.quote_add_item
+

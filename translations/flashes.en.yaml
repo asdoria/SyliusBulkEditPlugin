@@ -1,0 +1,6 @@
+asdoria_bulk_edit:
+    ui:
+        shop:
+            success_add_to_quote: Your product has been added to your quote
+            success_save_my_quote: Your quote has been correctly updated
+                

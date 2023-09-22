@@ -1,0 +1,40 @@
+framework:
+    assets:
+        packages:
+            asdoria_sylius_bulk_edit_plugin:
+                base_path: '/bundles/asdoriasyliusquoterequestplugin'
+
+sylius_ui:
+    events:
+        asdoria.shop.index_bulk_edit.javascripts:
+            blocks:
+                bulk_edit:
+                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/Quote/_javascripts.html.twig"
+                    priority: 5
+
+        sylius.shop.layout.javascripts:
+            blocks:
+                bulk_edit:
+                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/_javascripts.html.twig"
+                    priority: 5
+        sylius.shop.contact.request.form:
+            blocks:
+                bulk_edit:
+                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/Contact/_quote.html.twig"
+                    priority: 5
+twig:
+    globals:
+        quoteContext: '@asdoria_bulk_edit.context.quote'
+
+
+# This file is part of the Sylius package.
+# (c) Sylius Sp. z o.o.
+
+sylius_mailer:
+    emails:
+        contact_bulk_edit:
+            subject: asdoria_bulk_edit.email.contact_bulk_edit.subject
+            template: "@AsdoriaSyliusBulkEditPlugin/Email/contactBulkEdit.html.twig"
+        admin_bulk_edit:
+            subject: asdoria_bulk_edit.email.admin_bulk_edit.subject
+            template: "@AsdoriaSyliusBulkEditPlugin/Email/adminBulkEdit.html.twig"

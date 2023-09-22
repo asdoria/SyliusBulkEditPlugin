@@ -1,0 +1,9 @@
+asdoria_shop_bulk_edit_ajax:
+    resource: "shop/ajax.yaml"
+    prefix: /ajax
+    
+asdoria_shop_bulk_edit_index:
+      path: /
+      methods: [GET, POST]
+      defaults:
+        _controller: Asdoria\SyliusBulkEditPlugin\Controller\Shop\QuoteController

@@ -1,0 +1,14 @@
+{
+  "entrypoints": {
+    "shop-bulk-edit": {
+      "js": [
+        "/bundles/asdoriasyliusquoterequestplugin/shop-bulk-edit.min.js"
+      ]
+    },
+    "shop-add-to-quote": {
+      "js": [
+        "/bundles/asdoriasyliusquoterequestplugin/shop-add-to-quote.min.js"
+      ]
+    }
+  }
+}
