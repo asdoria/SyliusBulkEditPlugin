@@ -1,0 +1,14 @@
+services:
+    asdoria_bulk_edit.action.set_attribute_value:
+        class: Asdoria\SyliusBulkEditPlugin\Action\SetAttributeValueAction
+        public: true
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $attributeValueFactory: '@sylius.factory.product_attribute_value'
+            $productAttributeRepository: '@sylius.repository.product_attribute'
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\SetAttributeValueAction::_SET_ATTRIBUTE_VALUE
+                type_identifier: 'product'
+                label: asdoria_bulk_edit.form.set_attribute_value
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType

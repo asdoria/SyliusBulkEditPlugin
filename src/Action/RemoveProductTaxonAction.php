@@ -17,6 +17,7 @@ use Asdoria\Bundle\BulkEditBundle\Action\ResourceActionInterface;
 use Asdoria\Bundle\BulkEditBundle\Form\Type\Configuration\TaxonConfigurationType;
 use Asdoria\Bundle\BulkEditBundle\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
+use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -32,7 +33,7 @@ class RemoveProductTaxonAction implements ResourceActionInterface
 {
     const _REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
 
-    use EntityManagerTrait;
+    use TaxonRepositoryTrait;
 
     /**
      * @param ResourceInterface             $resource
@@ -50,31 +51,16 @@ class RemoveProductTaxonAction implements ResourceActionInterface
 
 
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
-        $repo      = $this->getEntityManager()->getRepository(TaxonInterface::class);
-        $taxon     = $repo->findOneByCode($taxonCode);
+        $taxon     = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
         if (!$taxon instanceof TaxonInterface) return;
 
-        $this->getEntityManager()
-            ->wrapInTransaction($this->callbackTransactional($taxon, $resource));
+        $productTaxon = $resource->getProductTaxons()
+            ->filter(fn($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
+
+        if (empty($productTaxon)) return;
+
+        $resource->removeProductTaxon($productTaxon);
     }
 
-
-    /**
-     * @param TaxonInterface   $taxon
-     * @param ProductInterface $product
-     *
-     * @return \Closure
-     */
-    protected function callbackTransactional(TaxonInterface $taxon, ProductInterface $product): \Closure
-    {
-        return function (EntityManagerInterface $entityManager) use ($taxon, $product): void {
-            $productTaxon = $product->getProductTaxons()
-                ->filter(fn($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
-
-            if (empty($productTaxon)) return;
-
-            $product->removeProductTaxon($productTaxon);
-        };
-    }
 }

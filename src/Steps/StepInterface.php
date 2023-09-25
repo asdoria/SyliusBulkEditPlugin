@@ -2,27 +2,17 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Asdoria Package.
- *
- * (c) Asdoria .
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace Asdoria\SyliusBulkEditPlugin\StepResolver;
+namespace Asdoria\SyliusBulkEditPlugin\Step;
 
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\Request;
-
 
 /**
- * Class StepResolverInterface.
+ * Class StepInterface.
+ * @package Asdoria\SyliusBulkEditPlugin\Step
  *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
+ * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-interface StepResolverInterface
+interface StepInterface
 {
     /**
      * @return string|null
@@ -63,11 +53,4 @@ interface StepResolverInterface
      * @param FormTypeInterface|null $form
      */
     public function setForm(?FormTypeInterface $form): void;
-
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function supports(Request $request): bool;
 }

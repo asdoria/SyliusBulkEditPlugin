@@ -65,8 +65,7 @@ class SetAttributeValueAction implements ResourceActionInterface
 
         if (!$configAttributeValue instanceof AttributeValueInterface) return;
 
-        $this->getEntityManager()
-            ->wrapInTransaction($this->callbackTransactional($configAttributeValue, $resource));
+        $this->process($configAttributeValue, $resource);
     }
 
     /**
@@ -75,33 +74,31 @@ class SetAttributeValueAction implements ResourceActionInterface
      *
      * @return \Closure
      */
-    protected function callbackTransactional(AttributeValueInterface $configAttributeValue, AttributeSubjectInterface $resource): \Closure {
-        return function (EntityManagerInterface $entityManager) use ($configAttributeValue, $resource): void {
-            $attributeCode = $configAttributeValue->getAttribute()->getCode();
-            $value         = $configAttributeValue->getValue();
-            $locale        = $configAttributeValue->getLocaleCode();
+    protected function process(AttributeValueInterface $configAttributeValue, AttributeSubjectInterface $resource): \Closure {
+        $attributeCode = $configAttributeValue->getAttribute()->getCode();
+        $value         = $configAttributeValue->getValue();
+        $locale        = $configAttributeValue->getLocaleCode();
 
-            $attribute = $this->productAttributeRepository->findOneBy(['code' => $attributeCode]);
+        $attribute = $this->productAttributeRepository->findOneBy(['code' => $attributeCode]);
 
-            if (!$attribute instanceof AttributeInterface) return;
+        if (!$attribute instanceof AttributeInterface) return;
 
-            $isTranslatable = $attribute->isTranslatable() && $attribute->getStorageType() === AttributeValueInterface::STORAGE_TEXT;
+        $isTranslatable = $attribute->isTranslatable() && $attribute->getStorageType() === AttributeValueInterface::STORAGE_TEXT;
 
-            $attributeValue = $isTranslatable ? $resource->getAttributeByCodeAndLocale($attributeCode, $locale) :
-                $resource->getAttributeByCodeAndLocale($attributeCode);
+        $attributeValue = $isTranslatable ? $resource->getAttributeByCodeAndLocale($attributeCode, $locale) :
+            $resource->getAttributeByCodeAndLocale($attributeCode);
 
-            if (!$attributeValue instanceof AttributeValueInterface) {
-                /** @var AttributeValueInterface $attributeValue */
-                $attributeValue = $this->attributeValueFactory->createNew();
-                if ($isTranslatable) {
-                    $attributeValue->setLocaleCode($locale);
-                }
-                $attributeValue->setAttribute($attribute);
-                $resource->addAttribute($attributeValue);
+        if (!$attributeValue instanceof AttributeValueInterface) {
+            /** @var AttributeValueInterface $attributeValue */
+            $attributeValue = $this->attributeValueFactory->createNew();
+            if ($isTranslatable) {
+                $attributeValue->setLocaleCode($locale);
             }
+            $attributeValue->setAttribute($attribute);
+            $resource->addAttribute($attributeValue);
+        }
 
-            $attributeValue->setValue($value);
-            $entityManager->persist($attributeValue);
-        };
+        $attributeValue->setValue($value);
+        $this->getEntityManager()->persist($attributeValue);
     }
 }

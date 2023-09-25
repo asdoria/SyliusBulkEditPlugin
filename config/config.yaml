@@ -1,40 +1,59 @@
+imports:
+    - { resource: "../grids/*.yaml" }
+    - { resource: "actions_config.yaml" }
+
+doctrine_migrations:
+    migrations_paths:
+        'Asdoria\Bundle\BulkEditBundle\Migrations': '@AsdoriaBulkEditBundle/Migrations'
+
+sylius_ui:
+    events:
+        sylius.admin.product.index.javascripts:
+            blocks:
+                scripts:
+                    template: "@AsdoriaBulkEdit/_javascripts/Product/_javascripts.html.twig"
+                    priority: 10
+        sylius.admin.product.index.stylesheets:
+            blocks:
+                scripts:
+                    template: "@AsdoriaBulkEdit/_stylesheets/Product/_stylesheets.html.twig"
+                    priority: 10
+
 framework:
     assets:
         packages:
             asdoria_sylius_bulk_edit_plugin:
-                base_path: '/bundles/asdoriasyliusquoterequestplugin'
+                base_path: '/bundles/asdoriasyliusbulkeditplugin'
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
 
-sylius_ui:
-    events:
-        asdoria.shop.index_bulk_edit.javascripts:
-            blocks:
-                bulk_edit:
-                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/Quote/_javascripts.html.twig"
-                    priority: 5
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            bulk_edit: '%env(MESSENGER_TRANSPORT_BULK_EDIT_DSN)%'
+        #            options:
+        #                queue_name: bulk_edit
+        # failed: 'doctrine://default?queue_name=failed'
+        # sync: 'sync://'
 
-        sylius.shop.layout.javascripts:
-            blocks:
-                bulk_edit:
-                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/_javascripts.html.twig"
-                    priority: 5
-        sylius.shop.contact.request.form:
-            blocks:
-                bulk_edit:
-                    template: "@AsdoriaSyliusBulkEditPlugin/Shop/Contact/_quote.html.twig"
-                    priority: 5
-twig:
-    globals:
-        quoteContext: '@asdoria_bulk_edit.context.quote'
+        routing:
+            # route all messages that extend this example base class or interface
+            'Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface': bulk_edit
 
+        buses:
+            asdoria_bulk_edit.bus:
+                middleware:
+                    # each time a message is handled, the Doctrine connection
+                    # is "pinged" and reconnected if it's closed. Useful
+                    # if your workers run for a long time and the database
+                    # connection is sometimes lost
+                    - doctrine_ping_connection
+                    # After handling, the Doctrine connection is closed,
+                    # which can free up database connections in a worker,
+                    # instead of keeping them open forever
+                    - doctrine_close_connection
+                    # wraps all handlers in a single Doctrine transaction
+                    # handlers do not need to call flush() and an error
+                    # in any handler will cause a rollback
+                    - doctrine_transaction
 
-# This file is part of the Sylius package.
-# (c) Sylius Sp. z o.o.
-
-sylius_mailer:
-    emails:
-        contact_bulk_edit:
-            subject: asdoria_bulk_edit.email.contact_bulk_edit.subject
-            template: "@AsdoriaSyliusBulkEditPlugin/Email/contactBulkEdit.html.twig"
-        admin_bulk_edit:
-            subject: asdoria_bulk_edit.email.admin_bulk_edit.subject
-            template: "@AsdoriaSyliusBulkEditPlugin/Email/adminBulkEdit.html.twig"

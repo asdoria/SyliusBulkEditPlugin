@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
+use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
+use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
@@ -30,12 +32,14 @@ class AddProductTaxonAction implements ResourceActionInterface
 {
     const _ADD_PRODUCT_TAXON = 'add_product_taxon';
 
+    use TaxonRepositoryTrait;
+    use EntityManagerTrait;
+    
     /**
      * @param EntityManagerInterface $entityManager
      * @param FactoryInterface       $productTaxonFactory
      */
     public function __construct(
-        protected EntityManagerInterface $entityManager,
         protected FactoryInterface       $productTaxonFactory,
     )
     {
@@ -54,30 +58,16 @@ class AddProductTaxonAction implements ResourceActionInterface
         if (empty($configuration)) return;
 
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
-        $repo      = $this->getEntityManager()->getRepository(TaxonInterface::class);
-        $taxon     = $repo->findOneByCode($taxonCode);
+        $taxon     = $this->getTaxonRepository->findOneByCode($taxonCode);
 
         if (!$taxon instanceof TaxonInterface) return;
         if ($resource->hasTaxon($taxon)) return;
 
-        $this->getEntityManager()->wrapInTransaction($this->callbackTransactional($taxon, $resource));
-    }
-
-    /**
-     * @param TaxonInterface   $taxon
-     * @param ProductInterface $product
-     *
-     * @return \Closure
-     */
-    protected function callbackTransactional(TaxonInterface $taxon, ProductInterface $product): \Closure
-    {
-        return function (EntityManagerInterface $entityManager) use ($taxon, $product): void {
-            /** @var ProductTaxonInterface $productTaxon */
-            $productTaxon = $this->productTaxonFactory->createNew();
-            $productTaxon->setProduct($resource);
-            $productTaxon->setTaxon($taxon);
-            $product->addProductTaxon($productTaxon);
-            $entityManager->persist($productTaxon);
-        };
+        /** @var ProductTaxonInterface $productTaxon */
+        $productTaxon = $this->productTaxonFactory->createNew();
+        $productTaxon->setProduct($resource);
+        $productTaxon->setTaxon($taxon);
+        $resource->addProductTaxon($productTaxon);
+        $this->getEntityManager()->persist($productTaxon);
     }
 }

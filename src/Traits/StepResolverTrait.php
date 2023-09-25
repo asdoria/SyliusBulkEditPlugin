@@ -2,27 +2,18 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Asdoria Package.
- *
- * (c) Asdoria .
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace Asdoria\SyliusBulkEditPlugin\Resolver\StepResolver;
+namespace Asdoria\SyliusBulkEditPlugin\Traits;
 
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class BaseStepResolver.
- * @package Asdoria\Bundle\BulkEditBundle\Resolver\StepResolver
+ * Class StepResolverTrait.
+ * @package Asdoria\SyliusBulkEditPlugin\Traits
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-abstract class BaseStepResolver implements StepResolverInterface
+trait StepResolverTrait
 {
     protected ?string $type = null;
     protected ?string $context = null;

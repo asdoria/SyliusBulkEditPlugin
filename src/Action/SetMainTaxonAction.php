@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
 use Asdoria\Bundle\BulkEditBundle\Form\Type\Configuration\TaxonConfigurationType;
-use Doctrine\ORM\EntityManagerInterface;
+use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
@@ -27,7 +27,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  */
 class SetMainTaxonAction implements ResourceActionInterface
 {
-    use EntityManagerTrait;
+    use TaxonRepositoryTrait;
 
     /**
      * @param ResourceInterface             $resource
@@ -44,25 +44,10 @@ class SetMainTaxonAction implements ResourceActionInterface
         if (empty($configuration)) return;
 
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
-        $taxon      = $this
-            ->getEntityManager()
-            ->getRepository(TaxonInterface::class)
-            ->findOneByCode($taxonCode);
+        $taxon     = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
-        $this->getEntityManager()
-            ->wrapInTransaction($this->callbackTransactional($taxon, $resource));
+        if(!$taxon instanceof TaxonInterface) return;
 
-    }
-    /**
-     * @param TaxonInterface   $taxon
-     * @param ProductInterface $product
-     *
-     * @return \Closure
-     */
-    protected function callbackTransactional(TaxonInterface $taxon, ProductInterface $product): \Closure
-    {
-        return function (EntityManagerInterface $entityManager) use ($taxon, $product): void {
-            $product->setMainTaxon($taxon);
-        };
+        $resource->setMainTaxon($taxon);
     }
 }

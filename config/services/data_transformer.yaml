@@ -1,0 +1,4 @@
+services:
+    Asdoria\SyliusBulkEditPlugin\Form\DataTransformer\TaxonToCodeTransformer:
+        arguments:
+            $taxonRepository: '@sylius.repository.taxon'
