@@ -2,15 +2,15 @@ services:
     asdoria_bulk_edit.action.add_product_taxon:
         class: Asdoria\SyliusBulkEditPlugin\Action\AddProductTaxonAction
         public: true
+        arguments:
+            $productTaxonFactory: '@sylius.factory.product_taxon'
         calls:
             - [setTaxonRepository, ['@sylius.repository.taxon']]
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
-        arguments:
-            $productTaxonFactory: '@sylius.factory.product_taxon'
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\AddProductTaxonAction::_ADD_PRODUCT_TAXON
-                type_identifier: 'product'
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\AddProductTaxonAction::ADD_PRODUCT_TAXON
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.add_product_taxon
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType
 
@@ -21,8 +21,8 @@ services:
             - [setTaxonRepository, ['@sylius.repository.taxon']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveProductTaxonAction::_REMOVE_PRODUCT_TAXON
-                type_identifier: 'product'
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveProductTaxonAction::REMOVE_PRODUCT_TAXON
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.remove_product_taxon
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType
 
@@ -33,7 +33,7 @@ services:
             - [setTaxonRepository, ['@sylius.repository.taxon']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\SetMainTaxonAction::_SET_MAIN_TAXON
-                type_identifier: 'product'
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\SetMainTaxonAction::SET_MAIN_TAXON
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.set_main_taxon
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType

@@ -13,9 +13,20 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type;
 
+use Asdoria\SyliusBulkEditPlugin\Form\EventSubscriber\ConfigurationTypeFormSubscriber;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\AbstractFormConfigurableElementType;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditConfigurationChoiceType;
+use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
+use Sylius\Component\Registry\ServiceRegistryInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BulkEditType
@@ -23,8 +34,19 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class BulkEditType extends AbstractFormConfigurableElementType
+final class BulkEditType extends AbstractType
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(
+        protected FormTypeRegistryInterface $formTypeRegistry,
+        protected ServiceRegistryInterface  $formConfigurationRegistry,
+        protected TranslatorInterface  $translator
+    )
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -32,16 +54,43 @@ class BulkEditType extends AbstractFormConfigurableElementType
     public function buildForm(FormBuilderInterface $builder, array $options = []): void
     {
         parent::buildForm($builder, $options);
-
         $builder
             ->add('type', BulkEditConfigurationChoiceType::class, [
+                'required' => true,
                 'label' => 'asdoria_bulk_edit.form.type.header',
-                'placeholder' => 'asdoria.ui.please_selected_item',
+                'placeholder' => 'asdoria_bulk_edit.ui.please_selected_item',
+                'constraints' => [new NotBlank(['groups' => 'sylius'])],
                 'attr' => [
                     'data-form-collection' => 'update',
                 ],
             ])
-        ;
+            ->addEventSubscriber(
+                new ConfigurationTypeFormSubscriber(
+                    $this->formTypeRegistry,
+                    $this->formConfigurationRegistry,
+                    $this->translator,
+                    $options['context'] ?? null
+                )
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefaults([
+                'context'            => 'product',
+                'validation_groups' => function (FormInterface $form) {
+                    $isClicked = $form->has('submit') && $form->get('submit')->isClicked();
+
+                    return $isClicked ? ['sylius'] : [];
+                },
+            ])
+            ->setAllowedTypes('context', ['string']);
     }
 
     /**

@@ -1,6 +1,9 @@
 services:
-    asdoria_bulk_edit_plugin.registry.step:
+    asdoria_bulk_edit.action_registry:
         class: Sylius\Component\Registry\ServiceRegistry
         arguments:
-            $className: Asdoria\SyliusBulkEditPlugin\StepResolver\StepResolverInterface
-            $context: 'step calculator'
+            $className: Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface
+            $context: 'asdoria bulk edit handle action'
+            
+    asdoria_bulk_edit.configuration_form_type_registry:
+        class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry

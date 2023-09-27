@@ -1,0 +1,5 @@
+#services:
+#    Asdoria\SyliusBulkEditPlugin\Factory\FormStepFactory:
+#        arguments:
+#            $formFactory: '@form.factory'
+#            $formStepResolver: '@Asdoria\SyliusBulkEditPlugin\Resolver\FormStepResolver'

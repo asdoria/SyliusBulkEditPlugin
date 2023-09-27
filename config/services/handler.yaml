@@ -1,0 +1,9 @@
+services:
+    Asdoria\SyliusBulkEditPlugin\MessageHandler\BulkEditMessageHandler:
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $actionRegistry: '@asdoria_bulk_edit.action_registry'
+            $eventDispatcher: '@event_dispatcher'
+        tags:
+            -   name: messenger.message_handler
+                handles: Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface

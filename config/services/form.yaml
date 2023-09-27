@@ -1,15 +1,4 @@
 services:
-    Asdoria\SyliusBulkEditPlugin\Form\Type\ProductAttributeValueType:
-        arguments:
-            $dataClass: '%sylius.model.product_attribute_value.class%'
-            $validationGroups: '%sylius.form.type.product_attribute_value.validation_groups%'
-            $attributeChoiceType: 'Asdoria\SyliusBulkEditPlugin\Form\Type\ProductAttributeChoiceType'
-            $attributeRepository: '@sylius.repository.product_attribute'
-            $localeRepository: '@sylius.repository.locale'
-            $formTypeRegistry: '@sylius.form_registry.attribute_type'
-        tags:
-            - { name: form.type }
-
     Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType:
         arguments:
             $taxonsToCodesTransformer: '@sylius.form.type.data_transformer.taxons_to_codes'
@@ -18,7 +7,7 @@ services:
 
     Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType:
         arguments:
-            $taxonToCodeTransformer: '@asdoria_bulk_edit.form.type.data_transformer.taxon_to_code'
+            $taxonToCodeTransformer: '@Asdoria\SyliusBulkEditPlugin\Form\DataTransformer\TaxonToCodeTransformer'
         tags:
             - { name: form.type }
                 
@@ -36,11 +25,6 @@ services:
         arguments:
             $formTypeRegistry: '@asdoria_bulk_edit.configuration_form_type_registry'
             $formConfigurationRegistry: '@asdoria_bulk_edit.action_registry'
-        tags:
-            - { name: form.type }
-
-    Asdoria\SyliusBulkEditPlugin\Form\Type\ProductAttributeChoiceType:
-        arguments:
-            $attributeRepository: '@sylius.repository.product_attribute'
+            $translator: '@translator'
         tags:
             - { name: form.type }

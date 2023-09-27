@@ -1,5 +1,3 @@
-asdoria_bulk_edit_shop:
-    resource: "routes/shop.yaml"
-    prefix: /{_locale}/bulk-edit
-    requirements:
-        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$
+asdoria_bulk_edit_admin:
+    resource: "routes/admin.yaml"
+    prefix: /%sylius_admin.path_name%/bulk-edit

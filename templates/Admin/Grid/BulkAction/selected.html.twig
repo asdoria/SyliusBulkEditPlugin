@@ -1,0 +1,15 @@
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+<div class="ui styled fluid accordion" style="width: 600px;">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        <i class="edit icon"></i>
+        {{ 'sylius.ui.actions'| trans }}
+    </div>
+    <div class="content ">
+        <form class="ui form">
+            <input type="hidden" name="resources" class="bulk-select-checkbox-target">
+            <div id="js-action-steps" data-url="{{ path('asdoria_bulk_edit_admin_ajax_step', {context: options.link.parameters.context|default('product')}) }}"></div>
+        </form>
+    </div>
+</div>

@@ -13,7 +13,8 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
-use Asdoria\Bundle\BulkEditBundle\Form\Type\Configuration\TaxonConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -27,6 +28,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  */
 class SetMainTaxonAction implements ResourceActionInterface
 {
+    const SET_MAIN_TAXON = 'set_main_taxon';
     use TaxonRepositoryTrait;
 
     /**

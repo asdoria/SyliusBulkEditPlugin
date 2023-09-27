@@ -1,0 +1,7 @@
+services:
+    Asdoria\SyliusBulkEditPlugin\Controller\BulkEditController:
+        public: true
+        arguments:
+            $twig: '@twig'
+            $formFactory: '@form.factory'
+            $eventDispatcher: '@event_dispatcher'

@@ -1,0 +1,6 @@
+asdoria_bulk_edit_admin_ajax:
+    resource: 'admin/ajax/step.yaml'
+    prefix: /ajax
+
+asdoria_bulk_edit_admin_product:
+    resource: 'admin/product.yaml'

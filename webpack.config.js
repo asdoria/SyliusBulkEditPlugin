@@ -5,8 +5,9 @@ const fs = require('fs');
 const basePath = path.resolve(__dirname, './');
 const assets_path = path.join(basePath, './private');
 const output_path = path.join(basePath, './public');
-const public_path = 'bundles/asdoriasyliusquoterequestplugin';
+const public_path = 'bundles/asdoriasyliusbulkeditplugin';
 const js_path = path.join(assets_path, './js');
+const sass_path = path.join(assets_path, './css');
 const isProduction = Encore.isProduction();
 
 Encore
@@ -18,12 +19,11 @@ Encore
 
   .setPublicPath('/' + public_path)
   .setManifestKeyPrefix(public_path)
-  .addEntry('shop-bulk-edit', [
-    path.join(js_path, './shop-bulk-edit.js'),
+  .addEntry('admin-bulk-edit', [
+    path.join(js_path, './admin-bulk-edit.js'),
+    path.join(sass_path, './admin-bulk-edit.scss'),
   ])
-  .addEntry('shop-add-to-quote', [
-    path.join(js_path, './shop-add-to-quote.js'),
-  ])
+ 
 
   // allow sass/scss files to be processed
   .enableSassLoader()
@@ -40,6 +40,7 @@ Encore
   .enableVersioning(false)
   .configureFilenames({
     js: '[name].min.js',
+    css: '[name].min.css',
   })
 
 ;

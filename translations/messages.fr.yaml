@@ -1,23 +1,22 @@
 asdoria_bulk_edit:
+    menu:
+        admin:
+            asdoria_bulk_edit:
+                products: Produits
+                header: Edition en masse
+
+    form:
+        set_attribute_value: Modifier une valeur d'Attribut
+        add_product_taxon: Ajouter un Taxon
+        remove_product_taxon: Supprimer un Taxon
+        set_main_taxon: Modifier le Taxon principal
+        type:
+            header: Choisir une Action
     ui:
-        shop:
-            or: ou
-            title: Devis
-            header: Demande de devis
-            sub_header: Ajouter plusieurs produits à un devis
-            add_to_quote: Ajouter au devis
-            quote_add_item: L'article a été ajouté au devis
-            save_my_quote: Register my Quote
-            confirm_my_quote: Enregistrer
-            see_detail: Voir les détails
-            contact_header: Votre devis
-    email:
-        contact_bulk_edit:
-            content: Contenu
-            subject: Votre demande de devis a été transmise
-            number: Numéro de devis
-        admin_bulk_edit:
-            content: Contenu
-            subject: Une demande de devis vous a été envoyée
-            message_from: Message de
-            number: Un devis avec la référence %reference% vous a été envoyé
+        please_selected_item: Choisir une Action
+        form:
+            choice:
+                taxonomy_configuration:
+                    taxons: Selectionnez des Catégories
+                    taxon: Selectionnez une Catégorie
+        save_action: Go

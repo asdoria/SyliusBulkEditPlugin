@@ -17,6 +17,7 @@ use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class TaxonsConfigurationType.
@@ -46,6 +47,7 @@ class TaxonsConfigurationType extends AbstractType
             ->create(self::_TAXONS_FIELD, TaxonAutocompleteChoiceType::class, [
                 'label' => 'asdoria_bulk_edit.ui.form.choice.taxonomy_configuration.taxons',
                 'multiple' => true,
+                'constraints' => [new NotBlank(['groups' => 'bulk_edit'])]
             ])
             ->addModelTransformer($this->taxonsToCodesTransformer);
 

@@ -34,7 +34,7 @@ class SetAttributeValueAction implements ResourceActionInterface
 {
     use EntityManagerTrait;
 
-    const _SET_ATTRIBUTE_VALUE = 'set_attribute_value';
+    const SET_ATTRIBUTE_VALUE = 'set_attribute_value';
 
     /**
      * @param FactoryInterface       $attributeValueFactory
@@ -74,7 +74,7 @@ class SetAttributeValueAction implements ResourceActionInterface
      *
      * @return \Closure
      */
-    protected function process(AttributeValueInterface $configAttributeValue, AttributeSubjectInterface $resource): \Closure {
+    protected function process(AttributeValueInterface $configAttributeValue, AttributeSubjectInterface $resource): void {
         $attributeCode = $configAttributeValue->getAttribute()->getCode();
         $value         = $configAttributeValue->getValue();
         $locale        = $configAttributeValue->getLocaleCode();

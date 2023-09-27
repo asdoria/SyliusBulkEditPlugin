@@ -1,0 +1,9 @@
+asdoria_bulk_edit_admin_ajax_step:
+    path: /{context}/step
+    methods: [POST]
+    defaults:
+        _controller: Asdoria\SyliusBulkEditPlugin\Controller\BulkEditController
+    options:
+        expose: true
+    requirements:
+        context: .+

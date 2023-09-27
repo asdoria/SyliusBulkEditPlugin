@@ -15,6 +15,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 interface ResourceActionInterface
 {
+    const PRODUCT_CONTEXT = 'product';
+    
     /**
      * @param ResourceInterface             $resource
      * @param BulkEditNotificationInterface $message

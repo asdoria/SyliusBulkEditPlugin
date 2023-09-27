@@ -1,0 +1,18 @@
+services:
+    asdoria.controller.bulk_edit.grid_driver.doctrine.orm.attribute_value_string:
+        class: Asdoria\SyliusBulkEditPlugin\Doctrine\ORM\AttributeValueStringDriver
+        decorates: sylius.grid_driver.doctrine.orm
+        decoration_priority:  256
+        arguments:
+            $inner: '@asdoria.controller.bulk_edit.grid_driver.doctrine.orm.attribute_value_string.inner'
+            $gridProvider: '@sylius.grid.provider'
+            $requestStack: '@request_stack'
+            $services: ['@Asdoria\SyliusBulkEditPlugin\Grid\Filter\AttributeValueStringFilter']
+
+    Asdoria\SyliusBulkEditPlugin\Grid\Filter\AttributeValueStringFilter:
+        calls:
+          - ['setProductAttributeRepository', ['@sylius.repository.product_attribute']]
+          - ['setLocaleContext', ['@sylius.context.locale']]
+        tags:
+          - { name: sylius.grid_filter, type: asdoria_bulk_edit_attribute_value_string, form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Filter\AttributeValueStringFilterType }
+

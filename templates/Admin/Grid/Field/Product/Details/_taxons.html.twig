@@ -1,0 +1,10 @@
+<h5>
+    {{ 'sylius.ui.taxons'|trans }}
+</h5>
+<ul>
+    {% for taxon in product.taxons %}
+        <li>
+            {{ taxon.fullname }}
+        </li>
+    {% endfor %}
+</ul>

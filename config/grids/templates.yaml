@@ -1,0 +1,6 @@
+sylius_grid:
+  templates:
+    filter:
+      asdoria_bulk_edit_attribute_value_string: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Filter/attributeValueString.html.twig"
+    bulk_action:
+      selected: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/BulkAction/selected.html.twig"

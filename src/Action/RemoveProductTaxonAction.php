@@ -13,16 +13,15 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
-use Asdoria\Bundle\BulkEditBundle\Action\ResourceActionInterface;
-use Asdoria\Bundle\BulkEditBundle\Form\Type\Configuration\TaxonConfigurationType;
-use Asdoria\Bundle\BulkEditBundle\Message\BulkEditNotificationInterface;
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
+use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
-
 /**
  * Class RemoveProductTaxonAction.
  * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection
@@ -31,7 +30,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  */
 class RemoveProductTaxonAction implements ResourceActionInterface
 {
-    const _REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
+    const REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
 
     use TaxonRepositoryTrait;
 

@@ -1,22 +1,17 @@
 imports:
-    - { resource: "../grids/*.yaml" }
-    - { resource: "actions_config.yaml" }
-
-doctrine_migrations:
-    migrations_paths:
-        'Asdoria\Bundle\BulkEditBundle\Migrations': '@AsdoriaBulkEditBundle/Migrations'
+    - { resource: "grids/*.yaml" }
 
 sylius_ui:
     events:
-        sylius.admin.product.index.javascripts:
+        asdoria_bulk_edit.admin.index.javascripts:
             blocks:
                 scripts:
-                    template: "@AsdoriaBulkEdit/_javascripts/Product/_javascripts.html.twig"
+                    template: "@AsdoriaSyliusBulkEditPlugin/Admin/_javascripts.html.twig"
                     priority: 10
-        sylius.admin.product.index.stylesheets:
+        asdoria_bulk_edit.admin.index.javascripts.stylesheets:
             blocks:
                 scripts:
-                    template: "@AsdoriaBulkEdit/_stylesheets/Product/_stylesheets.html.twig"
+                    template: "@AsdoriaSyliusBulkEditPlugin/Admin/_stylesheets.html.twig"
                     priority: 10
 
 framework:

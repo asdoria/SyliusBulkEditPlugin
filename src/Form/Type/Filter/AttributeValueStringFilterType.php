@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Form\Type;
+namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Filter;
 
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeChoiceType;
 use Sylius\Component\Grid\Filter\StringFilter;
@@ -22,8 +22,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AttributeValueStringFilterType.
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type
+ * Class AttributeValueStringFilterType
+ * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Filter
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */

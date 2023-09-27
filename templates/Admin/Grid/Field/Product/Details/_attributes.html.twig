@@ -1,0 +1,19 @@
+<h5>
+    {{ 'sylius.ui.product_attributes'|trans }}
+</h5>
+<ul>
+    {% for attribute in product.getAttributesByLocale(sylius.localeCode, sylius.localeCode) %}
+        <li>
+                <strong>{{ attribute.attribute.name }}</strong> :
+                {% include [
+                        '@SyliusShop/Product/Show/Types/'~attribute.attribute.type~'.html.twig',
+                        '@SyliusAttribute/Types/'~attribute.attribute.type~'.html.twig',
+                        '@SyliusShop/Product/Show/Types/default.html.twig'
+                ] with {
+                        'attribute': attribute,
+                        'locale': sylius.localeCode,
+                        'fallbackLocale': sylius.localeCode
+                } %}
+        </li>
+    {% endfor %}
+</ul>

@@ -1,13 +1,11 @@
 {
   "entrypoints": {
-    "shop-bulk-edit": {
+    "admin-bulk-edit": {
+      "css": [
+        "/bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.min.css"
+      ],
       "js": [
-        "/bundles/asdoriasyliusquoterequestplugin/shop-bulk-edit.min.js"
-      ]
-    },
-    "shop-add-to-quote": {
-      "js": [
-        "/bundles/asdoriasyliusquoterequestplugin/shop-add-to-quote.min.js"
+        "/bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.min.js"
       ]
     }
   }

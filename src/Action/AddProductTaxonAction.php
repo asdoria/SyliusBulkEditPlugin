@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,11 +32,11 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  */
 class AddProductTaxonAction implements ResourceActionInterface
 {
-    const _ADD_PRODUCT_TAXON = 'add_product_taxon';
+    const ADD_PRODUCT_TAXON = 'add_product_taxon';
 
     use TaxonRepositoryTrait;
     use EntityManagerTrait;
-    
+
     /**
      * @param EntityManagerInterface $entityManager
      * @param FactoryInterface       $productTaxonFactory

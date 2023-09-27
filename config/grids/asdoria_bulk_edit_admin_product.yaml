@@ -1,0 +1,54 @@
+sylius_grid:
+    grids:
+        asdoria_bulk_edit_admin_product:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: '%sylius.model.product.class%'
+                    repository:
+                        method: createListQueryBuilder
+                        arguments: ["%locale%"]
+            limits: [ 50, 100, 200, 500 ]
+            fields:
+                image:
+                    type: twig
+                    label: sylius.ui.image
+                    path: .
+                    options:
+                        template: "@SyliusAdmin/Product/Grid/Field/image.html.twig"
+                    position: 1
+                id:
+                    type: twig
+                    label: sylius.ui.details
+                    sortable: ~
+                    path: .
+                    options:
+                        template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/details.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ code, id ]
+                taxon:
+                    type: entity
+                    label: sylius.ui.taxonomy
+                    options:
+                        fields: [ productTaxons.taxon ]
+                    form_options:
+                        class: "%sylius.model.taxon.class%"
+                        choice_label: fullname
+                asdoria_bulk_edit_search_attribute_value:
+                    type: asdoria_bulk_edit_attribute_value_string
+                    label: sylius.ui.search
+            actions:
+                bulk:
+                    selected:
+                        type: selected
+                        label: asdoria_bulk_edit.ui.selected_product
+                        options:
+                            link:
+                                route: asdoria_bulk_edit_admin_product_bulk_edit
+                                parameters:
+                                    criteria: "expr:service('request_stack').getCurrentRequest().get('criteria', [])"
+                                    context: "product"

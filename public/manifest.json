@@ -1,4 +1,4 @@
 {
-  "bundles/asdoriasyliusquoterequestplugin/shop-bulk-edit.js": "/bundles/asdoriasyliusquoterequestplugin/shop-bulk-edit.min.js",
-  "bundles/asdoriasyliusquoterequestplugin/shop-add-to-quote.js": "/bundles/asdoriasyliusquoterequestplugin/shop-add-to-quote.min.js"
+  "bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.css": "/bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.min.css",
+  "bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.js": "/bundles/asdoriasyliusbulkeditplugin/admin-bulk-edit.min.js"
 }
