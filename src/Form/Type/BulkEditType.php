@@ -19,6 +19,7 @@ use Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditConfigurationChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -43,7 +44,7 @@ final class BulkEditType extends AbstractType
     public function __construct(
         protected FormTypeRegistryInterface $formTypeRegistry,
         protected ServiceRegistryInterface  $formConfigurationRegistry,
-        protected TranslatorInterface  $translator
+        protected TranslatorInterface       $translator
     )
     {
     }
@@ -56,20 +57,21 @@ final class BulkEditType extends AbstractType
         parent::buildForm($builder, $options);
         $builder
             ->add('type', BulkEditConfigurationChoiceType::class, [
-                'required' => true,
-                'label' => 'asdoria_bulk_edit.form.type.header',
+                'required'    => true,
+                'label'       => 'asdoria_bulk_edit.form.type.header',
                 'placeholder' => 'asdoria_bulk_edit.ui.please_selected_item',
-                'constraints' => [new NotBlank(['groups' => 'sylius'])],
-                'attr' => [
+                'constraints' => [new Valid([], ['sylius'])],
+                'attr'        => [
                     'data-form-collection' => 'update',
                 ],
             ])
+            ->add('resources', HiddenType::class)
             ->addEventSubscriber(
                 new ConfigurationTypeFormSubscriber(
                     $this->formTypeRegistry,
                     $this->formConfigurationRegistry,
                     $this->translator,
-                    $options['context'] ?? null
+                    $options
                 )
             );
     }
@@ -83,7 +85,7 @@ final class BulkEditType extends AbstractType
 
         $resolver
             ->setDefaults([
-                'context'            => 'product',
+                'context'           => 'product',
                 'validation_groups' => function (FormInterface $form) {
                     $isClicked = $form->has('submit') && $form->get('submit')->isClicked();
 

@@ -10,13 +10,19 @@ asdoria_bulk_edit:
         add_product_taxon: Ajouter un Taxon
         remove_product_taxon: Supprimer un Taxon
         set_main_taxon: Modifier le Taxon principal
+        configuration:
+            locale: Locale
         type:
             header: Choisir une Action
     ui:
+        loading: Chargement
         please_selected_item: Choisir une Action
         form:
             choice:
                 taxonomy_configuration:
                     taxons: Selectionnez des Catégories
                     taxon: Selectionnez une Catégorie
-        save_action: Go
+        save_action: Modifier
+        confirmation: Confirmation
+        please_to_validate_choice: Merci de valider votre choix
+        confirmation_success: Veuillez attendre le traitement de votre demande

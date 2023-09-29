@@ -46,7 +46,7 @@ class TaxonConfigurationType extends AbstractType
         $taxonField = $builder
             ->create(self::_TAXON_FIELD, TaxonAutocompleteChoiceType::class, [
                 'label' => 'asdoria_bulk_edit.ui.form.choice.taxonomy_configuration.taxon',
-                'constraints' => [new NotBlank(['groups' => 'bulk_edit'])]
+                'constraints' => [new NotBlank(['groups' => ['sylius']])]
             ])
             ->addModelTransformer($this->taxonToCodeTransformer);
 
@@ -58,6 +58,6 @@ class TaxonConfigurationType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'asdoria_bulk_edit_taxonomy_configuration';
+        return 'asdoria_bulk_edit_configuration_taxon';
     }
 }

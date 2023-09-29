@@ -36,13 +36,13 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
     /**
      * @param FormTypeRegistryInterface $formTypeRegistry
      * @param ServiceRegistryInterface  $formConfigurationRegistry
-     * @param string                    $context
+     * @param array                     $options
      */
     public function __construct(
         protected FormTypeRegistryInterface $formTypeRegistry,
         protected ServiceRegistryInterface  $formConfigurationRegistry,
-        protected TranslatorInterface $translator,
-        protected ?string $context = null
+        protected TranslatorInterface       $translator,
+        protected array $options
     )
     {
     }
@@ -98,22 +98,26 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
      */
     private function addConfigurationField(FormInterface $form, string $typeName): void
     {
-        if (!$this->formTypeRegistry->has($typeName, $this->context ?? 'default')) {
-            throw new \InvalidArgumentException(sprintf('there is no form for type %s and this context %s',$typeName, $this->context ?? 'default'));
+        $context = $this->options['context'] ?? 'default';
+        if (!$this->formTypeRegistry->has($typeName, $context)) {
+            throw new \InvalidArgumentException(sprintf('there is no form for type %s and this context %s',$typeName, $context));
         }
 
-        $formConfiguration = $this->formTypeRegistry->get($typeName, $this->context ?? 'default');
+        $formConfiguration = $this->formTypeRegistry->get($typeName, $context);
 
         $form->add(
             'configuration',
             $formConfiguration,
-            ['constraints' => [new Valid()]]
+            [
+                'constraints' => [new Valid([], ['sylius'])],
+            ]
         );
 
-        $label = sprintf('<i class="icon pencil"></i>%s', $this->translator->trans('asdoria_bulk_edit.ui.save_action'));
+
         $form->add('submit', SubmitType::class, [
-            'label' => $label,
+            'label' => sprintf('<i class="icon pencil"></i>%s', $this->translator->trans('asdoria_bulk_edit.ui.save_action')),
             'label_html' => true,
+            'priority' => -1,
             'attr' => ['class' => 'ui blue labeled icon button', 'data-bulk-edit-action-requires-confirmation' => '1']
         ]);
     }

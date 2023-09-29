@@ -8,7 +8,7 @@ sylius_ui:
                 scripts:
                     template: "@AsdoriaSyliusBulkEditPlugin/Admin/_javascripts.html.twig"
                     priority: 10
-        asdoria_bulk_edit.admin.index.javascripts.stylesheets:
+        asdoria_bulk_edit.admin.index.stylesheets:
             blocks:
                 scripts:
                     template: "@AsdoriaSyliusBulkEditPlugin/Admin/_stylesheets.html.twig"
