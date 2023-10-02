@@ -1,10 +1,10 @@
-<h5>
-    {{ 'sylius.ui.taxons'|trans }}
-</h5>
-<ul>
+<h5 class="ui header">{{ 'sylius.ui.taxons'|trans }}</h5>
+<div class="ui divided selection list">
     {% for taxon in product.taxons %}
-        <li>
-            {{ taxon.fullname }}
-        </li>
+        <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : taxon.id }) }}">
+            <div class="ui blue horizontal tiny label">
+                 {{ taxon.fullname }}
+            </div>
+        </a>
     {% endfor %}
-</ul>
+</div>

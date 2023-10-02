@@ -9,6 +9,8 @@ asdoria_bulk_edit:
         set_attribute_value: Modify an Attribute value
         add_product_taxon: Add Taxon
         remove_product_taxon: Delete Taxon
+        add_product_association: Add Association
+        remove_product_association: Delete Association
         set_main_taxon: Edit Main Taxon
         configuration:
             locale: Locale

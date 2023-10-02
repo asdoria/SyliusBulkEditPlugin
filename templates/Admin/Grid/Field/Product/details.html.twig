@@ -1,25 +1,31 @@
 <div class="ui stackable grid"
      style="margin: 0;"
 >
-    <div class="six wide column">
-        <div class="content">
-            <div class="header">
-                <a class="number" href="{{ path('sylius_admin_product_update', {'id' : data.id }) }}">
-                    <strong>{{ data.code }}</strong>
-                </a>
-            </div>
-            <div class="description">
-                <ul>
-                    <li> {{ 'sylius.ui.name' | trans }} : <strong>{{ data.name }}</strong></li>
-                    <li> {{ 'sylius.ui.main_taxon' | trans }} : <strong>{{ data.mainTaxon.fullname|default('~') }}</strong></li>
-                </ul>
-            </div>
+    <div class="three wide column">
+        <div class="ui ">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_main.html.twig' with {'product': data} %}
         </div>
     </div>
-    <div class="six wide column">
-        {%  include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_taxons.html.twig' with {'product': data} %}
-    </div>
-    <div class="four wide column">
-        {%  include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_attributes.html.twig' with {'product': data} %}
-    </div>
+
+    {% if data.taxons is not empty %}
+        <div class="three wide column">
+            <div class="ui">
+                {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_taxons.html.twig' with {'product': data} %}
+            </div>
+        </div>
+    {% endif %}
+    {% if data.attributes is not empty %}
+        <div class="four wide column">
+            <div class="ui ">
+                {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_attributes.html.twig' with {'product': data} %}
+            </div>
+        </div>
+    {% endif %}
+    {% if  data.associations is not empty %}
+        <div class="six wide column">
+            <div class="ui">
+                {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Product/Details/_associations.html.twig' with {'product': data} %}
+            </div>
+        </div>
+    {% endif %}
 </div>

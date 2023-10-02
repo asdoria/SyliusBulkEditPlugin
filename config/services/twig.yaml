@@ -1,0 +1,6 @@
+services:
+    Asdoria\SyliusBulkEditPlugin\Twig\AttributeByLocaleExtension:
+        arguments:
+            $helper: '@Asdoria\SyliusBulkEditPlugin\Templating\Helper\AttributeByLocaleHelper'
+        tags:
+            - { name: twig.extension }

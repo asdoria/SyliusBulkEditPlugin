@@ -10,13 +10,6 @@ sylius_grid:
                         arguments: ["%locale%"]
             limits: [ 50, 100, 200, 500 ]
             fields:
-                image:
-                    type: twig
-                    label: sylius.ui.image
-                    path: .
-                    options:
-                        template: "@SyliusAdmin/Product/Grid/Field/image.html.twig"
-                    position: 1
                 id:
                     type: twig
                     label: sylius.ui.details

@@ -10,6 +10,8 @@ asdoria_bulk_edit:
         add_product_taxon: Ajouter un Taxon
         remove_product_taxon: Supprimer un Taxon
         set_main_taxon: Modifier le Taxon principal
+        add_product_association: Ajouter Une Association
+        remove_product_association: Supprimer Une Association
         configuration:
             locale: Locale
         type:

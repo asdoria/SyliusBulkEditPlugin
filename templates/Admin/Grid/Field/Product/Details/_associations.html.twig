@@ -1,0 +1,10 @@
+<h5 class="ui header">{{ 'sylius.ui.associations'|trans }}</h5>
+<div class="ui divided selection list">
+    {% for association in product.associations %}
+        <a class="item" href="{{ path('sylius_admin_product_association_type_update', {'id' : association.type.id }) }}">
+            <div class="ui horizontal pink label">{{ association.type.name }}</div>
+            {{ association.getAssociatedProducts()|map(p => "#{p.code}")|join(' | ') }}
+        </a>
+    {% endfor %}
+</div>
+
