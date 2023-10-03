@@ -2,43 +2,6 @@
 {% set attributesByLocale = attributes_by_locale(product, sylius.channel()) %}
 <h5 class="ui header">{{ 'sylius.ui.product_attributes'|trans }}</h5>
 <div class="ui divided selection list">
-{#        <div class="ui grid">#}
-{#            <div class="four wide column">#}
-{#                <div class="ui vertical fluid tabular menu">#}
-{#                    {% for locale, attributes in attributesByLocale %}#}
-{#                    <a class="item{% if 0 == loop.index0 %} active{% endif %}" data-tab="{{ locale }}">#}
-{#                        {{ flags.fromLocaleCode(locale) }}#}
-{#                    </a>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="twelve wide stretched column">#}
-{#                <div class="ui segment" style="border: 0px !important;">#}
-{#                    {% for locale, attributes in attributesByLocale %}#}
-{#                    <div class="ui bottom attached tab {% if 0 == loop.index0 %} active{% endif %}"#}
-{#                         data-tab="{{ locale }}">#}
-{#                        {% for key, attribute in attributes %}#}
-{#                        <div class="ui stackable grid">#}
-{#                            <a class="item" href="{{ path('sylius_admin_product_attribute_update', {'id' : attribute.attribute.id }) }}" >#}
-{#                                <div class="ui teal horizontal tiny label">{{ attribute.attribute.name }}</div>#}
-{#                                {% include [#}
-{#                                    '@SyliusShop/Product/Show/Types/'~attribute.attribute.type~'.html.twig',#}
-{#                                    '@SyliusAttribute/Types/'~attribute.attribute.type~'.html.twig',#}
-{#                                    '@SyliusShop/Product/Show/Types/default.html.twig'#}
-{#                                ] with {#}
-{#                                    'attribute': attribute,#}
-{#                                    'locale': locale,#}
-{#                                    'fallbackLocale': sylius.localeCode#}
-{#                                } %}#}
-{#                            </a>#}
-{#                        </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-
         <div class="ui top attached tabular menu">
             {% for locale, attributes in attributesByLocale %}
                 <a class="item{% if 0 == loop.index0 %} active{% endif %}" data-tab="{{ locale }}"

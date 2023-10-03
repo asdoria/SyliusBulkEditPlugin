@@ -12,9 +12,11 @@ declare(strict_types=1);
  */
 namespace Asdoria\SyliusBulkEditPlugin\Grid\Filter;
 
+use Asdoria\SyliusBulkEditPlugin\Doctrine\ORM\AttributeValueStringDriver;
 use Asdoria\SyliusBulkEditPlugin\Traits\LocaleContextTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\ProductAttributeRepositoryTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\QueryBuilderTrait;
+use Asdoria\SyliusBulkEditPlugin\Traits\RequestStackTrait;
 use Sylius\Component\Grid\Data\DataSourceInterface;
 use Sylius\Component\Grid\Data\ExpressionBuilderInterface;
 use Sylius\Component\Grid\Filtering\FilterInterface;
@@ -27,7 +29,7 @@ use Sylius\Component\Product\Model\ProductAttributeInterface;
  */
 class AttributeValueStringFilter implements FilterInterface
 {
-    use QueryBuilderTrait;
+    use RequestStackTrait;
     use ProductAttributeRepositoryTrait;
     use LocaleContextTrait;
 
@@ -56,13 +58,16 @@ class AttributeValueStringFilter implements FilterInterface
     public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
     {
         $expressionBuilder = $dataSource->getExpressionBuilder();
+        $queryBuilder      = $this->requestStack
+            ->getCurrentRequest()->attributes->get(AttributeValueStringDriver::QUERY_BUILDER_ATTR);
 
         $value         = is_array($data) ? $data['value'] ?? null : $data;
         $type          = $data['type'] ?? ($options['type'] ?? self::TYPE_CONTAINS);
         $attributeCode = $data['attribute'] ?? null;
+        $localeCode = $data['localeCode'] ?? $this->getLocaleContext()->getLocaleCode();
 
 
-        if (!in_array($type, [self::TYPE_NOT_EMPTY, self::TYPE_EMPTY], true) && '' === trim((string) $value)) {
+        if (!in_array($type, [self::TYPE_NOT_EMPTY, self::TYPE_EMPTY], true) && empty($value)) {
             return;
         }
 
@@ -72,15 +77,21 @@ class AttributeValueStringFilter implements FilterInterface
 
         $alias      = sprintf('%s_%s_%s', 'code', $attribute->getCode(), $attribute->getId());
         $attrParam  = 'attr_' . uniqid($attribute->getCode());
-        $localeCode = $this->getLocaleContext()->getLocaleCode();
         $condition  = $alias . '.attribute = :' . $attrParam. ' AND '.$alias . '.localeCode = :localeCode';
         $fieldType  = $attribute->getStorageType();
-        $this->getQueryBuilder()
+        $queryBuilder
             ->innerJoin('o.attributes', $alias, 'WITH', $condition)
             ->setParameter($attrParam, $attribute)
             ->setParameter('localeCode', $localeCode);
 
-        $dataSource->restrict($this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $value));
+        if (!is_array($value)) {
+            $dataSource->restrict($this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $value));
+            return;
+        }
+        
+        $ands = [];
+        foreach ($value as $v) $ands[] = $expressionBuilder->like($alias . '.' . $fieldType, '%' . $v. '%');
+        $dataSource->restrict($expressionBuilder->andX(...$ands));
     }
 
     /**

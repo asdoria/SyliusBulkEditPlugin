@@ -13,13 +13,17 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Filter;
 
+use Asdoria\SyliusBulkEditPlugin\Traits\LocaleContextTrait;
+use Sylius\Bundle\LocaleBundle\Form\Type\LocaleChoiceType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeChoiceType;
 use Sylius\Component\Grid\Filter\StringFilter;
+use Sylius\Component\Locale\Model\LocaleInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class AttributeValueStringFilterType
@@ -29,6 +33,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AttributeValueStringFilterType extends AbstractType
 {
+    use LocaleContextTrait;
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (!isset($options['type'])) {
@@ -52,9 +57,16 @@ class AttributeValueStringFilterType extends AbstractType
 
         $builder
             ->add('attribute', ProductAttributeChoiceType::class, [
+                'required' => false
             ])
-        ;
-        $builder
+            ->add('localeCode',
+                LocaleChoiceType::class,
+                [
+                    'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                    'label' => 'sylius.ui.locale',
+                    'empty_data' => $this->getLocaleContext()->getLocaleCode()
+                ]
+            )
             ->add('value', TextType::class, [
                 'required' => false,
                 'label' => 'sylius.ui.value',

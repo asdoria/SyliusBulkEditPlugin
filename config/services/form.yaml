@@ -22,6 +22,12 @@ services:
         tags:
             - { name: form.type }
 
+    Asdoria\SyliusBulkEditPlugin\Form\Type\Filter\AttributeValueStringFilterType:
+        calls:
+            - ['setLocaleContext', ['@sylius.context.locale']]
+        tags:
+            - { name: form.type }
+
     Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditConfigurationChoiceType:
         arguments:
             $choices: '%asdoria_bulk_edit.form_configurations%'

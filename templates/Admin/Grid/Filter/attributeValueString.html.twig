@@ -1,9 +1,10 @@
 {% form_theme form '@SyliusUi/Form/theme.html.twig' %}
 
-<div class="sylius-filters__group">
+<div class="sylius-filters__group ui segment">
     {% if form.type is defined %}
         {{ form_row(form.type, {'label': filter.label}) }}
     {% endif %}
-    {{ form_row(form.attribute) }}
-    {{ form_row(form.value, {attr: {placeholder: form.value.vars.label}, 'label': form.type is defined ? form.value.vars.label : filter.label}) }}
-</div>
+    {{ form_row(form.attribute, {'attr': {'class': 'ui fluid search dropdown', 'data-render-url' : path('asdoria_bulk_edit_admin_ajax_render_attribute_forms')}}) }}
+    {{ form_row(form.localeCode,  {'attr': {'class': 'ui fluid search dropdown'}}) }}
+    {{ form_row(form.value, {attr: {placeholder: form.value.vars.label, 'disabled': true}, 'label': form.type is defined ? form.value.vars.label : filter.label}) }}
+</div></br>

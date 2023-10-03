@@ -29,16 +29,17 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class AttributeValueStringDriver implements DriverInterface
 {
+    const QUERY_BUILDER_ATTR = 'asdoria_bulk_edit_search_attribute_value[queryBuilder]';
+
     /**
      * @param DriverInterface       $inner
      * @param GridProviderInterface $gridProvider
-     * @param array                 $services
+     * @param RequestStack          $requestStack
      */
     public function __construct(
         protected DriverInterface       $inner,
         protected GridProviderInterface $gridProvider,
-        protected RequestStack          $requestStack,
-        protected array                 $services
+        protected RequestStack          $requestStack
     )
     {
     }
@@ -52,11 +53,12 @@ class AttributeValueStringDriver implements DriverInterface
      */
     public function getDataSource(array $configuration, Parameters $parameters): DataSourceInterface
     {
-        if (empty($this->requestStack->getMainRequest())) {
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        if (null === $currentRequest) {
             return $this->inner->getDataSource($configuration, $parameters);
         }
 
-        $grid = $this->requestStack->getMainRequest()->attributes->get('_sylius', [])['grid'] ?? null;
+        $grid = $currentRequest->attributes->get('_sylius', [])['grid'] ?? null;
 
         if (empty($grid)) return $this->inner->getDataSource($configuration, $parameters);
 
@@ -75,10 +77,7 @@ class AttributeValueStringDriver implements DriverInterface
         $reflectionProperty = new \ReflectionProperty(get_class($dataSource), 'queryBuilder');
         $reflectionProperty->setAccessible(true);
         $queryBuilder = $reflectionProperty->getValue($dataSource);
-
-        foreach ($this->services as $service) {
-            if (method_exists($service, 'setQueryBuilder')) $service->setQueryBuilder($queryBuilder);
-        }
+        $currentRequest->attributes->set(self::QUERY_BUILDER_ATTR, $queryBuilder);
 
         return $dataSource;
     }

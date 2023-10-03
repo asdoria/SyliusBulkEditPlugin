@@ -1,0 +1,6 @@
+asdoria_bulk_edit_admin_ajax_render_attribute_forms:
+    path: /attribute-forms
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product_attribute::renderAttributeValueFormsAction
+        template: "@AsdoriaSyliusBulkEditPlugin/Admin/Form/Filter/attributeValueForms.html.twig"

@@ -71,7 +71,7 @@ const setStepEl = (container, stepKey, stepHtml) => {
 
     container.appendChild(el)
 
-    formFieldSelector(el).forEach(input => input.addEventListener('change', updateValue))
+    formUpdateFieldSelector(el).forEach(input => input.addEventListener('change', updateValue))
     initAutoComplete(el)
 
 }
@@ -104,12 +104,12 @@ export const updateValue = ({ target }, isSumited = false) => {
     init(container, formData)
 }
 
-// const formFieldSelector = (container) => container.querySelectorAll(`[name^="asdoria_bulk_edit_form"]:not(#asdoria_bulk_edit_form_submit):not(#asdoria_bulk_edit_form_resources)`)
-const formFieldSelector = (container) => container.querySelectorAll(`[data-form-collection="update"]`)
+const formFieldSelector = (container) => container.querySelectorAll(`[name^="asdoria_bulk_edit_form"]:not(#asdoria_bulk_edit_form_submit):not(#asdoria_bulk_edit_form_resources)`)
+const formUpdateFieldSelector = (container) => container.querySelectorAll(`[data-form-collection="update"]`)
 const initAutoComplete = (container) => $(container.querySelectorAll('.sylius-autocomplete')).autoComplete()
 const initAlertify = (container, stepKey, el) => {
   if ('submit' !== stepKey) return;
-  el.addEventListener('click', (e) => {
+  el.querySelector('[type="input"]').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
     const { confirmation, validateChoice } = container.dataset

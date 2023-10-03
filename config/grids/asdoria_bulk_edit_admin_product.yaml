@@ -31,6 +31,14 @@ sylius_grid:
                     form_options:
                         class: "%sylius.model.taxon.class%"
                         choice_label: fullname
+                association:
+                    type: entity
+                    label: sylius.ui.association
+                    options:
+                        fields: [ associations.type ]
+                    form_options:
+                        class: "%sylius.model.product_association_type.class%"
+                        choice_label: name
                 asdoria_bulk_edit_search_attribute_value:
                     type: asdoria_bulk_edit_attribute_value_string
                     label: sylius.ui.search

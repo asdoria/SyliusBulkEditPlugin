@@ -1,0 +1,35 @@
+{% import _self as self %}
+{% import '@SyliusUi/Macro/flags.html.twig' as flags %}
+
+{% set subject = metadata.name|replace({'_attribute': ''}) %}
+{% set localeCode = app.request.query.get('locale_code', sylius.localeCode) %}
+{% for code, localeCodes in forms %}
+    <label for="criteria_asdoria_bulk_edit_search_attribute_value_value">{{ 'sylius.ui.value'|trans }}</label>
+    {% for localeCode, form in localeCodes| filter((v, k) => k == localeCode) %}
+        {% if 'type_checkbox' in form.vars.cache_key %}
+            <div class="ui toggle checkbox">
+                {{ self.formField(form, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '') }}
+                <label></label>
+            </div>
+        {% else %}
+            {{ self.formField(form, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '', subject) }}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% macro formField(item, count, id, prefix, subject) %}
+    {% from _self import formField %}
+    {% if item.children|length > 0 %}
+        {% set prefix = prefix~'_'~item.vars.name %}
+        {% for child in item.children %}
+            {{ formField(child, count, id, prefix, subject) }}
+        {% endfor %}
+    {% elseif item.vars.name != '_token' %}
+        {% set dataName = 'criteria[asdoria_bulk_edit_search_attribute_value]['~item.vars.name~']' %}
+        {% if item.vars.multiple is defined and item.vars.multiple %}
+            {% set dataName = dataName~'[]' %}
+        {% endif %}
+
+        {{ form_widget(item, {'id': id, 'attr': {'data-name': dataName }}) }}
+    {% endif %}
+{% endmacro %}
