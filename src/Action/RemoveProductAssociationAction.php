@@ -14,10 +14,14 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Sylius\Component\Product\Model\ProductAssociationInterface;
 use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Repository\ProductAssociationTypeRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -38,7 +42,8 @@ class RemoveProductAssociationAction implements ResourceActionInterface
      * @param ProductAssociationTypeRepositoryInterface $associationTypeRepository
      */
     public function __construct(
-        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository
+        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository,
+        protected ProductRepositoryInterface $productRepository
     )
     {
     }
@@ -57,16 +62,29 @@ class RemoveProductAssociationAction implements ResourceActionInterface
 
         if (empty($configuration)) return;
 
-        $associationCode = $configuration[AssociationConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
-        $association     = $this->associationTypeRepository->findOneByCode($associationCode);
+        $associationTypeCode = $configuration[AssociationsConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
+        $productIds          = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
 
-        if (!$association instanceof ProductAssociationTypeInterface) return;
+        if(empty($associationTypeCode)) return;
 
-//        $productTaxon = $resource->getAssociations()
-//            ->filter(fn($current) => $current->get()->getId() === $taxon->getId())->first();
-//
-//        if (empty($productTaxon)) return;
-//
-//        $resource->removeProductTaxon($productTaxon);
+        $associationType     = $this->associationTypeRepository->findOneByCode($associationTypeCode);
+
+        if (!$associationType instanceof ProductAssociationTypeInterface) return;
+
+        $productAssociation = $resource->getAssociations()
+            ->matching(Criteria::create()->where(Criteria::expr()->eq('type', $associationType)))->first();
+
+        if (!$productAssociation instanceof ProductAssociationInterface) return;
+
+        if (empty($productIds)) {
+            $productAssociation->clearAssociatedProducts();
+            return;
+        }
+
+        foreach (explode(',', $productIds) as $productId) {
+            $product = $this->productRepository->find($productId);
+            if(!$product instanceof ProductInterface) continue;
+            $productAssociation->removeAssociatedProduct($product);
+        }
     }
 }

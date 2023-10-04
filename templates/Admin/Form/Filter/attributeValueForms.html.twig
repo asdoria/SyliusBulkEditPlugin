@@ -14,6 +14,8 @@
         {% else %}
             {{ self.formField(form, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '', subject) }}
         {% endif %}
+    {% else %}
+        {{ self.formField(localeCodes|first, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '', subject) }}
     {% endfor %}
 {% endfor %}
 

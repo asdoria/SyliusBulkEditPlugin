@@ -1,4 +1,0 @@
-#services:
-#    Asdoria\SyliusBulkEditPlugin\Resolver\FormStepResolver:
-#        arguments:
-#            $formStepRegistry: '@Asdoria\SyliusBulkEditPlugin\Registry\FormStepRegistry'

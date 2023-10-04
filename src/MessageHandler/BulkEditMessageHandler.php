@@ -53,14 +53,14 @@ class BulkEditMessageHandler implements MessageHandlerInterface
         if (!$action instanceof ResourceActionInterface) {
             return;
         }
+
         $entity = $this->entityManager->find($message->getEntityClass(), $message->getId());
         if (!$entity instanceof ResourceInterface) {
             return;
         }
 
-        $this->entityManager->transactional(function (EntityManagerInterface $manager) use ($entity, $message, $action) {
-            $action->handle($entity, $message);
-            $this->eventDispatcher->dispatch(new GenericEvent($message), 'bulk_edit.post_handle_message');
-        });
+        $action->handle($entity, $message);
+
+        $this->eventDispatcher->dispatch(new GenericEvent($message), 'bulk_edit.post_handle_message');
     }
 }

@@ -16,12 +16,11 @@ namespace Asdoria\SyliusBulkEditPlugin\EventListener;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotification;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Metadata\Registry;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * Class BulkEditActionListener.
@@ -51,21 +50,19 @@ class BulkEditActionListener
             $subject     = $event->getSubject();
             $resources   = $subject['resources'] ?? '';
             $resourceIds = explode(',', $resources);
-            $metadata    = $this->getResourceMetadata($subject['context']);
+            $context     = $subject['context'] ?? null;
+            $config      = $subject['configuration'];
+            $metadata    = $this->getResourceMetadata($context);
             $actionId    = uniqid();
-
-            $config = array_merge(...(array_filter($subject['steps'] ?? [], 'is_array')));
 
             foreach ($resourceIds as $i => $resourceId) {
                 $subject = [
                     'id'              => intval($resourceId),
                     'configuration'   => $config,
-                    'type'            => $config['type'],
-                    'type_identifier' => $subject['context'] ?? null,
+                    'type'            => $subject['type'] ?? null,
+                    'type_identifier' => $context,
                     'entity_class'    => $metadata?->getClass('model'),
                     'action_id'       => $actionId,
-                    'current'         => $i + 1,
-                    'total_count'     => sizeof($resourceIds),
                 ];
 
                 $message = new BulkEditNotification($subject);
@@ -73,9 +70,7 @@ class BulkEditActionListener
                 $this->bus->dispatch($message);
             }
         } catch (\Throwable $ex) {
-
-//            $this->logger->
-//            dump($ex->getMessage());exit;
+            //TODO Logger
         }
     }
 

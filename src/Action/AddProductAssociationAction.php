@@ -13,11 +13,15 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
+use Asdoria\SyliusConfiguratorPlugin\Entity\ConfiguratorItemProductAttribute;
+use Asdoria\SyliusConfiguratorPlugin\Model\ConfiguratorItemInterface;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Product\Model\ProductAssociationInterface;
 use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Repository\ProductAssociationTypeRepositoryInterface;
@@ -42,7 +46,8 @@ class AddProductAssociationAction implements ResourceActionInterface
      */
     public function __construct(
         protected FactoryInterface $productAssociationFactory,
-        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository
+        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository,
+        protected ProductRepositoryInterface $productRepository
     )
     {
     }
@@ -59,19 +64,30 @@ class AddProductAssociationAction implements ResourceActionInterface
 
         if (empty($configuration)) return;
 
-        $associationCode = $configuration[AssociationConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
-        $association     = $this->associationTypeRepository->findOneByCode($associationCode);
+        $associationTypeCode = $configuration[AssociationsConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
+        $productIds          = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
 
-        if (!$association instanceof ProductAssociationTypeInterface) return;
-        if ($resource->hasAssociation($association)) return;
+        if(empty($productIds) || empty($associationTypeCode)) return;
 
-        /** @var ProductAssociationInterface $productAssociation */
-        $productAssociation = $this->productAssociationFactory->createNew();
-        $productAssociation->setOwner($resource);
-        $productAssociation->setType($association);
+        $associationType     = $this->associationTypeRepository->findOneByCode($associationTypeCode);
 
-//        $productAssociation->addAssociatedProduct();
-//        $resource->addProductAssociation($productAssociation);
-//        $this->getEntityManager()->persist($productAssociation);
+        if (!$associationType instanceof ProductAssociationTypeInterface) return;
+
+        $productAssociation = $resource->getAssociations()
+            ->matching(Criteria::create()->where(Criteria::expr()->eq('type', $associationType)))->first();
+
+        if (!$productAssociation instanceof ProductAssociationInterface) {
+            /** @var ProductAssociationInterface $productAssociation */
+            $productAssociation = $this->productAssociationFactory->createNew();
+            $productAssociation->setOwner($resource);
+            $productAssociation->setType($associationType);
+            $this->getEntityManager()->persist($productAssociation);
+        }
+
+        foreach (explode(',', $productIds) as $productId) {
+            $product = $this->productRepository->find($productId);
+            if(!$product instanceof ProductInterface) continue;
+            $productAssociation->addAssociatedProduct($product);
+        }
     }
 }

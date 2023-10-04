@@ -5,6 +5,7 @@ services:
         arguments:
             $productAssociationFactory: '@sylius.factory.product_association'
             $associationTypeRepository: '@sylius.repository.product_association_type'
+            $productRepository: '@sylius.repository.product'
         calls:
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
@@ -19,6 +20,7 @@ services:
         public: true
         arguments:
             $associationTypeRepository: '@sylius.repository.product_association_type'
+            $productRepository: '@sylius.repository.product'
         tags:
             -   name: asdoria_bulk_edit.action
                 type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveProductAssociationAction::REMOVE_PRODUCT_ASSOCIATION

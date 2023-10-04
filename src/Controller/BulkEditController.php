@@ -62,10 +62,9 @@ class BulkEditController
             $this->eventDispatcher->dispatch(
                 new GenericEvent(array_merge_recursive(
                     $form->getData(),
-                    $form->getExtraData(),
                     $request->attributes->all(),
                 )),
-                'bulk_edit.handle'
+                'asdoria.bulk_edit.handle'
             );
 
             return new JsonResponse('OK', 204);

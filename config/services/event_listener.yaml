@@ -1,0 +1,9 @@
+services:
+    Asdoria\SyliusBulkEditPlugin\EventListener\BulkEditActionListener:
+        arguments:
+            $bus: '@asdoria_bulk_edit.bus'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $securityHelper: '@security.helper'
+            $resourceMetadataRegistry: '@sylius.resource_registry'
+        tags:
+            - { name: kernel.event_listener, event: asdoria.bulk_edit.handle, method: handleEvent }

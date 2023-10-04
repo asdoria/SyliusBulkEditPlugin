@@ -23,7 +23,7 @@ use Webmozart\Assert\Assert;
  *
  * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
-class TaxonToCodeTransformer implements DataTransformerInterface
+final class TaxonToCodeTransformer implements DataTransformerInterface
 {
     /**
      * @param TaxonRepositoryInterface $taxonRepository

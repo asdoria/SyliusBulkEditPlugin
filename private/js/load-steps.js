@@ -109,7 +109,7 @@ const formUpdateFieldSelector = (container) => container.querySelectorAll(`[data
 const initAutoComplete = (container) => $(container.querySelectorAll('.sylius-autocomplete')).autoComplete()
 const initAlertify = (container, stepKey, el) => {
   if ('submit' !== stepKey) return;
-  el.querySelector('[type="input"]').addEventListener('click', (e) => {
+  el.querySelector('[type="submit"]').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
     const { confirmation, validateChoice } = container.dataset

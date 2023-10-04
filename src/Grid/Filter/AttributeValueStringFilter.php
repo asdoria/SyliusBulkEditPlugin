@@ -88,9 +88,9 @@ class AttributeValueStringFilter implements FilterInterface
             $dataSource->restrict($this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $value));
             return;
         }
-        
+
         $ands = [];
-        foreach ($value as $v) $ands[] = $expressionBuilder->like($alias . '.' . $fieldType, '%' . $v. '%');
+        foreach ($value as $v) $ands[] = $this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $v);
         $dataSource->restrict($expressionBuilder->andX(...$ands));
     }
 

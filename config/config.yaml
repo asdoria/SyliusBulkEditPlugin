@@ -1,3 +1,8 @@
+parameters:
+    env(ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_DSN): 'doctrine://default'
+    env(ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_FAILED_DSN): 'doctrine://default?queue_name=asdoria_bulk_edit_failed'
+    asdoria_messenger_transport_bulk_edit_dsn: '%env(resolve:ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_DSN)%'
+    asdoria_messenger_transport_bulk_edit_failed_dsn: '%env(resolve:ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_FAILED_DSN)%'
 imports:
     - { resource: "grids/*.yaml" }
 
@@ -20,21 +25,16 @@ framework:
             asdoria_sylius_bulk_edit_plugin:
                 base_path: '/bundles/asdoriasyliusbulkeditplugin'
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
-
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            bulk_edit: '%env(MESSENGER_TRANSPORT_BULK_EDIT_DSN)%'
-        #            options:
-        #                queue_name: bulk_edit
-        # failed: 'doctrine://default?queue_name=failed'
-        # sync: 'sync://'
-
+            asdoria_bulk_edit:
+                dsn: '%asdoria_messenger_transport_bulk_edit_dsn%'
+                failure_transport: 'asdoria_bulk_edit_failed'
+            asdoria_bulk_edit_failed:
+                dsn: '%asdoria_messenger_transport_bulk_edit_failed_dsn%'
         routing:
             # route all messages that extend this example base class or interface
-            'Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface': bulk_edit
-
+            'Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface': asdoria_bulk_edit
         buses:
             asdoria_bulk_edit.bus:
                 middleware:

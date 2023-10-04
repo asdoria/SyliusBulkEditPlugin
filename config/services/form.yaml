@@ -28,6 +28,13 @@ services:
         tags:
             - { name: form.type }
 
+    Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType:
+        arguments:
+            $productRepository: '@sylius.repository.product'
+            $productAssociationTypeRepository: '@sylius.repository.product_association_type'
+        tags:
+            - { name: form.type }
+
     Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditConfigurationChoiceType:
         arguments:
             $choices: '%asdoria_bulk_edit.form_configurations%'

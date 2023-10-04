@@ -11,28 +11,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     action: 'hide',
     onChange: function (value, text, $selectedItem) {
       changeInputValue()
+      selectedInputValue().value = '';
     }
   })
   loadSteps()
   selectResources()
-  changeInputValue()
+  changeInputValue(true)
 });
 
 const selectedInputValue = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_value')
 const selectedInputLocale = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_localeCode')
 const selectedInputAttribute = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_attribute')
-const selectedInputContainer = () => selectedInputValue().closest("div")
+const selectedInputContainer = () => selectedInputValue().closest("div.field")
 const initInputValue = (name, el) => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const initialValue = urlParams.get(name)
-  if (el.type !== 'checkbox') {
-    el.value = urlParams.get(name)
-  } else if (!initialValue) {
-    el.checked = true
+  if (el.type === 'checkbox') {
+      el.checked = true
+    return;
   }
+  el.value = urlParams.get(name)
 }
-const changeInputValue = (value) => {
+const changeInputValue = (init = false) => {
   const localeCode = selectedInputLocale().value
   const inputAttr = selectedInputAttribute()
   const {renderUrl} = inputAttr.dataset
@@ -49,7 +50,7 @@ const changeInputValue = (value) => {
       if (input) {
         const {name} = input.dataset
         input.name = name
-        initInputValue(name, input)
+        if (init) initInputValue(name, input)
       }
     });
 }
