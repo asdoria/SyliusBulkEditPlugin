@@ -46,6 +46,9 @@ class SetMainTaxonAction implements ResourceActionInterface
         if (empty($configuration)) return;
 
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
+
+        if (empty($taxonCode)) return;
+
         $taxon     = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
         if(!$taxon instanceof TaxonInterface) return;

@@ -16,6 +16,7 @@ namespace Asdoria\SyliusBulkEditPlugin\Action;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeSubjectInterface;
@@ -61,11 +62,13 @@ class SetAttributeValueAction implements ResourceActionInterface
 
         if (empty($configuration)) return;
 
-        $configAttributeValue = $configuration[AttributeValueConfigurationType::_VALUE_FIELD] ?? null;
+        $value      = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_VALUE_FIELD] ?? null;
+        $attributeCode  = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_FIELD] ?? null;
+        $localeCode = $configuration[AttributeValueConfigurationType::_LOCALE_CODE_FIELD] ?? null;
 
-        if (!$configAttributeValue instanceof AttributeValueInterface) return;
+        if (empty($value) || empty($attributeCode)) return;
 
-        $this->process($configAttributeValue, $resource);
+        $this->process($attributeCode, $value, $resource, $localeCode);
     }
 
     /**
@@ -74,31 +77,25 @@ class SetAttributeValueAction implements ResourceActionInterface
      *
      * @return \Closure
      */
-    protected function process(AttributeValueInterface $configAttributeValue, AttributeSubjectInterface $resource): void {
-        $attributeCode = $configAttributeValue->getAttribute()->getCode();
-        $value         = $configAttributeValue->getValue();
-        $locale        = $configAttributeValue->getLocaleCode();
-
+    protected function process(string $attributeCode, $value, AttributeSubjectInterface $resource, ?string $localeCode = null): void {
         $attribute = $this->productAttributeRepository->findOneBy(['code' => $attributeCode]);
 
         if (!$attribute instanceof AttributeInterface) return;
 
         $isTranslatable = $attribute->isTranslatable() && $attribute->getStorageType() === AttributeValueInterface::STORAGE_TEXT;
 
-        $attributeValue = $isTranslatable ? $resource->getAttributeByCodeAndLocale($attributeCode, $locale) :
+        $attributeValue = $isTranslatable ? $resource->getAttributeByCodeAndLocale($attributeCode, $localeCode) :
             $resource->getAttributeByCodeAndLocale($attributeCode);
 
         if (!$attributeValue instanceof AttributeValueInterface) {
             /** @var AttributeValueInterface $attributeValue */
             $attributeValue = $this->attributeValueFactory->createNew();
-            if ($isTranslatable) {
-                $attributeValue->setLocaleCode($locale);
-            }
+            if ($isTranslatable) $attributeValue->setLocaleCode($localeCode);
             $attributeValue->setAttribute($attribute);
             $resource->addAttribute($attributeValue);
+            $this->getEntityManager()->persist($attributeValue);
         }
 
         $attributeValue->setValue($value);
-        $this->getEntityManager()->persist($attributeValue);
     }
 }

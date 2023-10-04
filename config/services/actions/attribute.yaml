@@ -13,3 +13,15 @@ services:
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.set_attribute_value
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType
+                
+    asdoria_bulk_edit.action.remove_attribute_value:
+        class: Asdoria\SyliusBulkEditPlugin\Action\RemoveAttributeValueAction
+        public: true
+        arguments:
+            $productAttributeRepository: '@sylius.repository.product_attribute'
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveAttributeValueAction::REMOVE_ATTRIBUTE_VALUE
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
+                label: asdoria_bulk_edit.form.remove_attribute_value
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeConfigurationType

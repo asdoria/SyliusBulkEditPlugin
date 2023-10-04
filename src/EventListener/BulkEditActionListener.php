@@ -70,7 +70,7 @@ class BulkEditActionListener
                 $this->bus->dispatch($message);
             }
         } catch (\Throwable $ex) {
-            //TODO Logger
+            $this->logger->critical($ex->getMessage());
         }
     }
 

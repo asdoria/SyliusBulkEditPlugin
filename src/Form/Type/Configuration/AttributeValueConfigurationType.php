@@ -14,24 +14,19 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration;
 
 use Sylius\Bundle\AttributeBundle\Form\Type\AttributeValueType;
-use Sylius\Bundle\AttributeBundle\Validator\Constraints\ValidAttributeValue;
-use Sylius\Bundle\CoreBundle\Validator\Constraints\LocalesAwareValidAttributeValueValidator;
 use Sylius\Bundle\LocaleBundle\Form\Type\LocaleChoiceType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;
+use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeValueInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ReversedTransformer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Valid;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class AttributeValueConfigurationType.
@@ -39,22 +34,40 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class AttributeValueConfigurationType extends AttributeValueType
+class AttributeValueConfigurationType extends AbstractType
 {
+    const _ATTRIBUTE_FIELD = 'attribute';
+    const _LOCALE_CODE_FIELD = 'localeCode';
+    const _ATTRIBUTE_VALUE_FIELD = 'value';
+
+    public function __construct(
+        protected string $attributeChoiceType,
+        protected RepositoryInterface $attributeRepository,
+        protected RepositoryInterface $localeRepository,
+        protected FormTypeRegistryInterface $formTypeRegistry,
+    ) {
+
+    }
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('attribute', $this->attributeChoiceType, [
+            ->add(self::_ATTRIBUTE_FIELD, $this->attributeChoiceType, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
                 'attr'        => [
                     'data-form-collection' => 'update',
                 ],
             ])
-            ->add('localeCode',
+            ->add(self::_LOCALE_CODE_FIELD,
                 LocaleChoiceType::class,
                 [
                     'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                    'label' => 'asdoria_bulk_edit.form.configuration.locale',
+                    'label'       => 'asdoria_bulk_edit.form.configuration.locale',
                 ]
             )
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -86,25 +99,35 @@ class AttributeValueConfigurationType extends AttributeValueType
                 }
 
                 $this->addValueField($event->getForm(), $attribute);
-            })
-        ;
+            });
 
-        $builder->get('localeCode')->addModelTransformer(
+        $builder->get(self::_LOCALE_CODE_FIELD)->addModelTransformer(
             new ReversedTransformer(new ResourceToIdentifierTransformer($this->localeRepository, 'code')),
+        );
+        $builder->get(self::_ATTRIBUTE_FIELD)->addModelTransformer(
+            new ReversedTransformer(new ResourceToIdentifierTransformer($this->attributeRepository, 'code')),
         );
     }
 
+    /**
+     * @param FormInterface      $form
+     * @param AttributeInterface $attribute
+     * @param string|null        $localeCode
+     *
+     * @return void
+     */
     protected function addValueField(
-        FormInterface $form,
+        FormInterface      $form,
         AttributeInterface $attribute,
-        ?string $localeCode = null,
-    ): void {
-        $form->add('value', $this->formTypeRegistry->get($attribute->getType(), 'default'), [
+        ?string            $localeCode = null,
+    ): void
+    {
+        $form->add(self::_ATTRIBUTE_VALUE_FIELD, $this->formTypeRegistry->get($attribute->getType(), 'default'), [
             'auto_initialize' => false,
-            'configuration' => $attribute->getConfiguration(),
-            'label' => $attribute->getName(),
-            'locale_code' => $localeCode,
-            'constraints' => [new NotBlank(['groups' => ['sylius']])]
+            'configuration'   => $attribute->getConfiguration(),
+            'label'           => $attribute->getName(),
+            'locale_code'     => $localeCode,
+            'constraints'     => [new NotBlank(['groups' => ['sylius']])]
         ]);
     }
 

@@ -13,12 +13,16 @@ services:
                 
     Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType:
         arguments:
-            $dataClass: '%sylius.model.product_attribute_value.class%'
-            $validationGroups: '%sylius.form.type.product_attribute_value.validation_groups%'
             $attributeChoiceType: 'Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeChoiceType'
             $attributeRepository: '@sylius.repository.product_attribute'
             $localeRepository: '@sylius.repository.locale'
             $formTypeRegistry: '@sylius.form_registry.attribute_type'
+        tags:
+            - { name: form.type }                
+                
+    Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeConfigurationType:
+        arguments:
+            $attributeRepository: '@sylius.repository.product_attribute'
         tags:
             - { name: form.type }
 

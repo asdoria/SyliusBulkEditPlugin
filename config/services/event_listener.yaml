@@ -5,5 +5,7 @@ services:
             $entityManager: '@doctrine.orm.entity_manager'
             $securityHelper: '@security.helper'
             $resourceMetadataRegistry: '@sylius.resource_registry'
+        calls:
+            - ['setLogger', ['@logger']]
         tags:
             - { name: kernel.event_listener, event: asdoria.bulk_edit.handle, method: handleEvent }
