@@ -1,11 +1,12 @@
 {
     "name": "asdoria/sylius-bulk-edit-plugin",
     "type": "sylius-plugin",
-    "description": "Generates quote requests in sylius.",
+    "description": "bulk edit for sylius with asynchrone process.",
     "keywords": [
         "asdoria",
         "sylius",
-        "sylius-plugin"
+        "sylius-plugin",
+        "bulk-edit"
     ],
     "authors": [
         {
