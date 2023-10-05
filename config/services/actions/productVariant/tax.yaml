@@ -1,0 +1,15 @@
+services:
+    asdoria_bulk_edit.action.tax_category_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\TaxCategoryProductVariantAction
+        public: true
+        arguments:
+            $taxCategoryRepository: '@sylius.repository.tax_category'
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\TaxCategoryProductVariantAction::TAX_CATEGORY_PRODUCT_VARIANT
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
+                label: asdoria_bulk_edit.form.tax_category_product_variant
+                label_group: 'asdoria_bulk_edit.ui.label_group.tax_categories'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxCategoryConfigurationType
+                
+ 

@@ -18,18 +18,25 @@ asdoria_bulk_edit:
         enabled_product: Activer/Desactiver un Produit
         enabled_taxon: Enabled/Disabled Taxon
         set_parent_taxon: Modifier le Taxon Parent
-        enabled_product_variant: Enabled/Disabled Variant
-        tracked_product_variant: Enabled/Disabled Suivi des stocks
+        enabled_product_variant: Activer/Desactiver la Variant
+        tracked_product_variant: Activer/Desactiver le Suivi des stocks
+        property_product_variant: Modifier une Propriété (Hauteur,Largeur,Profondeur,Poids)
+        tax_category_product_variant: Modifier la Categorie de Taxe
+        shipping_category_product_variant: Modifier la Categorie d'expedition
+        shipping_required_product_variant: Activer/Desactiver Expedition Requise
         configuration:
             locale: Locale
         type:
             header: Choisir une Action
     ui:
+        shipping_required: Expédition requise
         label_group:
             taxons: Taxons
             attributes: Attributes
             products: Products
             product_variants: Product Variants
+            tax_categories: Categorie de Taxes
+            shipping_categories: Categorie d'expedition
         loading: Chargement
         please_selected_item: Choisir une Action
         form:
@@ -39,6 +46,8 @@ asdoria_bulk_edit:
                     taxon: Selectionnez une Catégorie
             product:
                 enabled: Activé
+            product_variant:
+                property: Propriété
         save_action: Modifier
         confirmation: Confirmation
         please_to_validate_choice: Merci de valider votre choix

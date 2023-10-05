@@ -28,6 +28,14 @@ sylius_grid:
                     form_options:
                         class: "%sylius.model.product.class%"
                         choice_label: descriptor
+                taxCategory:
+                    type: entity
+                    label: sylius.ui.tax_category
+                    options:
+                        fields: [ taxCategory ]
+                    form_options:
+                        class: "%sylius.model.tax_category.class%"
+                        choice_label: name
             actions:
                 bulk:
                     selected:

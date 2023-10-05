@@ -22,16 +22,25 @@ asdoria_bulk_edit:
         enabled_product_variant: Enabled/Disabled Variant
         set_parent_taxon: Edit Parent Taxon
         tracked_product_variant: Enabled/Disabled Tracked
+        property_product_variant: Modify Property (width,height,depth,weight)
+        tax_category_product_variant: Modify Tax Category
+        shipping_category_product_variant: Modify Shipping Category
+        shipping_required_product_variant: Enabled/Disabled Shipping required
         configuration:
             locale: Locale
         type:
             header: Choose an Action
+        product_variant:
+            property: Property
     ui:
+        shipping_required: Shipping Required
         label_group:
             taxons: Taxons
             attributes: Attributes
             products: Products
             variants: Product Variants
+            tax_categories: Tax Categories
+            shipping_categories: Shipping Categories
         loading: Loading
         please_selected_item: Please selected item
         form:
@@ -41,6 +50,8 @@ asdoria_bulk_edit:
                     taxon: Select a Category
             product:
                 enabled: Enabled
+            product_variant:
+                property: Property
         save_action: Edit
         confirmation: Confirmation
         please_to_validate_choice: Please to validate choice

@@ -1,0 +1,23 @@
+services:
+    asdoria_bulk_edit.action.shipping_category_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\ShippingCategoryProductVariantAction
+        public: true
+        arguments:
+            $shippingCategoryRepository: '@sylius.repository.shipping_category'
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\ShippingCategoryProductVariantAction::SHIPPING_CATEGORY_PRODUCT_VARIANT
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
+                label: asdoria_bulk_edit.form.shipping_category_product_variant
+                label_group: 'asdoria_bulk_edit.ui.label_group.shipping_categories'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\ShippingCategoryConfigurationType
+    asdoria_bulk_edit.action.shipping_required_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\ShippingRequiredProductVariantAction
+        public: true
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\ShippingRequiredProductVariantAction::SHIPPING_REQUIRED_PRODUCT_VARIANT
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
+                label: asdoria_bulk_edit.form.shipping_required_product_variant
+                label_group: 'asdoria_bulk_edit.ui.label_group.shipping_categories'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType

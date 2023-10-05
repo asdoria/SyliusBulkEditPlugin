@@ -20,6 +20,18 @@ services:
         tags:
             - { name: form.type }                
                 
+    Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxCategoryConfigurationType:
+        arguments:
+            $taxCategoryRepository: '@sylius.repository.tax_category'
+        tags:
+            - { name: form.type }
+                
+    Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\ShippingCategoryConfigurationType:
+        arguments:
+            $shippingCategoryRepository: '@sylius.repository.shipping_category'
+        tags:
+            - { name: form.type }
+                
     Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeConfigurationType:
         arguments:
             $attributeRepository: '@sylius.repository.product_attribute'

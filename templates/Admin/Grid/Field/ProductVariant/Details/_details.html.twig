@@ -23,5 +23,13 @@
         <div class="ui olive horizontal tiny label">{{ 'sylius.ui.shipping_category'|trans }}</div>
         {{ variant.shippingCategory.name|default() }}
     </a>
+    <a class="item" href="#">
+        <div class="ui blue horizontal tiny label">{{ 'asdoria_bulk_edit.ui.shipping_required'|trans }}</div>
+        {% if variant.isShippingRequired  %}
+            {{ 'sylius.ui.yes_label'|trans }}
+        {% else %}
+            {{ 'sylius.ui.no_label'|trans }}
+        {% endif %}
+    </a>
     {% endif %}
 </div>
