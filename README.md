@@ -50,7 +50,7 @@ imports:
 ```
 
 5. Synchronous messenger transport for consume message
-```php
+```
     php bin/console messenger:consume asdoria_bulk_edit
 ```
 
