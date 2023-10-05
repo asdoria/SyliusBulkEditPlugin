@@ -21,13 +21,17 @@ sylius_grid:
                     options:
                         fields: [ code, id ]
                 product:
-                    type: entity
+                    type: resource_autocomplete
                     label: sylius.ui.product
-                    options:
-                        fields: [ product ]
                     form_options:
-                        class: "%sylius.model.product.class%"
-                        choice_label: descriptor
+                        resource: sylius.product
+                        choice_name: descriptor
+                        choice_value: code
+                        multiple: true
+                        remote_path: sylius_admin_ajax_products_by_phrase
+                        load_edit_path: sylius_admin_ajax_product_by_code
+                    options:
+                        fields: [product.code]
                 taxCategory:
                     type: entity
                     label: sylius.ui.tax_category
