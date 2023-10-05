@@ -7,13 +7,9 @@
 
 <p align="center">Simply BulkEdit's Managment into Sylius Shop</p>
 
-## Features
-
-+ Managment Quote Request for you shop
-
 <div style="max-width: 75%; height: auto; margin: auto">
 
-![Add to Cart](doc/presentation.gif)
+![Bulk edit](doc/bulk-edit-plugin.png)
 
 </div>
 
@@ -47,11 +43,11 @@ asdoria_bulk_edit:
 imports:
     - { resource: "@AsdoriaSyliusBulkEditPlugin/config/config.yaml"}
 ```
-```
+
 
 5. Synchronous messenger transport for consume message
-```
-    php bin/console messenger:consume asdoria_bulk_edit
+```bash
+php bin/console messenger:consume asdoria_bulk_edit
 ```
 
 ## Demo
