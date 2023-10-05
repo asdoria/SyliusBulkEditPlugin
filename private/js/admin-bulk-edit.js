@@ -7,7 +7,7 @@ import axios from 'axios'
 
 document.addEventListener('DOMContentLoaded', async () => {
   $('[data-js-bulk-checkboxes]').checkAll();
-  $('.ui.dropdown.search').dropdown({
+  $('.ui.dropdown.search:not(.sylius-autocomplete)').dropdown({
     action: 'hide',
     onChange: function (value, text, $selectedItem) {
       changeInputValue()
@@ -34,8 +34,12 @@ const initInputValue = (name, el) => {
   el.value = urlParams.get(name)
 }
 const changeInputValue = (init = false) => {
-  const localeCode = selectedInputLocale().value
+  const inputLocale = selectedInputLocale()
   const inputAttr = selectedInputAttribute()
+
+  if (!inputLocale || !inputAttr) return;
+
+  const localeCode = inputLocale.value
   const {renderUrl} = inputAttr.dataset
   const attrValue = inputAttr.value
   if (!localeCode || !attrValue) return;
