@@ -39,13 +39,16 @@ class RegisterFormTypeResolversPass implements CompilerPassInterface
 
         $formConfigurationResolverTypeToLabelMap = [];
         foreach ($container->findTaggedServiceIds('asdoria_bulk_edit.action') as $id => $attributes) {
-            if (!isset($attributes[0]['type'], $attributes[0]['label'], $attributes[0]['form_type'])) {
-                throw new \InvalidArgumentException('Tagged form configuration resolver `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
+            if (!isset($attributes[0]['type'], $attributes[0]['label'], $attributes[0]['form_type'], $attributes[0]['type_identifier'])) {
+                throw new \InvalidArgumentException('Tagged form configuration resolver `' . $id . '` needs to have `type`, `form_type`, `type_identifier`, `label` and `label_group` attributes.');
             }
 
-            $formConfigurationResolverTypeToLabelMap[$attributes[0]['type']] = $attributes[0]['label'];
+            $labelGroup = $attributes[0]['label_group'] ?? 'default';
+            $typeIdentifier = $attributes[0]['type_identifier'] ?? 'default';
+            $formConfigurationResolverTypeToLabelMap[$typeIdentifier][$labelGroup][$attributes[0]['label']] = $attributes[0]['type'];
+
             $actionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
-            $configurationFormTypeRegistry->addMethodCall('add', [$attributes[0]['type'], $attributes[0]['type_identifier'] ?? 'default', $attributes[0]['form_type']]);
+            $configurationFormTypeRegistry->addMethodCall('add', [$attributes[0]['type'], $typeIdentifier, $attributes[0]['form_type']]);
         }
 
         $container->setParameter('asdoria_bulk_edit.form_configurations', $formConfigurationResolverTypeToLabelMap);

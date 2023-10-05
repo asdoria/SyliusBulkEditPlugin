@@ -1,0 +1,44 @@
+sylius_grid:
+    grids:
+        asdoria_bulk_edit_admin_taxon:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: '%sylius.model.taxon.class%'
+                    repository:
+                        method: createListQueryBuilder
+                        arguments: ["%locale%"]
+            limits: [ 50, 100, 200, 500 ]
+            fields:
+                id:
+                    type: twig
+                    label: sylius.ui.details
+                    sortable: ~
+                    path: .
+                    options:
+                        template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Taxon/details.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ code, id ]
+                taxon:
+                    type: entity
+                    label: sylius.ui.taxonomy
+                    options:
+                        fields: [ productTaxons.taxon ]
+                    form_options:
+                        class: "%sylius.model.taxon.class%"
+                        choice_label: fullname
+            actions:
+                bulk:
+                    selected:
+                        type: selected
+                        label: asdoria_bulk_edit.ui.selected_taxon
+                        options:
+                            link:
+                                route: asdoria_bulk_edit_admin_taxon_bulk_edit
+                                parameters:
+                                    criteria: "expr:service('request_stack').getCurrentRequest().get('criteria', [])"
+                                    context: "taxon"

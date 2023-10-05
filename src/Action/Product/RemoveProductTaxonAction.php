@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Action;
+namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
@@ -22,9 +22,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
+
 /**
- * Class RemoveProductTaxonAction.
- * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection
+ * Class RemoveProductTaxonAction
+ * @package Asdoria\SyliusBulkEditPlugin\Action\Product
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
@@ -51,7 +52,7 @@ class RemoveProductTaxonAction implements ResourceActionInterface
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
 
         if (empty($taxonCode)) return;
-        
+
         $taxon     = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
         if (!$taxon instanceof TaxonInterface) return;

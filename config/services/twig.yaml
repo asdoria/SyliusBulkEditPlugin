@@ -4,3 +4,9 @@ services:
             $helper: '@Asdoria\SyliusBulkEditPlugin\Templating\Helper\AttributeByLocaleHelper'
         tags:
             - { name: twig.extension }
+                
+    Asdoria\SyliusBulkEditPlugin\Twig\ProductOptionByVariantExtension:
+        arguments:
+            $helper: '@Asdoria\SyliusBulkEditPlugin\Templating\Helper\ProductOptionByVariantHelper'
+        tags:
+            - { name: twig.extension }

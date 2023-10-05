@@ -1,6 +1,6 @@
 services:
     asdoria_bulk_edit.action.set_attribute_value:
-        class: Asdoria\SyliusBulkEditPlugin\Action\SetAttributeValueAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\SetAttributeValueAction
         public: true
         arguments:
             $attributeValueFactory: '@sylius.factory.product_attribute_value'
@@ -9,19 +9,21 @@ services:
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\SetAttributeValueAction::SET_ATTRIBUTE_VALUE
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\SetAttributeValueAction::SET_ATTRIBUTE_VALUE
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.set_attribute_value
+                label_group: 'asdoria_bulk_edit.ui.label_group.attributes'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType
                 
     asdoria_bulk_edit.action.remove_attribute_value:
-        class: Asdoria\SyliusBulkEditPlugin\Action\RemoveAttributeValueAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveAttributeValueAction
         public: true
         arguments:
             $productAttributeRepository: '@sylius.repository.product_attribute'
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveAttributeValueAction::REMOVE_ATTRIBUTE_VALUE
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveAttributeValueAction::REMOVE_ATTRIBUTE_VALUE
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.remove_attribute_value
+                label_group: 'asdoria_bulk_edit.ui.label_group.attributes'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeConfigurationType

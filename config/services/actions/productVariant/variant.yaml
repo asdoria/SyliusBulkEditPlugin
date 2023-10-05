@@ -1,0 +1,21 @@
+services:
+    asdoria_bulk_edit.action.enabled_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnabledProductVariantAction
+        public: true
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnabledProductVariantAction::ENABLED_PRODUCT_VARIANT
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
+                label: asdoria_bulk_edit.form.enabled_product_variant
+                label_group: 'asdoria_bulk_edit.ui.label_group.product_variants'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+    asdoria_bulk_edit.action.tracked_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\TrackedProductVariantAction
+        public: true
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\TrackedProductVariantAction::TRACKED_PRODUCT_VARIANT
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
+                label: asdoria_bulk_edit.form.tracked_product_variant
+                label_group: 'asdoria_bulk_edit.ui.label_group.product_variants'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType

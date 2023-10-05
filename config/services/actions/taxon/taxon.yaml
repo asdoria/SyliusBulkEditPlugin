@@ -1,0 +1,24 @@
+services:
+    asdoria_bulk_edit.action.enabled_taxon:
+        class: Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnabledTaxonAction
+        public: true
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnabledTaxonAction::ENABLED_TAXON
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::TAXON_CONTEXT
+                label: asdoria_bulk_edit.form.enabled_taxon
+                label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                
+    asdoria_bulk_edit.action.parent_taxon:
+        class: Asdoria\SyliusBulkEditPlugin\Action\Taxon\SetParentTaxonAction
+        public: true
+        calls:
+            - [ setTaxonRepository, [ '@sylius.repository.taxon' ] ]
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Taxon\SetParentTaxonAction::SET_PARENT_TAXON
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::TAXON_CONTEXT
+                label: asdoria_bulk_edit.form.set_parent_taxon
+                label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType

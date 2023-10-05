@@ -37,5 +37,13 @@ class AdminMenuListener
         $configuration->addChild('asdoria_bulk_edit_product' , ['route' => 'asdoria_bulk_edit_admin_product_index'])
             ->setLabel('asdoria_bulk_edit.menu.admin.asdoria_bulk_edit.products')
             ->setLabelAttribute('icon', 'list alternate outline');
+
+        $configuration->addChild('asdoria_bulk_edit_product_variant' , ['route' => 'asdoria_bulk_edit_admin_product_variant_index'])
+            ->setLabel('asdoria_bulk_edit.menu.admin.asdoria_bulk_edit.product_variants')
+            ->setLabelAttribute('icon', 'list alternate');
+
+        $configuration->addChild('asdoria_bulk_edit_taxon' , ['route' => 'asdoria_bulk_edit_admin_taxon_index'])
+            ->setLabel('asdoria_bulk_edit.menu.admin.asdoria_bulk_edit.taxons')
+            ->setLabelAttribute('icon', 'outdent');
     }
 }

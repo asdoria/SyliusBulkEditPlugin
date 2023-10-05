@@ -1,2 +1,3 @@
 services:
     Asdoria\SyliusBulkEditPlugin\Templating\Helper\AttributeByLocaleHelper: ~
+    Asdoria\SyliusBulkEditPlugin\Templating\Helper\ProductOptionByVariantHelper: ~

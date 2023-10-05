@@ -13,19 +13,17 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type;
 
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\EventSubscriber\ConfigurationTypeFormSubscriber;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\AbstractFormConfigurableElementType;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditConfigurationChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -44,7 +42,8 @@ final class BulkEditType extends AbstractType
     public function __construct(
         protected FormTypeRegistryInterface $formTypeRegistry,
         protected ServiceRegistryInterface  $formConfigurationRegistry,
-        protected TranslatorInterface       $translator
+        protected TranslatorInterface       $translator,
+        protected array $typeChoices
     )
     {
     }
@@ -56,13 +55,17 @@ final class BulkEditType extends AbstractType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('type', BulkEditConfigurationChoiceType::class, [
+            ->add('type', ChoiceType::class, [
                 'required'    => true,
                 'label'       => 'asdoria_bulk_edit.form.type.header',
                 'placeholder' => 'asdoria_bulk_edit.ui.please_selected_item',
                 'constraints' => [new Valid([], ['sylius'])],
+                'choice_loader' => new CallbackChoiceLoader(function () use ($options) {
+                    return $this->typeChoices[$options['context']] ?? [];
+                }),
                 'attr'        => [
                     'data-form-collection' => 'update',
+                    'class' => 'ui dropdown'
                 ],
             ])
             ->add('resources', HiddenType::class)
@@ -85,7 +88,7 @@ final class BulkEditType extends AbstractType
 
         $resolver
             ->setDefaults([
-                'context'           => 'product',
+                'context'           => ResourceActionInterface::PRODUCT_CONTEXT,
                 'validation_groups' => function (FormInterface $form) {
                     $isClicked = $form->has('submit') && $form->get('submit')->isClicked();
 

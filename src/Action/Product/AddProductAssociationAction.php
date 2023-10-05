@@ -11,8 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Action;
+namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
@@ -30,7 +31,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Class AddProductAssociationAction
- * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection
+ * @package Asdoria\SyliusBulkEditPlugin\Action\Product
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */

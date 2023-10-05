@@ -11,8 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Action;
+namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
@@ -29,8 +30,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
 
 /**
- * Class RemoveProductAssociationAction.
- * @package Asdoria\SyliusBulkEditPlugin\Action
+ * Class RemoveProductAssociationAction
+ * @package Asdoria\SyliusBulkEditPlugin\Action\Product
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */

@@ -59,6 +59,8 @@ class AttributeValueConfigurationType extends AbstractType
         $builder
             ->add(self::_ATTRIBUTE_FIELD, $this->attributeChoiceType, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                'required' => false,
+                'placeholder' => 'asdoria_bulk_edit.form.attribute.select',
                 'attr'        => [
                     'data-form-collection' => 'update',
                 ],

@@ -5,3 +5,9 @@ asdoria_bulk_edit_admin_ajax:
 
 asdoria_bulk_edit_admin_product:
     resource: 'admin/product.yaml'
+
+asdoria_bulk_edit_admin_taxon:
+    resource: 'admin/taxon.yaml'
+    
+asdoria_bulk_edit_admin_product_variant:
+    resource: 'admin/product_variant.yaml'

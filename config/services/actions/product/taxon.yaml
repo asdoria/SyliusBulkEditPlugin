@@ -1,6 +1,6 @@
 services:
     asdoria_bulk_edit.action.add_product_taxon:
-        class: Asdoria\SyliusBulkEditPlugin\Action\AddProductTaxonAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\AddProductTaxonAction
         public: true
         arguments:
             $productTaxonFactory: '@sylius.factory.product_taxon'
@@ -9,31 +9,34 @@ services:
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\AddProductTaxonAction::ADD_PRODUCT_TAXON
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\AddProductTaxonAction::ADD_PRODUCT_TAXON
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.add_product_taxon
+                label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType
 
     asdoria_bulk_edit.action.remove_taxon:
-        class: Asdoria\SyliusBulkEditPlugin\Action\RemoveProductTaxonAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveProductTaxonAction
         public: true
         calls:
             - [setTaxonRepository, ['@sylius.repository.taxon']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveProductTaxonAction::REMOVE_PRODUCT_TAXON
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveProductTaxonAction::REMOVE_PRODUCT_TAXON
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.remove_product_taxon
+                label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType
 
     asdoria_bulk_edit.action.set_main_taxon:
-        class: Asdoria\SyliusBulkEditPlugin\Action\SetMainTaxonAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\SetMainTaxonAction
         public: true
         calls:
             - [setTaxonRepository, ['@sylius.repository.taxon']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\SetMainTaxonAction::SET_MAIN_TAXON
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\SetMainTaxonAction::SET_MAIN_TAXON
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.set_main_taxon
+                label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType

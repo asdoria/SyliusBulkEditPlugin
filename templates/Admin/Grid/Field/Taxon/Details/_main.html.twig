@@ -1,0 +1,18 @@
+
+<div class="ui divided selection list">
+    {% if taxon.images is not empty %}
+    <div class="ui ribbon mini images">
+        {% for image in taxon.images|slice(0, 5) %}
+            <img class="ui  circular image" src="{{ image.path|imagine_filter(filter|default('sylius_admin_product_tiny_thumbnail')) }}"/>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : taxon.id}) }}">
+        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        {% if taxon.enabled  %}
+            {{ 'sylius.ui.yes_label'|trans }}
+        {% else %}
+            {{ 'sylius.ui.no_label'|trans }}
+        {% endif %}
+    </a>
+</div>

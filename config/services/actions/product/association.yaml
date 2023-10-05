@@ -1,6 +1,6 @@
 services:
     asdoria_bulk_edit.action.add_product_association:
-        class: Asdoria\SyliusBulkEditPlugin\Action\AddProductAssociationAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\AddProductAssociationAction
         public: true
         arguments:
             $productAssociationFactory: '@sylius.factory.product_association'
@@ -10,20 +10,22 @@ services:
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\AddProductAssociationAction::ADD_PRODUCT_ASSOCIATION
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\AddProductAssociationAction::ADD_PRODUCT_ASSOCIATION
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.add_product_association
+                label_group: 'asdoria_bulk_edit.ui.label_group.association_types'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType
 
     asdoria_bulk_edit.action.remove_association:
-        class: Asdoria\SyliusBulkEditPlugin\Action\RemoveProductAssociationAction
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveProductAssociationAction
         public: true
         arguments:
             $associationTypeRepository: '@sylius.repository.product_association_type'
             $productRepository: '@sylius.repository.product'
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\RemoveProductAssociationAction::REMOVE_PRODUCT_ASSOCIATION
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\RemoveProductAssociationAction::REMOVE_PRODUCT_ASSOCIATION
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
                 label: asdoria_bulk_edit.form.remove_product_association
+                label_group: 'asdoria_bulk_edit.ui.label_group.association_types'
                 form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType

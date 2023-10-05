@@ -1,0 +1,41 @@
+sylius_grid:
+    grids:
+        asdoria_bulk_edit_admin_product_variant:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: '%sylius.model.product_variant.class%'
+            limits: [ 50, 100, 200, 500 ]
+            fields:
+                id:
+                    type: twig
+                    label: sylius.ui.details
+                    sortable: ~
+                    path: .
+                    options:
+                        template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/ProductVariant/details.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ code, id ]
+                product:
+                    type: entity
+                    label: sylius.ui.product
+                    options:
+                        fields: [ product ]
+                    form_options:
+                        class: "%sylius.model.product.class%"
+                        choice_label: descriptor
+            actions:
+                bulk:
+                    selected:
+                        type: selected
+                        label: asdoria_bulk_edit.ui.selected_taxon
+                        options:
+                            link:
+                                route: asdoria_bulk_edit_admin_product_variant_bulk_edit
+                                parameters:
+                                    criteria: "expr:service('request_stack').getCurrentRequest().get('criteria', [])"
+                                    context: "product_variant"

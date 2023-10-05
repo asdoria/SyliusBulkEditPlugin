@@ -11,8 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Action;
+namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
@@ -26,7 +27,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
 
 /**
  * Class AddProductTaxonAction
- * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection
+ * @package Asdoria\SyliusBulkEditPlugin\Action\Product
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
@@ -62,7 +63,7 @@ class AddProductTaxonAction implements ResourceActionInterface
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
 
         if (empty($taxonCode)) return;
-        
+
         $taxon     = $this->getTaxonRepository->findOneByCode($taxonCode);
 
         if (!$taxon instanceof TaxonInterface) return;

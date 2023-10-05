@@ -3,20 +3,33 @@ asdoria_bulk_edit:
         admin:
             asdoria_bulk_edit:
                 products: Produits
+                taxons: Taxons
+                product_variants: Variants
                 header: Edition en masse
-
     form:
+        attribute:
+            select: Selectionner un attribute...
         set_attribute_value: Modifier une valeur d'Attribut
         add_product_taxon: Ajouter un Taxon
         remove_product_taxon: Supprimer un Taxon
         set_main_taxon: Modifier le Taxon principal
         add_product_association: Ajouter Une Association
         remove_product_association: Supprimer Une Association
+        enabled_product: Activer/Desactiver un Produit
+        enabled_taxon: Enabled/Disabled Taxon
+        set_parent_taxon: Modifier le Taxon Parent
+        enabled_product_variant: Enabled/Disabled Variant
+        tracked_product_variant: Enabled/Disabled Suivi des stocks
         configuration:
             locale: Locale
         type:
             header: Choisir une Action
     ui:
+        label_group:
+            taxons: Taxons
+            attributes: Attributes
+            products: Products
+            product_variants: Product Variants
         loading: Chargement
         please_selected_item: Choisir une Action
         form:
@@ -24,6 +37,8 @@ asdoria_bulk_edit:
                 taxonomy_configuration:
                     taxons: Selectionnez des Catégories
                     taxon: Selectionnez une Catégorie
+            product:
+                enabled: Activé
         save_action: Modifier
         confirmation: Confirmation
         please_to_validate_choice: Merci de valider votre choix

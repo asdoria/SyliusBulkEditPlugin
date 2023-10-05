@@ -3,9 +3,12 @@ asdoria_bulk_edit:
         admin:
             asdoria_bulk_edit:
                 products: Products
+                taxons: Taxons
+                product_variants: Variants
                 header: Bulk publishing
-
     form:
+        attribute:
+            select: Select a attribute...
         set_attribute_value: Modify an Attribute value
         remove_attribute_value: Delete Attribute value
         add_product_taxon: Add Taxon
@@ -13,11 +16,21 @@ asdoria_bulk_edit:
         add_product_association: Add Association Type
         remove_product_association: Delete Association Type
         set_main_taxon: Edit Main Taxon
+        enabled_product: Enabled/Disabled Product
+        enabled_taxon: Enabled/Disabled Taxon
+        set_parent_taxon: Edit Parent Taxon
+        enabled_product_variant: Enabled/Disabled Variant
+        tracked_product_variant: Enabled/Disabled Tracked
         configuration:
             locale: Locale
         type:
             header: Choose an Action
     ui:
+        label_group:
+            taxons: Taxons
+            attributes: Attributes
+            products: Products
+            product_variants: Product Variants
         loading: Loading
         please_selected_item: Please selected item
         form:
@@ -25,6 +38,8 @@ asdoria_bulk_edit:
                 taxonomy_configuration:
                     taxons: Select categories
                     taxon: Select a Category
+            product:
+                enabled: Enabled
         save_action: Edit
         confirmation: Confirmation
         please_to_validate_choice: Please to validate choice

@@ -12,23 +12,23 @@ declare(strict_types=1);
  */
 namespace Asdoria\SyliusBulkEditPlugin\Twig;
 
-use Asdoria\SyliusBulkEditPlugin\Templating\Helper\AttributeByLocaleHelperInterface;
+use Asdoria\SyliusBulkEditPlugin\Templating\Helper\ProductOptionByVariantHelperInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFunction;
 
 /**
- * Class AttributeByLocaleExtension
+ * Class ProductOptionByVariantExtension
  * @package Asdoria\SyliusBulkEditPlugin\Twig
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-final class AttributeByLocaleExtension extends AbstractExtension implements ExtensionInterface
+final class ProductOptionByVariantExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
-     * @param AttributeByLocaleHelperInterface $helper
+     * @param ProductOptionByVariantHelperInterface $helper
      */
-    public function __construct(protected AttributeByLocaleHelperInterface $helper)
+    public function __construct(protected ProductOptionByVariantHelperInterface $helper)
     {
     }
 
@@ -38,7 +38,7 @@ final class AttributeByLocaleExtension extends AbstractExtension implements Exte
     public function getFunctions()
     {
         return [
-            new TwigFunction('attributes_by_locale', [$this->helper, 'getAttributesByLocale']),
+            new TwigFunction('options_by_variant', [$this->helper, 'getOptionsByVariant']),
         ];
     }
 }

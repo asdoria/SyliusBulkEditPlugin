@@ -11,24 +11,24 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Asdoria\SyliusBulkEditPlugin\Action;
+namespace Asdoria\SyliusBulkEditPlugin\Action\Taxon;
 
+use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
 
 /**
- * Class SetMainTaxonAction.
- * @package Asdoria\SyliusBulkEditPlugin\Action
+ * Class SetParentTaxonAction
+ * @package Asdoria\SyliusBulkEditPlugin\Action\Taxon
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class SetMainTaxonAction implements ResourceActionInterface
+class SetParentTaxonAction implements ResourceActionInterface
 {
-    const SET_MAIN_TAXON = 'set_main_taxon';
+    const SET_PARENT_TAXON = 'set_parent_taxon';
     use TaxonRepositoryTrait;
 
     /**
@@ -39,7 +39,7 @@ class SetMainTaxonAction implements ResourceActionInterface
      */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductInterface) return;
+        if (!$resource instanceof TaxonInterface) return;
 
         $configuration = $message->getConfiguration();
 
@@ -53,6 +53,6 @@ class SetMainTaxonAction implements ResourceActionInterface
 
         if(!$taxon instanceof TaxonInterface) return;
 
-        $resource->setMainTaxon($taxon);
+        $resource->setParent($taxon);
     }
 }

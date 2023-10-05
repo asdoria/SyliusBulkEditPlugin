@@ -1,0 +1,27 @@
+<div class="ui stackable grid"
+     style="margin: 0;"
+>
+    <div class="four wide column">
+        <div class="ui ">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/ProductVariant/Details/_main.html.twig' with {'variant': data} %}
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/ProductVariant/Details/_details.html.twig' with {'variant': data} %}
+        </div>
+    </div>
+    <div class="four wide column">
+        <div class="ui ">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/ProductVariant/Details/_properties.html.twig' with {'variant': data} %}
+        </div>
+    </div>
+    {% if data.product.isSimple == false %}
+        <div class="four wide column">
+            <div class="ui">
+                {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/ProductVariant/Details/_options.html.twig' with {'variant': data} %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>

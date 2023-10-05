@@ -16,10 +16,7 @@ namespace Asdoria\SyliusBulkEditPlugin\Traits;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 /**
- * Class ProductAttributeRepositoryTrait.
- * @package Asdoria\SyliusBulkEditPlugin\Traits
  *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 trait ProductAttributeRepositoryTrait
 {
