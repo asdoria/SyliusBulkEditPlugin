@@ -55,3 +55,4 @@ asdoria_bulk_edit:
         confirmation: Confirmation
         please_to_validate_choice: Please to validate choice
         confirmation_success: Please wait for your request to be processed
+        please_to_validate_choice_with_empty_resources: Please to validate choice (Attention No Resource has been selected yet.)

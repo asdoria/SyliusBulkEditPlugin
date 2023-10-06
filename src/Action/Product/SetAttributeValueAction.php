@@ -83,7 +83,7 @@ class SetAttributeValueAction implements ResourceActionInterface
 
         if (!$attribute instanceof AttributeInterface) return;
 
-        $isTranslatable = $attribute->isTranslatable() && $attribute->getStorageType() === AttributeValueInterface::STORAGE_TEXT;
+        $isTranslatable = $attribute->isTranslatable();
 
         $attributeValue = $isTranslatable ? $resource->getAttributeByCodeAndLocale($attributeCode, $localeCode) :
             $resource->getAttributeByCodeAndLocale($attributeCode);

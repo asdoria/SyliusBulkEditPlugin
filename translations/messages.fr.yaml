@@ -54,3 +54,4 @@ asdoria_bulk_edit:
         confirmation: Confirmation
         please_to_validate_choice: Merci de valider votre choix
         confirmation_success: Veuillez attendre le traitement de votre demande
+        please_to_validate_choice_with_empty_resources: Merci de valider votre choix (Attention Aucune ressource n'a encore été sélectionnée.)

@@ -93,8 +93,8 @@ const setStepEl = (container, stepKey, stepHtml) => {
 export const updateValue = ({ target }, isSumited = false) => {
 
     const formData  = new FormData();
-    const container = document.querySelector(CONTAINER_SELECTOR)
-    const input     = document.querySelector('input.bulk-select-checkbox-target')
+    const container = selectContainer()
+    const input     = selectCheckboxTarget()
 
     if (input) {
       formData.set(`${FORM_NAME}[resources]`, input.value)
@@ -113,16 +113,18 @@ const formFieldSelector = (container) => container.querySelectorAll(`[name^="${F
 const formUpdateFieldSelector = (container) => container.querySelectorAll(`[data-form-collection="update"]`)
 const initAutoComplete = (container) => $(container.querySelectorAll('.sylius-autocomplete')).autoComplete()
 const initDropdown = (container) => $(container.querySelectorAll('.ui.dropdown:not(.sylius-autocomplete)')).dropdown()
+const selectCheckboxTarget = () => document.querySelector('input.bulk-select-checkbox-target')
+const selectContainer = () => document.querySelector(CONTAINER_SELECTOR)
 
 const initAlertify = (container, stepKey, el) => {
   if ('submit' !== stepKey) return;
   el.querySelector('[type="submit"]').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { confirmation, validateChoice } = container.dataset
+    const { confirmation, validateChoice, validateChoiceEmptyResources } = container.dataset
     Alertify.confirm(
       confirmation,
-      validateChoice,
+      !!selectCheckboxTarget().value ? validateChoice : validateChoiceEmptyResources,
       () => updateValue({ target: el }, true),
       () => {},
     )
