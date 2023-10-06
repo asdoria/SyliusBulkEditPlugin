@@ -52,6 +52,6 @@ asdoria_bulk_edit:
                 property: Propriété
         save_action: Modifier
         confirmation: Confirmation
-        please_to_validate_choice: Merci de valider votre choix
+        please_to_validate_choice: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ?
         confirmation_success: Veuillez attendre le traitement de votre demande
-        please_to_validate_choice_with_empty_resources: Merci de valider votre choix (Attention Aucune ressource n'a encore été sélectionnée.)
+        please_to_validate_choice_with_empty_resources: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ? (Attention Aucune ressource n'a encore été sélectionnée.)
