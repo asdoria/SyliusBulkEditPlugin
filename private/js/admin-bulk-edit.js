@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   selectResources()
   changeInputValue(true)
 });
-
-const selectedInputValue = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_value')
-const selectedInputLocale = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_localeCode')
-const selectedInputAttribute = () => document.querySelector('#criteria_asdoria_bulk_edit_search_attribute_value_attribute')
+const PREFIX_INPUT = 'criteria_asdoria_bulk_edit_search_attribute_value'
+const selectedInputValue = () => document.querySelector(`#${PREFIX_INPUT}_value`)
+const selectedInputLocale = () => document.querySelector(`#${PREFIX_INPUT}_localeCode`)
+const selectedInputAttribute = () => document.querySelector(`#${PREFIX_INPUT}_attribute`)
 const selectedInputContainer = () => selectedInputValue().closest("div.field")
 const initInputValue = (name, el) => {
   const queryString = window.location.search;
@@ -44,8 +44,10 @@ const changeInputValue = (init = false) => {
   const attrValue = inputAttr.value
   if (!localeCode || !attrValue) return;
 
+  const url = `${renderUrl}?sylius_product_attribute_choice[]=${attrValue}&locale_code=${localeCode}`;
+
   axios
-    .get(`${renderUrl}?sylius_product_attribute_choice[]=${attrValue}&locale_code=${localeCode}`)
+    .get(url)
     .then(({data}) => {
       const container = selectedInputContainer()
       container.classList.remove('error')

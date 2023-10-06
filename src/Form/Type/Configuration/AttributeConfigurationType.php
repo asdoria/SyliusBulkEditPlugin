@@ -37,7 +37,7 @@ class AttributeConfigurationType extends AbstractType
      */
     public function __construct(protected RepositoryInterface $attributeRepository) {
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -49,6 +49,7 @@ class AttributeConfigurationType extends AbstractType
         $attributeField = $builder
             ->create(self::_ATTRIBUTE_FIELD, ProductAttributeChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                'attr'        => ['class' => 'ui search dropdown'],
             ])
             ->addModelTransformer(new ReversedTransformer(new ResourceToIdentifierTransformer($this->attributeRepository, 'code')));
 

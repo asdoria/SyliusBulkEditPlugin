@@ -1,11 +1,11 @@
 <h5 class="ui header">{{ 'sylius.ui.details'|trans }}</h5>
 <div class="ui divided selection list">
     <a class="item" href="{{ path('sylius_admin_product_update', {'id' : variant.product.id}) }}">
-        <div class="ui orange horizontal tiny label">{{ 'sylius.ui.product' | trans }}</div>
+        <div class="ui teal horizontal tiny label">{{ 'sylius.ui.product' | trans }}</div>
         {{ variant.product.descriptor|default('~') }}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui red horizontal tiny label">{{ 'sylius.ui.tracked'|trans }}</div>
+        <div class="ui teal horizontal tiny label">{{ 'sylius.ui.tracked'|trans }}</div>
         {% if variant.tracked  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}
@@ -14,17 +14,17 @@
     </a>
     {% if variant.taxCategory %}
     <a class="item" href="{{ path('sylius_admin_tax_category_update', {'id': variant.taxCategory.id}) }}">
-        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.tax_category'|trans }}</div>
+        <div class="ui teal horizontal tiny label">{{ 'sylius.ui.tax_category'|trans }}</div>
         {{ variant.taxCategory.name|default() }}
     </a>
     {% endif %}
     {% if variant.shippingCategory %}
     <a class="item" href="{{ path('sylius_admin_shipping_category_update', {'id': variant.shippingCategory.id}) }}">
-        <div class="ui olive horizontal tiny label">{{ 'sylius.ui.shipping_category'|trans }}</div>
+        <div class="ui teal horizontal tiny label">{{ 'sylius.ui.shipping_category'|trans }}</div>
         {{ variant.shippingCategory.name|default() }}
     </a>
     <a class="item" href="#">
-        <div class="ui blue horizontal tiny label">{{ 'asdoria_bulk_edit.ui.shipping_required'|trans }}</div>
+        <div class="ui teal horizontal tiny label">{{ 'asdoria_bulk_edit.ui.shipping_required'|trans }}</div>
         {% if variant.isShippingRequired  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}

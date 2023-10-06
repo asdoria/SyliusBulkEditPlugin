@@ -49,6 +49,7 @@ class ShippingCategoryConfigurationType extends AbstractType
         $taxCategoryField = $builder
             ->create(self::_SHIPPING_CATEGORY_FIELD, ShippingCategoryChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                'attr'        => ['class' => 'ui search dropdown'],
             ])
             ->addModelTransformer(new ReversedTransformer(new ResourceToIdentifierTransformer($this->shippingCategoryRepository, 'code')));
 

@@ -49,6 +49,7 @@ class TaxCategoryConfigurationType extends AbstractType
         $taxCategoryField = $builder
             ->create(self::_TAX_CATEGORY_FIELD, TaxCategoryChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                'attr'        => ['class' => 'ui search dropdown'],
             ])
             ->addModelTransformer(new ReversedTransformer(new ResourceToIdentifierTransformer($this->taxCategoryRepository, 'code')));
 

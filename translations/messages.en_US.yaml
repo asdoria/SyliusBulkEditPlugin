@@ -10,7 +10,7 @@ asdoria_bulk_edit:
     form:
         attribute:
             select: Select a attribute...
-        set_attribute_value: Modify an Attribute value
+        set_attribute_value: Add/Modify Attribute value
         remove_attribute_value: Delete Attribute value
         add_product_taxon: Add Taxon
         remove_product_taxon: Delete Taxon
@@ -33,8 +33,10 @@ asdoria_bulk_edit:
         product_variant:
             property: Property
     ui:
+        error_process: An error occurred while processing your request
         shipping_required: Shipping Required
         label_group:
+            association_types: Association
             taxons: Taxons
             attributes: Attributes
             products: Products

@@ -9,7 +9,7 @@ asdoria_bulk_edit:
     form:
         attribute:
             select: Selectionner un attribute...
-        set_attribute_value: Modifier une valeur d'Attribut
+        set_attribute_value: Ajouter/Modifier une valeur d'Attribut
         add_product_taxon: Ajouter un Taxon
         remove_product_taxon: Supprimer un Taxon
         set_main_taxon: Modifier le Taxon principal
@@ -29,8 +29,10 @@ asdoria_bulk_edit:
         type:
             header: Choisir une Action
     ui:
+        error_process: Une erreur s'est produite lors du traitement de votre demande
         shipping_required: Expédition requise
         label_group:
+            association_types: Association
             taxons: Taxons
             attributes: Attributes
             products: Products

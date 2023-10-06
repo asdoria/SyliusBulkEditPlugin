@@ -9,7 +9,7 @@
 </div>
 <div class="ui divided selection list">
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
         {% if variant.enabled  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}
@@ -17,11 +17,12 @@
         {% endif %}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui red horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
         {{ variant.code }}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui purple horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
         {{ variant.name }}
     </a>
+
 </div>

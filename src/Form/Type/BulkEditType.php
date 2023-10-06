@@ -65,7 +65,7 @@ final class BulkEditType extends AbstractType
                 }),
                 'attr'        => [
                     'data-form-collection' => 'update',
-                    'class' => 'ui dropdown'
+                    'class' => 'ui search dropdown'
                 ],
             ])
             ->add('resources', HiddenType::class)

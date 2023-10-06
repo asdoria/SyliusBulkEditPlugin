@@ -27,6 +27,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ReversedTransformer;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class AttributeValueConfigurationType.
@@ -41,13 +43,15 @@ class AttributeValueConfigurationType extends AbstractType
     const _ATTRIBUTE_VALUE_FIELD = 'value';
 
     public function __construct(
-        protected string $attributeChoiceType,
-        protected RepositoryInterface $attributeRepository,
-        protected RepositoryInterface $localeRepository,
+        protected string                    $attributeChoiceType,
+        protected RepositoryInterface       $attributeRepository,
+        protected RepositoryInterface       $localeRepository,
         protected FormTypeRegistryInterface $formTypeRegistry,
-    ) {
+    )
+    {
 
     }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -59,16 +63,17 @@ class AttributeValueConfigurationType extends AbstractType
         $builder
             ->add(self::_ATTRIBUTE_FIELD, $this->attributeChoiceType, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                'required' => false,
+                'required'    => false,
                 'placeholder' => 'asdoria_bulk_edit.form.attribute.select',
                 'attr'        => [
                     'data-form-collection' => 'update',
+                    'class'                => 'ui search dropdown',
                 ],
             ])
             ->add(self::_LOCALE_CODE_FIELD,
                 LocaleChoiceType::class,
                 [
-                    'constraints' => [new NotBlank(['groups' => ['sylius']])],
+                    'constraints' => [new Callback(['groups' => ['sylius'], 'callback' => $this->localCodeValidatorCallback()])],
                     'label'       => 'asdoria_bulk_edit.form.configuration.locale',
                 ]
             )
@@ -109,6 +114,23 @@ class AttributeValueConfigurationType extends AbstractType
         $builder->get(self::_ATTRIBUTE_FIELD)->addModelTransformer(
             new ReversedTransformer(new ResourceToIdentifierTransformer($this->attributeRepository, 'code')),
         );
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function localCodeValidatorCallback(): \Closure
+    {
+        return function (?string $data, ExecutionContextInterface $context) {
+            $attributeCode = $context->getObject()->getParent()->get(self::_ATTRIBUTE_FIELD)->getData();
+            if (empty($attributeCode)) return;
+
+            $attribute = $this->attributeRepository->findOneByCode($attributeCode);
+            if (!$attribute instanceof AttributeInterface || !$attribute->isTranslatable() || !empty($data)) return;
+            $context
+                ->buildViolation((new NotBlank())->message)
+                ->addViolation();
+        };
     }
 
     /**

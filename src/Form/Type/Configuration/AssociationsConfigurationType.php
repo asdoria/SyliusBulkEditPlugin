@@ -60,6 +60,7 @@ class AssociationsConfigurationType extends AbstractType
     {
         $typeField = $builder->create(self::_ASSOCIATION_TYPE_FIELD, ProductAssociationTypeChoiceType::class, [
             'label'       => 'sylius.form.product_association.type',
+            'attr'        => ['class' => 'ui search dropdown'],
             'constraints' => [new NotBlank(['groups' => ['sylius']])]
         ])->addModelTransformer(
             new ReversedTransformer(new ResourceToIdentifierTransformer($this->productAssociationTypeRepository, 'code')),
