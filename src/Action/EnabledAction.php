@@ -16,6 +16,7 @@ namespace Asdoria\SyliusBulkEditPlugin\Action;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Model\ToggleableInterface;
 
 /**
  * Class EnabledAction.
