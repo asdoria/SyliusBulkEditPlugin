@@ -18,6 +18,7 @@ interface ResourceActionInterface
     const PRODUCT_CONTEXT = 'product';
     const TAXON_CONTEXT = 'taxon';
     const PRODUCT_VARIANT_CONTEXT = 'product_variant';
+    const CUSTOMER_CONTEXT = 'customer';
 
     /**
      * @param ResourceInterface             $resource

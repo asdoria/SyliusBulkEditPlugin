@@ -29,7 +29,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class RemoveProductTaxonAction implements ResourceActionInterface
+final class RemoveProductTaxonAction implements ResourceActionInterface
 {
     const REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
 

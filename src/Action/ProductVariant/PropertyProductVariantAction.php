@@ -25,7 +25,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class PropertyProductVariantAction implements ResourceActionInterface
+final class PropertyProductVariantAction implements ResourceActionInterface
 {
     const PROPERTY_PRODUCT_VARIANT = 'property_product_variant';
     /**

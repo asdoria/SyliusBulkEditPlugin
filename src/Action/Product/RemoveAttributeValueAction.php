@@ -33,7 +33,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class RemoveAttributeValueAction implements ResourceActionInterface
+final class RemoveAttributeValueAction implements ResourceActionInterface
 {
     const REMOVE_ATTRIBUTE_VALUE = 'remove_attribute_value';
 

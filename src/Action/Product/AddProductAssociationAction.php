@@ -35,7 +35,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class AddProductAssociationAction implements ResourceActionInterface
+final class AddProductAssociationAction implements ResourceActionInterface
 {
     const ADD_PRODUCT_ASSOCIATION = 'add_product_association';
 

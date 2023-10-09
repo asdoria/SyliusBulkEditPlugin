@@ -21,7 +21,7 @@ use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class EnabledTaxonAction extends EnabledAction
+final class EnabledTaxonAction extends EnabledAction
 {
     const ENABLED_TAXON = 'enabled_taxon';
 }

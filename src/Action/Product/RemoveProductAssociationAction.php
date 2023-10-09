@@ -35,7 +35,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class RemoveProductAssociationAction implements ResourceActionInterface
+final class RemoveProductAssociationAction implements ResourceActionInterface
 {
     const REMOVE_PRODUCT_ASSOCIATION = 'remove_product_association';
 

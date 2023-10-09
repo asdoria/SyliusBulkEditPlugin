@@ -21,7 +21,7 @@ use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class EnabledProductAction extends EnabledAction
+final class EnabledProductAction extends EnabledAction
 {
     const ENABLED_PRODUCT = 'enabled_product';
 }

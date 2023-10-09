@@ -45,5 +45,9 @@ class AdminMenuListener
         $configuration->addChild('asdoria_bulk_edit_taxon' , ['route' => 'asdoria_bulk_edit_admin_taxon_index'])
             ->setLabel('asdoria_bulk_edit.menu.admin.asdoria_bulk_edit.taxons')
             ->setLabelAttribute('icon', 'outdent');
+
+        $configuration->addChild('asdoria_bulk_edit_customer' , ['route' => 'asdoria_bulk_edit_admin_customer_index'])
+            ->setLabel('asdoria_bulk_edit.menu.admin.asdoria_bulk_edit.customers')
+            ->setLabelAttribute('icon', 'users');
     }
 }

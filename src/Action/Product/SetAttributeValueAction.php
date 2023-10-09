@@ -32,7 +32,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class SetAttributeValueAction implements ResourceActionInterface
+final class SetAttributeValueAction implements ResourceActionInterface
 {
     use EntityManagerTrait;
 

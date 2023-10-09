@@ -28,7 +28,7 @@ use Sylius\Component\Taxation\Repository\TaxCategoryRepositoryInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class TaxCategoryProductVariantAction implements ResourceActionInterface
+final class TaxCategoryProductVariantAction implements ResourceActionInterface
 {
     const TAX_CATEGORY_PRODUCT_VARIANT = 'tax_category_product_variant';
     public function __construct(protected TaxCategoryRepositoryInterface $taxCategoryRepository) {

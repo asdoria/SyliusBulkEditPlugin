@@ -1,0 +1,13 @@
+services:
+    asdoria_bulk_edit.action.set_customer_group:
+        class: Asdoria\SyliusBulkEditPlugin\Action\Customer\SetGroupAction
+        public: true
+        arguments:
+            $customerGroupRepository: '@sylius.repository.customer_group'
+        tags:
+            -   name: asdoria_bulk_edit.action
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Customer\SetGroupAction::SET_CUSTOMER_GROUP
+                type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::CUSTOMER_CONTEXT
+                label: asdoria_bulk_edit.form.set_customer_group
+                label_group: 'asdoria_bulk_edit.ui.label_group.customers'
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\CustomerGroupConfigurationType

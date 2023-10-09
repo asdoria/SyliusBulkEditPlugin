@@ -2,6 +2,8 @@ import axios from 'axios'
 import './sylius/sylius-auto-complete'
 import Alertify from 'alertifyjs';
 import 'fomantic-ui/dist/components/transition'
+import 'fomantic-ui/dist/components/popup'
+
 $.fn.destroyDropdown = function() {
     return $(this).each(function() {
         $(this).parent().dropdown( 'destroy' ).replaceWith( $(this) );
@@ -10,13 +12,14 @@ $.fn.destroyDropdown = function() {
 
 const CONTAINER_SELECTOR = '#js-asdoria-bulk-edit-action-steps'
 const FORM_NAME = 'asdoria_bulk_edit_form'
+const CREATED_ACTION_EVENT = 'bulk_edit.created_action'
 
 export default () => {
     const el = document.querySelector(CONTAINER_SELECTOR)
 
     if (!el) return;
 
-    init(el)
+    init(el, {}, CREATED_ACTION_EVENT)
 }
 
 /**
@@ -38,7 +41,10 @@ const init = async (container, formData = {}, eventName = 'bulk_edit.updated_act
       '        </div>'
     const response = await axios.post(url, formData).catch(e => {
         Alertify.error(errorMessage)
-        setTimeout(() => location.reload(), "1 seconde");
+      debugger
+        if (eventName !== CREATED_ACTION_EVENT) {
+          setTimeout(() => location.reload(), "1 seconde");
+        }
     })
 
     if(!response) return;
@@ -121,13 +127,21 @@ const initAlertify = (container, stepKey, el) => {
   el.querySelector('[type="submit"]').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { confirmation, validateChoice, validateChoiceEmptyResources } = container.dataset
-    Alertify.confirm(
-      confirmation,
-      !!selectCheckboxTarget().value ? validateChoice : validateChoiceEmptyResources,
-      () => updateValue({ target: el }, true),
-      () => {},
-    )
+    const { confirmation, validateChoice, alertEmptyResources, alert } = container.dataset
+
+    if (!!selectCheckboxTarget().value) {
+      Alertify.confirm(
+        confirmation,
+        validateChoice,
+        () => updateValue({ target: el }, true),
+        () => {},
+      )
+      return
+    }
+
+    Alertify.alert(alert, alertEmptyResources);
+    const checkboxs  = document.querySelectorAll('.bulk-select-checkbox')
+    checkboxs.forEach((ele) => ele.parentNode.classList.add('negative'))
   })
 }
 

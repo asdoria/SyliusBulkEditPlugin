@@ -1,0 +1,13 @@
+asdoria_bulk_edit_admin_customer_index:
+    path: /customers
+    methods: [ GET, POST ]
+    defaults:
+        _controller: sylius.controller.customer::indexAction
+        _sylius:
+            section: admin
+            permission: true
+            event: bulk_edit
+            grid: asdoria_bulk_edit_admin_customer
+            template: '@AsdoriaSyliusBulkEditPlugin/Admin/BulkEdit/index.html.twig'
+            vars:
+                icon: list alternate outline

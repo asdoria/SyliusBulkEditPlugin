@@ -30,7 +30,7 @@ use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class ShippingCategoryProductVariantAction implements ResourceActionInterface
+final class ShippingCategoryProductVariantAction implements ResourceActionInterface
 {
     const SHIPPING_CATEGORY_PRODUCT_VARIANT = 'shipping_category_product_variant';
     public function __construct(protected ShippingCategoryRepositoryInterface $shippingCategoryRepository) {

@@ -1,0 +1,27 @@
+<h5 class="ui header">{{ 'sylius.ui.user_details'|trans }}</h5>
+<div class="ui divided selection list">
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : shopUser.customer.id}) }}">
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        {% if shopUser.enabled  %}
+            {{ 'sylius.ui.yes_label'|trans }}
+        {% else %}
+            {{ 'sylius.ui.no_label'|trans }}
+        {% endif %}
+    </a>
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : shopUser.customer.id}) }}">
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.verified'|trans }}</div>
+        {% if shopUser.verifiedAt is not empty  %}
+            {{ 'sylius.ui.yes_label'|trans }}
+        {% else %}
+            {{ 'sylius.ui.no_label'|trans }}
+        {% endif %}
+    </a>
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : shopUser.customer.id}) }}">
+        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.locked'|trans }}</div>
+        {% if shopUser.isAccountNonLocked is not empty  %}
+            {{ 'sylius.ui.no_label'|trans }}
+        {% else %}
+            {{ 'sylius.ui.yes_label'|trans }}
+        {% endif %}
+    </a>
+</div>

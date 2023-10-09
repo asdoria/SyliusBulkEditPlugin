@@ -1,6 +1,6 @@
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
-<div class="ui styled fluid accordion" style="width: 600px;">
+<div class="ui styled fluid accordion" style="width: 100%;">
     <div class="title">
         <i class="dropdown icon"></i>
         <i class="edit icon"></i>
@@ -14,9 +14,10 @@
                 data-url="{{ path('asdoria_bulk_edit_admin_ajax_step', {context: options.link.parameters.context|default('product')}) }}"
                 data-loading="{{ 'asdoria_bulk_edit.ui.loading'|trans }}"
                 data-confirmation="{{ 'asdoria_bulk_edit.ui.confirmation'|trans }}"
+                data-alert="{{ 'asdoria_bulk_edit.ui.alert'|trans }}"
                 data-validate-choice="{{ 'asdoria_bulk_edit.ui.please_to_validate_choice'|trans }}"
                 data-confirmation-success="{{ 'asdoria_bulk_edit.ui.confirmation_success'|trans }}"
-                data-validate-choice-empty-resources="{{ 'asdoria_bulk_edit.ui.please_to_validate_choice_with_empty_resources'|trans }}"
+                data-alert-empty-resources="{{ 'asdoria_bulk_edit.ui.alert_choice_with_empty_resources'|trans }}"
                 data-error-message="{{ 'asdoria_bulk_edit.ui.error_process'|trans }}"
             ></div>
         </form>

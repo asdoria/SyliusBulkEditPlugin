@@ -1,0 +1,15 @@
+<div class="ui stackable grid"
+     style="margin: 0;"
+>
+    <div class="four wide column">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Customer/Details/_main.html.twig' with {'customer': data} %}
+    </div>
+    {% if data.user is defined and data.user is not empty %}
+        <div class="four wide column">
+            {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Customer/Details/_shop_user.html.twig' with {'shopUser': data.user} %}
+        </div>
+    {% endif %}
+    <div class="four wide column">
+        {% include '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Field/Customer/Details/_detail.html.twig' with {'customer': data} %}
+    </div>
+</div>

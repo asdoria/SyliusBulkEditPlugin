@@ -1,0 +1,20 @@
+<h5 class="ui header">{{ 'sylius.ui.details'|trans }}</h5>
+<div class="ui divided selection list">
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
+        <div class="ui brown horizontal tiny label">{{ 'sylius.form.customer.birthday'|trans }}</div>
+        {{ customer.birthday|date('d-m-Y H:i') }}
+    </a>
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
+        <div class="ui brown horizontal tiny label">{{ 'sylius.form.customer.gender'|trans }}</div>
+        {{ customer.gender }}
+    </a>
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
+        <div class="ui brown horizontal tiny label">{{ 'sylius.ui.phone_number'|trans }}</div>
+        {{ customer.phoneNumber }}
+    </a>
+    <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
+        <div class="ui brown horizontal tiny label">{{ 'sylius.ui.registration_date'|trans }}</div>
+        {{ customer.createdAt|date('d-m-Y H:i') }}
+    </a>
+</div>
+

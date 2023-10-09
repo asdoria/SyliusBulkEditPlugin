@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       selectedInputValue().value = '';
     }
   })
+
   loadSteps()
   selectResources()
   changeInputValue(true)
 });
+
 const PREFIX_INPUT = 'criteria_asdoria_bulk_edit_search_attribute_value'
 const selectedInputValue = () => document.querySelector(`#${PREFIX_INPUT}_value`)
 const selectedInputLocale = () => document.querySelector(`#${PREFIX_INPUT}_localeCode`)

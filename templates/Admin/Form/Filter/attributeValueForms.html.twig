@@ -1,13 +1,12 @@
 {% import _self as self %}
 {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
-
 {% set subject = metadata.name|replace({'_attribute': ''}) %}
 {% set localeCode = app.request.query.get('locale_code', sylius.localeCode) %}
 {% for code, localeCodes in forms %}
     <label for="criteria_asdoria_bulk_edit_search_attribute_value_value">{{ 'sylius.ui.value'|trans }}</label>
     {% for localeCode, form in localeCodes| filter((v, k) => k == localeCode) %}
         {% if 'type_checkbox' in form.vars.cache_key %}
-            <div class="ui toggle checkbox">
+            <div class="ui toggle checkbox" style="margin: 1em;">
                 {{ self.formField(form, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '') }}
                 <label></label>
             </div>
@@ -15,7 +14,9 @@
             {{ self.formField(form, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '', subject) }}
         {% endif %}
     {% else %}
+        <div class="ui right labeled input">
         {{ self.formField(localeCodes|first, count, 'criteria_asdoria_bulk_edit_search_attribute_value_value', '', subject) }}
+        </div>
     {% endfor %}
 {% endfor %}
 
@@ -31,7 +32,9 @@
         {% if item.vars.multiple is defined and item.vars.multiple %}
             {% set dataName = dataName~'[]' %}
         {% endif %}
-
-        {{ form_widget(item, {'id': id, 'attr': {'data-name': dataName }}) }}
+        {{ form_widget(item, {'id': id, 'attr': {'data-name': dataName }, 'symbol' : ''}) }}
+        {% if item.vars.symbol is defined and item.vars.symbol is not empty %}
+            <div class="ui basic label">{{ item.vars.symbol }}</div>
+        {% endif %}
     {% endif %}
 {% endmacro %}

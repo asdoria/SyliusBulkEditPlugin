@@ -25,7 +25,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class ShippingRequiredProductVariantAction implements ResourceActionInterface
+final class ShippingRequiredProductVariantAction implements ResourceActionInterface
 {
     const SHIPPING_REQUIRED_PRODUCT_VARIANT = 'shipping_required_product_variant';
     /**

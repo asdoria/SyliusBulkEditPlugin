@@ -25,7 +25,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class TrackedProductVariantAction implements ResourceActionInterface
+final class TrackedProductVariantAction implements ResourceActionInterface
 {
     const TRACKED_PRODUCT_VARIANT = 'tracked_product_variant';
     /**

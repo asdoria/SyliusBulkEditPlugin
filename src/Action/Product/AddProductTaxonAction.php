@@ -31,7 +31,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class AddProductTaxonAction implements ResourceActionInterface
+final class AddProductTaxonAction implements ResourceActionInterface
 {
     const ADD_PRODUCT_TAXON = 'add_product_taxon';
 

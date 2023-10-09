@@ -5,6 +5,7 @@ asdoria_bulk_edit:
                 products: Produits
                 taxons: Taxons
                 product_variants: Variants
+                customers: Clients
                 header: Edition en masse
     form:
         attribute:
@@ -17,7 +18,9 @@ asdoria_bulk_edit:
         remove_product_association: Supprimer Une Association
         enabled_product: Activer/Desactiver un Produit
         enabled_taxon: Enabled/Disabled Taxon
+        enabled_shop_user: Enabled/Disabled Utilisateur de la boutique
         set_parent_taxon: Modifier le Taxon Parent
+        set_customer_group: Ajouter/Modifier le group
         enabled_product_variant: Activer/Desactiver la Variant
         tracked_product_variant: Activer/Desactiver le Suivi des stocks
         property_product_variant: Modifier une Propriété (Hauteur,Largeur,Profondeur,Poids)
@@ -39,6 +42,8 @@ asdoria_bulk_edit:
             product_variants: Product Variants
             tax_categories: Categorie de Taxes
             shipping_categories: Categorie d'expedition
+            shop_users: Utilisateurs de la boutique
+            customers: Clients
         loading: Chargement
         please_selected_item: Choisir une Action
         form:
@@ -52,6 +57,8 @@ asdoria_bulk_edit:
                 property: Propriété
         save_action: Modifier
         confirmation: Confirmation
+        alert: Alerte
         please_to_validate_choice: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ?
         confirmation_success: Veuillez attendre le traitement de votre demande
-        please_to_validate_choice_with_empty_resources: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ? (Attention Aucune ressource n'a encore été sélectionnée.)
+        alert_choice_with_empty_resources: Attention Aucune ressource n'a encore été sélectionnée.
+        please_select_items: Veuillez sélectionnée un item pour continuée

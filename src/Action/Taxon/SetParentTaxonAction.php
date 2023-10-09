@@ -26,7 +26,7 @@ use Sylius\Component\Taxonomy\Model\TaxonInterface;
  *
  * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
-class SetParentTaxonAction implements ResourceActionInterface
+final class SetParentTaxonAction implements ResourceActionInterface
 {
     const SET_PARENT_TAXON = 'set_parent_taxon';
     use TaxonRepositoryTrait;
