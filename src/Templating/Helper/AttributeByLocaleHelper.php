@@ -15,6 +15,7 @@ namespace Asdoria\SyliusBulkEditPlugin\Templating\Helper;
 
 use Sylius\Component\Attribute\Model\AttributeSubjectInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
 /**
@@ -24,15 +25,30 @@ class AttributeByLocaleHelper extends Helper implements AttributeByLocaleHelperI
 {
     public function getAttributesByLocale(AttributeSubjectInterface $subject, ChannelInterface $channel): array
     {
-        $attributes = [];
-        foreach ($subject->getAttributes() as $attribute) {
-            if (!isset($attributes[$attribute->getLocaleCode()])) {
-                $attributes[$attribute->getLocaleCode()] = [];
+        $attributeValues = [];
+        $nonTranslatableAttributeValues = $subject->getAttributes()
+            ->filter(fn(ProductAttributeValueInterface $value) => !$value->getAttribute()->isTranslatable());
+        $translatableAttributeValues = $subject->getAttributes()
+            ->filter(fn(ProductAttributeValueInterface $value) => $value->getAttribute()->isTranslatable());
+
+        $initialValues = array_reduce(
+            $nonTranslatableAttributeValues->toArray(),
+            function (array $acc, $item) {
+                $carry[$item->getAttribute()->getCode()] = $item;
+                return $carry;
+            },
+            []
+        );
+
+        foreach ($translatableAttributeValues as $attributeValue) {
+            if (!isset($attributeValues[$attributeValue->getLocaleCode()])) {
+                $attributeValues[$attributeValue->getLocaleCode()] = $initialValues;
             }
-            $attributes[$attribute->getLocaleCode()][$attribute->getAttribute()->getCode()] = $attribute;
+
+            $attributeValues[$attributeValue->getLocaleCode()][$attributeValue->getAttribute()->getCode()] = $attributeValue;
         }
 
-        return $attributes;
+        return $attributeValues;
     }
 
     public function getName(): string
