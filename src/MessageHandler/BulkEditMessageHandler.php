@@ -34,6 +34,7 @@ final class BulkEditMessageHandler implements MessageHandlerInterface
         private iterable $actions,
         private EventDispatcherInterface $eventDispatcher,
     ) {
+        $this->actions = $this->actions instanceof \Traversable ? iterator_to_array($this->actions) : $this->actions;
     }
 
     public function __invoke(BulkEditNotificationInterface $message): void
