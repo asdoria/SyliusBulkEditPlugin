@@ -61,9 +61,6 @@ final class SetAttributeValueAction implements ResourceActionInterface
         $this->process($attributeCode, $value, $resource, $localeCode);
     }
 
-    /**
-     * @return \Closure
-     */
     protected function process(string $attributeCode, $value, AttributeSubjectInterface $resource, ?string $localeCode = null): void
     {
         $attribute = $this->productAttributeRepository->findOneBy(['code' => $attributeCode]);

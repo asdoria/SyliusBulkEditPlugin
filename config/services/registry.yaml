@@ -1,7 +1,3 @@
 services:
-    asdoria_bulk_edit.action_registry:
-        class: Asdoria\SyliusBulkEditPlugin\Registry\ResourceActionServiceRegistry
-        arguments: [!tagged_iterator { tag: 'asdoria_bulk_edit.action', index_by: 'type' }]
-        
     asdoria_bulk_edit.configuration_form_type_registry:
         class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry

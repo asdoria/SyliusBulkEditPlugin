@@ -24,20 +24,21 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * Class BulkEditMessageHandler.
+ * Class BulkEditMessageHandler
+ * @package Asdoria\SyliusBulkEditPlugin\MessageHandler
  */
-class BulkEditMessageHandler implements MessageHandlerInterface
+final class BulkEditMessageHandler implements MessageHandlerInterface
 {
     public function __construct(
-        protected EntityManagerInterface $entityManager,
-        protected ResourceActionServiceRegistryInterface $actionRegistry,
-        protected EventDispatcherInterface $eventDispatcher,
+        private EntityManagerInterface $entityManager,
+        private iterable $actions,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
     public function __invoke(BulkEditNotificationInterface $message): void
     {
-        $action = $this->actionRegistry->get($message->getType());
+        $action = $this->actions[$message->getType()] ?? null;
 
         Assert::isInstanceOf($action, ResourceActionInterface::class);
 

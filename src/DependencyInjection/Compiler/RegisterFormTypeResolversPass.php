@@ -27,11 +27,10 @@ class RegisterFormTypeResolversPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('asdoria_bulk_edit.action_registry') || !$container->has('asdoria_bulk_edit.configuration_form_type_registry')) {
+        if (!$container->has('asdoria_bulk_edit.configuration_form_type_registry')) {
             return;
         }
 
-//        $actionRegistry                = $container->getDefinition('asdoria_bulk_edit.action_registry');
         $configurationFormTypeRegistry = $container->getDefinition('asdoria_bulk_edit.configuration_form_type_registry');
 
         $formConfigurationResolverTypeToLabelMap = [];
@@ -44,7 +43,6 @@ class RegisterFormTypeResolversPass implements CompilerPassInterface
             $typeIdentifier = $attributes[0]['type_identifier'] ?? 'default';
             $formConfigurationResolverTypeToLabelMap[$typeIdentifier][$labelGroup][$attributes[0]['label']] = $attributes[0]['type'];
 
-//            $actionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
             $configurationFormTypeRegistry->addMethodCall('add', [$attributes[0]['type'], $typeIdentifier, $attributes[0]['form_type']]);
         }
 

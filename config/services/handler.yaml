@@ -2,7 +2,7 @@ services:
     Asdoria\SyliusBulkEditPlugin\MessageHandler\BulkEditMessageHandler:
         arguments:
             $entityManager: '@doctrine.orm.default_entity_manager'
-            $actionRegistry: '@asdoria_bulk_edit.action_registry'
+            $actions: !tagged_iterator { tag: 'asdoria_bulk_edit.action', index_by: 'type' }
             $eventDispatcher: '@event_dispatcher'
         tags:
             -   name: messenger.message_handler

@@ -16,7 +16,6 @@ namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
-use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
