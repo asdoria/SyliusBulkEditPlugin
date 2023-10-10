@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Controller;
 
-
 use Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -26,24 +25,17 @@ use Twig\Environment;
 
 /**
  * Class BulkEditController
- * @package Asdoria\SyliusBulkEditPlugin\Controller
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class BulkEditController
 {
     public function __construct(
-        protected Environment              $twig,
+        protected Environment $twig,
         protected FormFactoryInterface $formFactory,
         protected EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
     /**
-     * @param Request $request
-     *
-     * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -51,7 +43,7 @@ class BulkEditController
     public function __invoke(Request $request): Response
     {
         $form = $this->formFactory->create(BulkEditType::class, null, [
-            'context' => $request->attributes->get('context')
+            'context' => $request->attributes->get('context'),
         ]);
 
         $form->handleRequest($request);
@@ -64,21 +56,21 @@ class BulkEditController
                     $form->getData(),
                     $request->attributes->all(),
                 )),
-                'asdoria.bulk_edit.handle'
+                'asdoria.bulk_edit.handle',
             );
 
             return new JsonResponse('OK', 204);
         }
 
         $steps = array_map(
-            fn(FormView $step) => $this->twig->render('@AsdoriaSyliusBulkEditPlugin/Admin/Form/field.html.twig', ['form' => $step]),
-            $form->createView()->children
+            fn (FormView $step) => $this->twig->render('@AsdoriaSyliusBulkEditPlugin/Admin/Form/field.html.twig', ['form' => $step]),
+            $form->createView()->children,
         );
 
         return new JsonResponse(
             [
-                'steps' => $steps
-            ]
+                'steps' => $steps,
+            ],
         );
     }
 }

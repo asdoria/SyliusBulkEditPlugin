@@ -4,12 +4,12 @@
         {% set images = variant.product.images %}
     {% endif %}
     {% for image in images|slice(0, 5) %}
-        <img class="ui  circular image" src="{{ image.path|imagine_filter(filter|default('sylius_admin_product_tiny_thumbnail')) }}"/>
+        <img class="ui  circular image" src="{{ image.path|imagine_filter(filter|default('sylius_admin_product_thumbnail')) }}"/>
     {% endfor %}
 </div>
 <div class="ui divided selection list">
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
         {% if variant.enabled  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}
@@ -17,11 +17,11 @@
         {% endif %}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
         {{ variant.code }}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_variant_update', {'productId': variant.product.id,'id' : variant.id}) }}">
-        <div class="ui blue horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
         {{ variant.name }}
     </a>
 

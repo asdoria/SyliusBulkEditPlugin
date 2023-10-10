@@ -14,63 +14,46 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\Customer;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\CustomerGroupConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
-use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Attribute\Model\AttributeSubjectInterface;
-use Sylius\Component\Attribute\Model\AttributeValueInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Customer\Model\CustomerGroupInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class SetGroupAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Customer
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class SetGroupAction implements ResourceActionInterface
 {
-    const SET_CUSTOMER_GROUP = 'set_customer_group';
+    public const SET_CUSTOMER_GROUP = 'set_customer_group';
 
-    /**
-     * @param RepositoryInterface $customerGroupRepository
-     */
     public function __construct(
-        protected RepositoryInterface $customerGroupRepository,
-    )
-    {
+        private RepositoryInterface $customerGroupRepository,
+    ) {
     }
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof CustomerInterface) return;
+        Assert::isInstanceOf($resource, CustomerInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $customerGroupCode = $configuration[CustomerGroupConfigurationType::_CUSTOMER_GROUP_FIELD] ?? null;
 
-        if (empty($customerGroupCode)) return;
+        if (empty($customerGroupCode)) {
+            return;
+        }
 
         $customerGroup = $this->customerGroupRepository->findOneByCode($customerGroupCode);
 
-        if (!$customerGroup instanceof CustomerGroupInterface) return;
+        Assert::isInstanceOf($customerGroup, CustomerGroupInterface::class);
 
         $resource->setGroup($customerGroup);
     }
-
 }

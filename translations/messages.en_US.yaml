@@ -6,11 +6,11 @@ asdoria_bulk_edit:
                 taxons: Taxons
                 product_variants: Variants
                 customers: Customers
-                header: Bulk publishing
+                header: Bulk Edit
     form:
         attribute:
             select: Select a attribute...
-        set_attribute_value: Add/Modify Attribute value
+        set_attribute_value: Add/Edit Attribute value
         remove_attribute_value: Delete Attribute value
         add_product_taxon: Add Taxon
         remove_product_taxon: Delete Taxon
@@ -22,11 +22,11 @@ asdoria_bulk_edit:
         enabled_shop_user: Enabled/Disabled Shop User
         enabled_product_variant: Enabled/Disabled Variant
         set_parent_taxon: Edit Parent Taxon
-        set_customer_group: Add/Modify the group
+        set_customer_group: Add/Edit the group
         tracked_product_variant: Enabled/Disabled Tracked
         property_product_variant: Modify Property (width,height,depth,weight)
         tax_category_product_variant: Modify Tax Category
-        shipping_category_product_variant: Modify Shipping Category
+        shipping_category_product_variant: Edit Shipping Category
         shipping_required_product_variant: Enabled/Disabled Shipping required
         configuration:
             locale: Locale

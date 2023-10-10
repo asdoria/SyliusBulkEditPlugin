@@ -17,10 +17,7 @@ use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
-use Asdoria\SyliusConfiguratorPlugin\Entity\ConfiguratorItemProductAttribute;
-use Asdoria\SyliusConfiguratorPlugin\Model\ConfiguratorItemInterface;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Product\Model\ProductAssociationInterface;
@@ -28,51 +25,44 @@ use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Repository\ProductAssociationTypeRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class AddProductAssociationAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Product
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class AddProductAssociationAction implements ResourceActionInterface
 {
-    const ADD_PRODUCT_ASSOCIATION = 'add_product_association';
+    public const ADD_PRODUCT_ASSOCIATION = 'add_product_association';
 
     use EntityManagerTrait;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param FactoryInterface       $productAssociationFactory
-     */
     public function __construct(
-        protected FactoryInterface $productAssociationFactory,
-        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository,
-        protected ProductRepositoryInterface $productRepository
-    )
-    {
+        private FactoryInterface $productAssociationFactory,
+        private ProductAssociationTypeRepositoryInterface $associationTypeRepository,
+        private ProductRepositoryInterface $productRepository,
+    ) {
     }
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductInterface) return;
+        Assert::isInstanceOf($resource, ProductInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $associationTypeCode = $configuration[AssociationsConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
-        $productIds          = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
+        $productIds = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
 
-        if(empty($productIds) || empty($associationTypeCode)) return;
+        if (empty($productIds) || empty($associationTypeCode)) {
+            return;
+        }
 
-        $associationType     = $this->associationTypeRepository->findOneByCode($associationTypeCode);
+        $associationType = $this->associationTypeRepository->findOneByCode($associationTypeCode);
 
-        if (!$associationType instanceof ProductAssociationTypeInterface) return;
+        Assert::isInstanceOf($associationType, ProductAssociationTypeInterface::class);
 
         $productAssociation = $resource->getAssociations()
             ->matching(Criteria::create()->where(Criteria::expr()->eq('type', $associationType)))->first();
@@ -87,7 +77,9 @@ final class AddProductAssociationAction implements ResourceActionInterface
 
         foreach (explode(',', $productIds) as $productId) {
             $product = $this->productRepository->find($productId);
-            if(!$product instanceof ProductInterface) continue;
+
+            Assert::isInstanceOf($product, ProductInterface::class);
+
             $productAssociation->addAssociatedProduct($product);
         }
     }

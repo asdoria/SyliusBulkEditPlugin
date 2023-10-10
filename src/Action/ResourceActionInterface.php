@@ -9,20 +9,16 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Interface ResourceActionInterface
- * @package Asdoria\SyliusBulkEditPlugin\Action
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 interface ResourceActionInterface
 {
-    const PRODUCT_CONTEXT = 'product';
-    const TAXON_CONTEXT = 'taxon';
-    const PRODUCT_VARIANT_CONTEXT = 'product_variant';
-    const CUSTOMER_CONTEXT = 'customer';
+    public const PRODUCT_CONTEXT = 'product';
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
-    public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message):void;
+    public const TAXON_CONTEXT = 'taxon';
+
+    public const PRODUCT_VARIANT_CONTEXT = 'product_variant';
+
+    public const CUSTOMER_CONTEXT = 'customer';
+
+    public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void;
 }

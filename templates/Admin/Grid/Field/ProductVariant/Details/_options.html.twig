@@ -3,7 +3,7 @@
     {% set options = options_by_variant(variant) %}
     {% for option in options %}
         <a class="item" href="{{ path('sylius_admin_product_option_update', {'id' : option.id }) }}">
-            <div class="ui horizontal pink label">{{ option.name }}</div>
+            <div class="ui horizontal label">{{ option.name }}</div>
             {{ variant.getOptionValues()|filter(v => option.hasValue(v))|map(p => "#{p.code}")|join(' | ') }}
         </a>
     {% endfor %}

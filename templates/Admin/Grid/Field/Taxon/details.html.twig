@@ -8,20 +8,20 @@
     </div>
     <div class="four wide column">
         <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : data.id}) }}">
-            <div class="ui red horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
+            <div class="ui horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
             {{ data.code }}
         </a>
     </div>
     <div class="four wide column">
         <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : data.id}) }}">
-            <div class="ui purple horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
+            <div class="ui horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
             {{ data.fullName }}
         </a>
     </div>
     {% if data.parent is defined and data.parent is not empty %}
     <div class="four wide column">
         <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : data.parent.id}) }}">
-            <div class="ui orange horizontal tiny label">{{ 'sylius.ui.parent' | trans }}</div>
+            <div class="ui horizontal tiny label">{{ 'sylius.ui.parent' | trans }}</div>
             {{ data.parent.fullName|default('~') }}
         </a>
     </div>

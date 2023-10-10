@@ -1,20 +1,20 @@
 
 <div class="ui divided selection list">
     <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
-        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.first_name'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.first_name'|trans }}</div>
         {{ customer.firstName }}
     </a>
     <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
-        <div class="ui red horizontal tiny label">{{ 'sylius.ui.last_name'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.last_name'|trans }}</div>
         {{ customer.lastName }}
     </a>
     <a class="item" href="{{ path('sylius_admin_customer_update', {'id' : customer.id}) }}">
-        <div class="ui purple horizontal tiny label">{{ 'sylius.ui.email' | trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.email' | trans }}</div>
         {{ customer.email }}
     </a>
     {% if customer.group is defined and customer.group is not empty %}
         <a class="item" href="{{ path('sylius_admin_customer_group_update', {'id' : customer.group.id}) }}">
-            <div class="ui orange horizontal tiny label">{{ 'sylius.ui.customer_groups' | trans }}</div>
+            <div class="ui horizontal tiny label">{{ 'sylius.ui.customer_groups' | trans }}</div>
             {{ customer.group.name|default('~') }}
         </a>
     {% endif %}

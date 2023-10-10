@@ -10,54 +10,40 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Asdoria\SyliusBulkEditPlugin\MessageHandler;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
+use Asdoria\SyliusBulkEditPlugin\Registry\ResourceActionServiceRegistryInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Registry\ServiceRegistryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-
+use Webmozart\Assert\Assert;
 
 /**
  * Class BulkEditMessageHandler.
- *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
 class BulkEditMessageHandler implements MessageHandlerInterface
 {
-    /**
-     * @param EntityManagerInterface   $entityManager
-     * @param ServiceRegistryInterface $actionRegistry
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
-        protected EntityManagerInterface   $entityManager,
-        protected ServiceRegistryInterface $actionRegistry,
+        protected EntityManagerInterface $entityManager,
+        protected ResourceActionServiceRegistryInterface $actionRegistry,
         protected EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function __invoke(BulkEditNotificationInterface $message): void
     {
         $action = $this->actionRegistry->get($message->getType());
-        if (!$action instanceof ResourceActionInterface) {
-            return;
-        }
+
+        Assert::isInstanceOf($action, ResourceActionInterface::class);
 
         $entity = $this->entityManager->find($message->getEntityClass(), $message->getId());
-        if (!$entity instanceof ResourceInterface) {
-            return;
-        }
+
+        Assert::isInstanceOf($entity, ResourceInterface::class);
 
         $action->handle($entity, $message);
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action\Customer;
+
 /*
  * This file is part of the Asdoria Package.
  *
@@ -17,28 +18,22 @@ use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-
+use Webmozart\Assert\Assert;
 
 /**
  * Class EnabledShopUserAction.
- *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class EnabledShopUserAction extends EnabledAction
 {
-    const ENABLED_SHOP_USER = 'enabled_shop_user';
+    public const ENABLED_SHOP_USER = 'enabled_shop_user';
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof CustomerInterface) return;
+        Assert::isInstanceOf($resource, CustomerInterface::class);
 
         $shopUser = $resource->getUser();
 
-        if (!$shopUser instanceof ShopUserInterface) return;
+        Assert::isInstanceOf($shopUser, ShopUserInterface::class);
 
         parent::handle($shopUser, $message);
     }

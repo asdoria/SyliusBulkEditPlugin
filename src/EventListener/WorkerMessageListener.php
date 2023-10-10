@@ -22,57 +22,38 @@ use Symfony\Component\Messenger\Event\WorkerMessageReceivedEvent;
 
 /**
  * Class WorkerMessageListener.
- * @package Asdoria\SyliusBulkEditPlugin\EventListener
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class WorkerMessageListener
 {
     use EntityManagerTrait;
 
-    /**
-     * @param WorkerMessageReceivedEvent $event
-     */
     public function received(WorkerMessageReceivedEvent $event): void
     {
         $this->processChangeState($event, 'received');
     }
 
-    /**
-     * @param WorkerMessageHandledEvent $event
-     *
-     * @return void
-     */
     public function handled(WorkerMessageHandledEvent $event): void
     {
         $this->processChangeState($event, 'success');
     }
 
-    /**
-     * @param WorkerMessageFailedEvent $event
-     */
     public function failed(WorkerMessageFailedEvent $event): void
     {
         $this->processChangeState(
             $event,
             'error',
-            $event->getThrowable()->getMessage()
+            $event->getThrowable()->getMessage(),
         );
     }
 
-    /**
-     * @param AbstractWorkerMessageEvent $event
-     * @param string                     $newState
-     * @param string|null                $msg
-     *
-     * @return void
-     */
     protected function processChangeState(AbstractWorkerMessageEvent $event, string $newState, ?string $msg = null): void
     {
         $envelope = $event->getEnvelope();
-        $message  = $envelope->getMessage();
+        $message = $envelope->getMessage();
 
-        if (!$message instanceof BulkEditNotificationInterface) return;
+        if (!$message instanceof BulkEditNotificationInterface) {
+            return;
+        }
 
         //TODO
     }

@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Form\EventSubscriber;
 
-use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
-use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormEvent;
@@ -26,25 +24,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ConfigurationTypeFormSubscriber
- * @package Asdoria\SyliusBulkEditPlugin\Form\EventSubscriber
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
 {
-
-    /**
-     * @param FormTypeRegistryInterface $formTypeRegistry
-     * @param ServiceRegistryInterface  $formConfigurationRegistry
-     * @param array                     $options
-     */
     public function __construct(
         protected FormTypeRegistryInterface $formTypeRegistry,
-        protected ServiceRegistryInterface  $formConfigurationRegistry,
-        protected TranslatorInterface       $translator,
-        protected array $options
-    )
-    {
+        protected TranslatorInterface $translator,
+        protected array $options,
+    ) {
     }
 
     /**
@@ -59,12 +46,8 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     *
-     * @return void
-     */
-    public function preSetData(FormEvent $event): void {
+    public function preSetData(FormEvent $event): void
+    {
         $data = $event->getData();
 
         if (empty($data) || !array_key_exists('type', $data) || empty($data['type'])) {
@@ -74,13 +57,8 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
         $this->addConfigurationField($event->getForm(), $data['type']);
     }
 
-
-    /**
-     * @param FormEvent $event
-     *
-     * @return void
-     */
-    public function preSubmit(FormEvent $event): void {
+    public function preSubmit(FormEvent $event): void
+    {
         $data = $event->getData();
 
         if (empty($data) || !array_key_exists('type', $data) || empty($data['type'])) {
@@ -90,17 +68,11 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
         $this->addConfigurationField($event->getForm(), $data['type']);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string        $typeName
-     *
-     * @return void
-     */
     private function addConfigurationField(FormInterface $form, string $typeName): void
     {
         $context = $this->options['context'] ?? 'default';
         if (!$this->formTypeRegistry->has($typeName, $context)) {
-            throw new \InvalidArgumentException(sprintf('there is no form for type %s and this context %s',$typeName, $context));
+            throw new \InvalidArgumentException(sprintf('there is no form for type %s and this context %s', $typeName, $context));
         }
 
         $formConfiguration = $this->formTypeRegistry->get($typeName, $context);
@@ -110,15 +82,14 @@ class ConfigurationTypeFormSubscriber implements EventSubscriberInterface
             $formConfiguration,
             [
                 'constraints' => [new Valid([], ['sylius'])],
-            ]
+            ],
         );
-
 
         $form->add('submit', SubmitType::class, [
             'label' => sprintf('<i class="icon pencil"></i>%s', $this->translator->trans('asdoria_bulk_edit.ui.save_action')),
             'label_html' => true,
             'priority' => -1,
-            'attr' => ['class' => 'ui blue labeled icon button', 'data-bulk-edit-action-requires-confirmation' => '1']
+            'attr' => ['class' => 'ui blue labeled icon button', 'data-bulk-edit-action-requires-confirmation' => '1'],
         ]);
     }
 }

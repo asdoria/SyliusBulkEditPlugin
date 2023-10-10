@@ -15,7 +15,6 @@ namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration;
 
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;
-use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,40 +23,29 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class AttributeConfigurationType
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class AttributeConfigurationType extends AbstractType
 {
-    const _ATTRIBUTE_FIELD = 'attribute';
+    public const _ATTRIBUTE_FIELD = 'attribute';
 
-    /**
-     * @param RepositoryInterface $attributeRepository
-     */
-    public function __construct(protected RepositoryInterface $attributeRepository) {
+    public function __construct(protected RepositoryInterface $attributeRepository)
+    {
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $attributeField = $builder
             ->create(self::_ATTRIBUTE_FIELD, ProductAttributeChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                'attr'        => ['class' => 'ui search dropdown'],
+                'attr' => ['class' => 'ui search dropdown'],
             ])
             ->addModelTransformer(new ReversedTransformer(new ResourceToIdentifierTransformer($this->attributeRepository, 'code')));
 
         $builder->add($attributeField);
-
     }
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

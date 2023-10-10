@@ -10,8 +10,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Asdoria\SyliusBulkEditPlugin\DependencyInjection\Compiler;
 
+namespace Asdoria\SyliusBulkEditPlugin\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,14 +19,11 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class RegisterFormTypeResolversPass
- * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection\Compiler
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class RegisterFormTypeResolversPass implements CompilerPassInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function process(ContainerBuilder $container): void
     {
@@ -34,7 +31,7 @@ class RegisterFormTypeResolversPass implements CompilerPassInterface
             return;
         }
 
-        $actionRegistry                = $container->getDefinition('asdoria_bulk_edit.action_registry');
+//        $actionRegistry                = $container->getDefinition('asdoria_bulk_edit.action_registry');
         $configurationFormTypeRegistry = $container->getDefinition('asdoria_bulk_edit.configuration_form_type_registry');
 
         $formConfigurationResolverTypeToLabelMap = [];
@@ -47,7 +44,7 @@ class RegisterFormTypeResolversPass implements CompilerPassInterface
             $typeIdentifier = $attributes[0]['type_identifier'] ?? 'default';
             $formConfigurationResolverTypeToLabelMap[$typeIdentifier][$labelGroup][$attributes[0]['label']] = $attributes[0]['type'];
 
-            $actionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
+//            $actionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
             $configurationFormTypeRegistry->addMethodCall('add', [$attributes[0]['type'], $typeIdentifier, $attributes[0]['form_type']]);
         }
 

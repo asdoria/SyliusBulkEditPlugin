@@ -17,11 +17,8 @@ use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
 
 /**
  * Class EnabledProductAction.
- * @package Asdoria\SyliusBulkEditPlugin\Action
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class EnabledTaxonAction extends EnabledAction
 {
-    const ENABLED_TAXON = 'enabled_taxon';
+    public const ENABLED_TAXON = 'enabled_taxon';
 }

@@ -14,45 +14,44 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\ProductVariant;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxCategoryConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 use Sylius\Component\Taxation\Repository\TaxCategoryRepositoryInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class TaxCategoryProductVariantAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\ProductVariant
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class TaxCategoryProductVariantAction implements ResourceActionInterface
 {
-    const TAX_CATEGORY_PRODUCT_VARIANT = 'tax_category_product_variant';
-    public function __construct(protected TaxCategoryRepositoryInterface $taxCategoryRepository) {
+    public const TAX_CATEGORY_PRODUCT_VARIANT = 'tax_category_product_variant';
 
+    public function __construct(private TaxCategoryRepositoryInterface $taxCategoryRepository)
+    {
     }
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
+
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductVariantInterface) return;
+        Assert::isInstanceOf($resource, ProductVariantInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $taxCategoryCode = $configuration[TaxCategoryConfigurationType::_TAX_CATEGORY_FIELD] ?? null;
 
-        if(empty($taxCategoryCode)) return;
+        if (empty($taxCategoryCode)) {
+            return;
+        }
 
         $taxCategory = $this->taxCategoryRepository->findOneByCode($taxCategoryCode);
 
-        if(!$taxCategory instanceof TaxCategoryInterface) return;
+        Assert::isInstanceOf($taxCategory, TaxCategoryInterface::class);
 
         $resource->setTaxCategory($taxCategory);
     }

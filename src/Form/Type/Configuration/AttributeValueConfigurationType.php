@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration;
 
-use Sylius\Bundle\AttributeBundle\Form\Type\AttributeValueType;
 use Sylius\Bundle\LocaleBundle\Form\Type\LocaleChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
@@ -26,56 +25,48 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ReversedTransformer;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class AttributeValueConfigurationType.
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class AttributeValueConfigurationType extends AbstractType
 {
-    const _ATTRIBUTE_FIELD = 'attribute';
-    const _LOCALE_CODE_FIELD = 'localeCode';
-    const _ATTRIBUTE_VALUE_FIELD = 'value';
+    public const _ATTRIBUTE_FIELD = 'attribute';
+
+    public const _LOCALE_CODE_FIELD = 'localeCode';
+
+    public const _ATTRIBUTE_VALUE_FIELD = 'value';
 
     public function __construct(
-        protected string                    $attributeChoiceType,
-        protected RepositoryInterface       $attributeRepository,
-        protected RepositoryInterface       $localeRepository,
+        protected string $attributeChoiceType,
+        protected RepositoryInterface $attributeRepository,
+        protected RepositoryInterface $localeRepository,
         protected FormTypeRegistryInterface $formTypeRegistry,
-    )
-    {
-
+    ) {
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(self::_ATTRIBUTE_FIELD, $this->attributeChoiceType, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'asdoria_bulk_edit.form.attribute.select',
-                'attr'        => [
+                'attr' => [
                     'data-form-collection' => 'update',
-                    'class'                => 'ui search dropdown',
+                    'class' => 'ui search dropdown',
                 ],
             ])
-            ->add(self::_LOCALE_CODE_FIELD,
+            ->add(
+                self::_LOCALE_CODE_FIELD,
                 LocaleChoiceType::class,
                 [
                     'constraints' => [new Callback(['groups' => ['sylius'], 'callback' => $this->localCodeValidatorCallback()])],
-                    'label'       => 'asdoria_bulk_edit.form.configuration.locale',
-                ]
+                    'label' => 'asdoria_bulk_edit.form.configuration.locale',
+                ],
             )
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $attributeValue = $event->getData();
@@ -116,47 +107,40 @@ class AttributeValueConfigurationType extends AbstractType
         );
     }
 
-    /**
-     * @return \Closure
-     */
     protected function localCodeValidatorCallback(): \Closure
     {
         return function (?string $data, ExecutionContextInterface $context) {
             $attributeCode = $context->getObject()->getParent()->get(self::_ATTRIBUTE_FIELD)->getData();
-            if (empty($attributeCode)) return;
+            if (empty($attributeCode)) {
+                return;
+            }
 
             $attribute = $this->attributeRepository->findOneByCode($attributeCode);
-            if (!$attribute instanceof AttributeInterface || !$attribute->isTranslatable() || !empty($data)) return;
+            if (!$attribute instanceof AttributeInterface || !$attribute->isTranslatable() || !empty($data)) {
+                return;
+            }
             $context
                 ->buildViolation((new NotBlank())->message)
                 ->addViolation();
         };
     }
 
-    /**
-     * @param FormInterface      $form
-     * @param AttributeInterface $attribute
-     * @param string|null        $localeCode
-     *
-     * @return void
-     */
     protected function addValueField(
-        FormInterface      $form,
+        FormInterface $form,
         AttributeInterface $attribute,
-        ?string            $localeCode = null,
-    ): void
-    {
+        ?string $localeCode = null,
+    ): void {
         $form->add(self::_ATTRIBUTE_VALUE_FIELD, $this->formTypeRegistry->get($attribute->getType(), 'default'), [
             'auto_initialize' => false,
-            'configuration'   => $attribute->getConfiguration(),
-            'label'           => $attribute->getName(),
-            'locale_code'     => $localeCode,
-            'constraints'     => [new NotBlank(['groups' => ['sylius']])]
+            'configuration' => $attribute->getConfiguration(),
+            'label' => $attribute->getName(),
+            'locale_code' => $localeCode,
+            'constraints' => [new NotBlank(['groups' => ['sylius']])],
         ]);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

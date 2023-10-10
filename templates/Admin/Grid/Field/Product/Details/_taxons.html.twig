@@ -1,8 +1,8 @@
-<h5 class="ui header">{{ 'sylius.ui.taxons'|trans }}</h5>
-<div class="ui divided selection list">
+<h5 class="ui header">{{ 'sylius.ui.product_taxons'|trans }}</h5>
+<div class="ui list">
     {% for taxon in product.taxons %}
         <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : taxon.id }) }}">
-            <div class="ui blue horizontal tiny label">
+            <div class="ui horizontal tiny label">
                  {{ taxon.fullname }}
             </div>
         </a>

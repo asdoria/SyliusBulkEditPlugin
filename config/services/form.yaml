@@ -54,7 +54,6 @@ services:
     Asdoria\SyliusBulkEditPlugin\Form\Type\BulkEditType:
         arguments:
             $formTypeRegistry: '@asdoria_bulk_edit.configuration_form_type_registry'
-            $formConfigurationRegistry: '@asdoria_bulk_edit.action_registry'
             $translator: '@translator'
             $typeChoices: '%asdoria_bulk_edit.form_configurations%'
         tags:

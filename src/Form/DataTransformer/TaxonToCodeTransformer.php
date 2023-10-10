@@ -10,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Asdoria\SyliusBulkEditPlugin\Form\DataTransformer;
 
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
@@ -17,21 +18,14 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Webmozart\Assert\Assert;
 
-
 /**
  * Class TaxonToCodeTransformer.
- *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class TaxonToCodeTransformer implements DataTransformerInterface
 {
-    /**
-     * @param TaxonRepositoryInterface $taxonRepository
-     */
     public function __construct(
         protected TaxonRepositoryInterface $taxonRepository,
-    )
-    {
+    ) {
     }
 
     /**
@@ -62,4 +56,3 @@ final class TaxonToCodeTransformer implements DataTransformerInterface
         return $value->getCode();
     }
 }
-

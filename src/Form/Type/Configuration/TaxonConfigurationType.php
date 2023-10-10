@@ -21,32 +21,25 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class TaxonConfigurationType.
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class TaxonConfigurationType extends AbstractType
 {
-    const _TAXON_FIELD = 'taxon';
+    public const _TAXON_FIELD = 'taxon';
 
-    /**
-     * @param DataTransformerInterface $taxonToCodeTransformer
-     */
     public function __construct(
         protected DataTransformerInterface $taxonToCodeTransformer,
-    )
-    {
+    ) {
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $taxonField = $builder
             ->create(self::_TAXON_FIELD, TaxonAutocompleteChoiceType::class, [
                 'label' => 'asdoria_bulk_edit.ui.form.choice.taxonomy_configuration.taxon',
-                'constraints' => [new NotBlank(['groups' => ['sylius']])]
+                'constraints' => [new NotBlank(['groups' => ['sylius']])],
             ])
             ->addModelTransformer($this->taxonToCodeTransformer);
 
@@ -54,7 +47,7 @@ class TaxonConfigurationType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

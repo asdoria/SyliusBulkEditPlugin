@@ -1,5 +1,5 @@
 services:
-    Asdoria\SyliusBulkEditPlugin\Menu\AdminMenuListener:
+    Asdoria\SyliusBulkEditPlugin\Menu\AdminMainMenuListener:
         public: true
         tags:
             - { name: kernel.event_listener, event: !php/const Sylius\Bundle\AdminBundle\Menu\MainMenuBuilder::EVENT_NAME, method: addMenuItems }

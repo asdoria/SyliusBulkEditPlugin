@@ -23,32 +23,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class AttributeValueStringDriver.
- * @package Asdoria\SyliusBulkEditPlugin\Doctrine\ORM
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class AttributeValueStringDriver implements DriverInterface
 {
-    const QUERY_BUILDER_ATTR = 'asdoria_bulk_edit_search_attribute_value[queryBuilder]';
+    public const QUERY_BUILDER_ATTR = 'asdoria_bulk_edit_search_attribute_value[queryBuilder]';
 
-    /**
-     * @param DriverInterface       $inner
-     * @param GridProviderInterface $gridProvider
-     * @param RequestStack          $requestStack
-     */
     public function __construct(
-        protected DriverInterface       $inner,
+        protected DriverInterface $inner,
         protected GridProviderInterface $gridProvider,
-        protected RequestStack          $requestStack
-    )
-    {
+        protected RequestStack $requestStack,
+    ) {
     }
 
     /**
-     * @param array      $configuration
-     * @param Parameters $parameters
-     *
-     * @return DataSourceInterface
      * @throws \ReflectionException
      */
     public function getDataSource(array $configuration, Parameters $parameters): DataSourceInterface
@@ -60,7 +47,9 @@ class AttributeValueStringDriver implements DriverInterface
 
         $grid = $currentRequest->attributes->get('_sylius', [])['grid'] ?? null;
 
-        if (empty($grid)) return $this->inner->getDataSource($configuration, $parameters);
+        if (empty($grid)) {
+            return $this->inner->getDataSource($configuration, $parameters);
+        }
 
         try {
             $gridDefinition = $this->gridProvider->get($grid);

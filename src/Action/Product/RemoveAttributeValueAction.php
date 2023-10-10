@@ -15,64 +15,59 @@ namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeConfigurationType;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeValueInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\Component\Taxonomy\Model\TaxonInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class RemoveAttributeValueAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Product
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class RemoveAttributeValueAction implements ResourceActionInterface
 {
-    const REMOVE_ATTRIBUTE_VALUE = 'remove_attribute_value';
+    public const REMOVE_ATTRIBUTE_VALUE = 'remove_attribute_value';
 
-    public function __construct(protected RepositoryInterface $productAttributeRepository)
+    public function __construct(private RepositoryInterface $productAttributeRepository)
     {
     }
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductInterface) return;
+        Assert::isInstanceOf($resource, ProductInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
-        $attributeCode  = $configuration[AttributeConfigurationType::_ATTRIBUTE_FIELD] ?? null;
+        $attributeCode = $configuration[AttributeConfigurationType::_ATTRIBUTE_FIELD] ?? null;
 
-        if (empty($attributeCode)) return;
+        if (empty($attributeCode)) {
+            return;
+        }
 
         $attribute = $this->productAttributeRepository->findOneByCode($attributeCode);
 
-        if (!$attribute instanceof AttributeInterface) return;
+        Assert::isInstanceOf($attribute, AttributeInterface::class);
 
         $values = $resource->getAttributes()
             ->matching(Criteria::create()->where(Criteria::expr()->eq('attribute', $attribute)));
 
-        if (!$values instanceof Collection) return;
-        if ($values->isEmpty()) return;
+        Assert::isInstanceOf($values, Collection::class);
+
+        if ($values->isEmpty()) {
+            return;
+        }
 
         /** @var AttributeValueInterface $value */
         foreach ($values as $value) {
             $resource->removeAttribute($value);
         }
     }
-
 }

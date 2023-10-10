@@ -19,24 +19,19 @@ use Symfony\Component\Templating\Helper\Helper;
 
 /**
  * Class AttributeByLocaleHelper.
- *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
 class AttributeByLocaleHelper extends Helper implements AttributeByLocaleHelperInterface
 {
-    /**
-     * @param AttributeSubjectInterface $subject
-     * @param ChannelInterface          $channel
-     *
-     * @return array
-     */
     public function getAttributesByLocale(AttributeSubjectInterface $subject, ChannelInterface $channel): array
     {
         $attributes = [];
         foreach ($subject->getAttributes() as $attribute) {
-            if (!isset($attributes[$attribute->getLocaleCode()])) $attributes[$attribute->getLocaleCode()] = [];
+            if (!isset($attributes[$attribute->getLocaleCode()])) {
+                $attributes[$attribute->getLocaleCode()] = [];
+            }
             $attributes[$attribute->getLocaleCode()][$attribute->getAttribute()->getCode()] = $attribute;
         }
+
         return $attributes;
     }
 

@@ -17,71 +17,58 @@ use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AttributeValueConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeSubjectInterface;
 use Sylius\Component\Attribute\Model\AttributeValueInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class SetAttributeValueAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Product
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class SetAttributeValueAction implements ResourceActionInterface
 {
     use EntityManagerTrait;
 
-    const SET_ATTRIBUTE_VALUE = 'set_attribute_value';
+    public const SET_ATTRIBUTE_VALUE = 'set_attribute_value';
 
-    /**
-     * @param FactoryInterface       $attributeValueFactory
-     * @param RepositoryInterface    $productAttributeRepository
-     */
     public function __construct(
-        protected FactoryInterface       $attributeValueFactory,
-        protected RepositoryInterface    $productAttributeRepository,
-    )
-    {
+        private FactoryInterface $attributeValueFactory,
+        private RepositoryInterface $productAttributeRepository,
+    ) {
     }
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof AttributeSubjectInterface) return;
+        Assert::isInstanceOf($resource, AttributeSubjectInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
-        $value      = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_VALUE_FIELD] ?? null;
-        $attributeCode  = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_FIELD] ?? null;
+        $value = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_VALUE_FIELD] ?? null;
+        $attributeCode = $configuration[AttributeValueConfigurationType::_ATTRIBUTE_FIELD] ?? null;
         $localeCode = $configuration[AttributeValueConfigurationType::_LOCALE_CODE_FIELD] ?? null;
 
-        if (empty($value) || empty($attributeCode)) return;
+        if (empty($value) || empty($attributeCode)) {
+            return;
+        }
 
         $this->process($attributeCode, $value, $resource, $localeCode);
     }
 
     /**
-     * @param AttributeValueInterface   $configAttributeValue
-     * @param AttributeSubjectInterface $resource
-     *
      * @return \Closure
      */
-    protected function process(string $attributeCode, $value, AttributeSubjectInterface $resource, ?string $localeCode = null): void {
+    protected function process(string $attributeCode, $value, AttributeSubjectInterface $resource, ?string $localeCode = null): void
+    {
         $attribute = $this->productAttributeRepository->findOneBy(['code' => $attributeCode]);
 
-        if (!$attribute instanceof AttributeInterface) return;
+        Assert::isInstanceOf($attribute, AttributeInterface::class);
 
         $isTranslatable = $attribute->isTranslatable();
 
@@ -91,7 +78,9 @@ final class SetAttributeValueAction implements ResourceActionInterface
         if (!$attributeValue instanceof AttributeValueInterface) {
             /** @var AttributeValueInterface $attributeValue */
             $attributeValue = $this->attributeValueFactory->createNew();
-            if ($isTranslatable) $attributeValue->setLocaleCode($localeCode);
+            if ($isTranslatable) {
+                $attributeValue->setLocaleCode($localeCode);
+            }
             $attributeValue->setAttribute($attribute);
             $resource->addAttribute($attributeValue);
             $this->getEntityManager()->persist($attributeValue);

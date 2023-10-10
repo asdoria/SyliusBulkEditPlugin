@@ -1,11 +1,11 @@
 <div class="ui ribbon mini images">
     {% for image in product.images|slice(0, 5) %}
-        <img class="ui  circular image" src="{{ image.path|imagine_filter(filter|default('sylius_admin_product_tiny_thumbnail')) }}"/>
+        <img class="ui  circular image" src="{{ image.path|imagine_filter(filter|default('sylius_admin_product_thumbnail')) }}"/>
     {% endfor %}
 </div>
 <div class="ui divided selection list">
     <a class="item" href="{{ path('sylius_admin_product_update', {'id' : product.id}) }}">
-        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
         {% if product.enabled  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}
@@ -13,16 +13,16 @@
         {% endif %}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_update', {'id' : product.id}) }}">
-        <div class="ui red horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.code'|trans }}</div>
         {{ product.code }}
     </a>
     <a class="item" href="{{ path('sylius_admin_product_update', {'id' : product.id}) }}">
-        <div class="ui purple horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.name' | trans }}</div>
         {{ product.name }}
     </a>
     {% if product.mainTaxon is defined and product.mainTaxon is not empty %}
         <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : product.mainTaxon.id}) }}">
-            <div class="ui orange horizontal tiny label">{{ 'sylius.ui.main_taxon' | trans }}</div>
+            <div class="ui horizontal tiny label">{{ 'sylius.ui.main_taxon' | trans }}</div>
             {{ product.mainTaxon.name|default('~') }}
         </a>
     {% endif %}

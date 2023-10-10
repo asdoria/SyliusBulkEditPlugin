@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,21 +21,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class PropertyConfigurationType
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class PropertyConfigurationType extends AbstractType
 {
-    const _PROPERTY_FIELD = 'property';
-    const _VALUE_FIELD = 'value';
+    public const _PROPERTY_FIELD = 'property';
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
+    public const _VALUE_FIELD = 'value';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -47,7 +38,7 @@ class PropertyConfigurationType extends AbstractType
                     'sylius.form.variant.depth' => 'setDepth',
                     'sylius.form.variant.weight' => 'setWeight',
                 ],
-                'label'    => 'asdoria_bulk_edit.ui.form.product_variant.property',
+                'label' => 'asdoria_bulk_edit.ui.form.product_variant.property',
             ])
             ->add('value', NumberType::class, [
                 'required' => false,
@@ -56,4 +47,3 @@ class PropertyConfigurationType extends AbstractType
             ]);
     }
 }
-

@@ -18,30 +18,27 @@ use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationTyp
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class TrackedProductVariantAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\ProductVariant
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class TrackedProductVariantAction implements ResourceActionInterface
 {
-    const TRACKED_PRODUCT_VARIANT = 'tracked_product_variant';
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
+    public const TRACKED_PRODUCT_VARIANT = 'tracked_product_variant';
+
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductVariantInterface) return;
+        Assert::isInstanceOf($resource, ProductVariantInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $enabled = $configuration[EnabledConfigurationType::_ENABLED_FIELD] ?? null;
 
-        $resource->setTracked(filter_var($enabled, FILTER_VALIDATE_BOOLEAN));
+        $resource->setTracked(filter_var($enabled, \FILTER_VALIDATE_BOOLEAN));
     }
 }

@@ -18,30 +18,27 @@ use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\PropertyConfigurationTy
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class PropertyProductVariantAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\ProductVariant
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class PropertyProductVariantAction implements ResourceActionInterface
 {
-    const PROPERTY_PRODUCT_VARIANT = 'property_product_variant';
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
+    public const PROPERTY_PRODUCT_VARIANT = 'property_product_variant';
+
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductVariantInterface) return;
+        Assert::isInstanceOf($resource, ProductVariantInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $methode = $configuration[PropertyConfigurationType::_PROPERTY_FIELD] ?? null;
-        $value   = $configuration[PropertyConfigurationType::_VALUE_FIELD] ?? null;
+        $value = $configuration[PropertyConfigurationType::_VALUE_FIELD] ?? null;
 
         try {
             $resource->$methode($value);

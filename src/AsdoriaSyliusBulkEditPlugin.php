@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin;
+
 /*
  * This file is part of the Asdoria Package.
  *
@@ -19,9 +20,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class AsdoriaSyliusBulkEditPlugin
- * @package Asdoria\SyliusBulkEditPlugin
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class AsdoriaSyliusBulkEditPlugin extends Bundle
 {
@@ -33,7 +31,7 @@ final class AsdoriaSyliusBulkEditPlugin extends Bundle
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function build(ContainerBuilder $container): void
     {

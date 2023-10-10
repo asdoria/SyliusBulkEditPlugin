@@ -18,7 +18,7 @@
                 {% for key, attribute in attributes %}
                     <div class="ui stackable grid">
                         <a class="item" href="{{ path('sylius_admin_product_attribute_update', {'id' : attribute.attribute.id }) }}" >
-                            <div class="ui teal horizontal tiny label">{{ attribute.attribute.name }}</div>
+                            <div class="ui horizontal tiny label">{{ attribute.attribute.name }}</div>
                         {% include [
                             '@SyliusShop/Product/Show/Types/'~attribute.attribute.type~'.html.twig',
                             '@SyliusAttribute/Types/'~attribute.attribute.type~'.html.twig',

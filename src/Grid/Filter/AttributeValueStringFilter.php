@@ -10,12 +10,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Asdoria\SyliusBulkEditPlugin\Grid\Filter;
 
 use Asdoria\SyliusBulkEditPlugin\Doctrine\ORM\AttributeValueStringDriver;
 use Asdoria\SyliusBulkEditPlugin\Traits\LocaleContextTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\ProductAttributeRepositoryTrait;
-use Asdoria\SyliusBulkEditPlugin\Traits\QueryBuilderTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\RequestStackTrait;
 use Sylius\Component\Grid\Data\DataSourceInterface;
 use Sylius\Component\Grid\Data\ExpressionBuilderInterface;
@@ -24,8 +24,6 @@ use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 /**
  * Class AttributeValueStringFilter.
- *
- * @author Philippe Vesin <pve.asdoria@gmail.com>
  */
 class AttributeValueStringFilter implements FilterInterface
 {
@@ -58,14 +56,13 @@ class AttributeValueStringFilter implements FilterInterface
     public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
     {
         $expressionBuilder = $dataSource->getExpressionBuilder();
-        $queryBuilder      = $this->requestStack
+        $queryBuilder = $this->requestStack
             ->getCurrentRequest()->attributes->get(AttributeValueStringDriver::QUERY_BUILDER_ATTR);
 
-        $value         = is_array($data) ? $data['value'] ?? null : $data;
-        $type          = $data['type'] ?? ($options['type'] ?? self::TYPE_CONTAINS);
+        $value = is_array($data) ? $data['value'] ?? null : $data;
+        $type = $data['type'] ?? ($options['type'] ?? self::TYPE_CONTAINS);
         $attributeCode = $data['attribute'] ?? null;
         $localeCode = $data['localeCode'] ?? $this->getLocaleContext()->getLocaleCode();
-
 
         if (!in_array($type, [self::TYPE_NOT_EMPTY, self::TYPE_EMPTY], true) && empty($value)) {
             return;
@@ -73,12 +70,14 @@ class AttributeValueStringFilter implements FilterInterface
 
         $attribute = $this->getProductAttributeRepository()->findOneByCode($attributeCode);
 
-        if (!$attribute instanceof ProductAttributeInterface)  return;
+        if (!$attribute instanceof ProductAttributeInterface) {
+            return;
+        }
 
-        $alias      = sprintf('%s_%s_%s', 'code', $attribute->getCode(), $attribute->getId());
-        $attrParam  = 'attr_' . uniqid($attribute->getCode());
-        $condition  = $alias . '.attribute = :' . $attrParam. ' AND '.$alias . '.localeCode = :localeCode';
-        $fieldType  = $attribute->getStorageType();
+        $alias = sprintf('%s_%s_%s', 'code', $attribute->getCode(), $attribute->getId());
+        $attrParam = 'attr_' . uniqid($attribute->getCode());
+        $condition = $alias . '.attribute = :' . $attrParam . ' AND ' . $alias . '.localeCode = :localeCode';
+        $fieldType = $attribute->getStorageType();
         $queryBuilder
             ->innerJoin('o.attributes', $alias, 'WITH', $condition)
             ->setParameter($attrParam, $attribute)
@@ -86,11 +85,14 @@ class AttributeValueStringFilter implements FilterInterface
 
         if (!is_array($value)) {
             $dataSource->restrict($this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $value));
+
             return;
         }
 
         $ands = [];
-        foreach ($value as $v) $ands[] = $this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $v);
+        foreach ($value as $v) {
+            $ands[] = $this->getExpression($expressionBuilder, $type, $alias . '.' . $fieldType, $v);
+        }
         $dataSource->restrict($expressionBuilder->andX(...$ands));
     }
 
@@ -105,7 +107,7 @@ class AttributeValueStringFilter implements FilterInterface
         ExpressionBuilderInterface $expressionBuilder,
         string $type,
         string $field,
-        $value
+        $value,
     ) {
         switch ($type) {
             case self::TYPE_EQUAL:

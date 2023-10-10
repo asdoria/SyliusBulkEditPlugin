@@ -14,47 +14,44 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\ProductVariant;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType;
-
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\ShippingCategoryConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ShippingCategoryRepositoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
-
+use Webmozart\Assert\Assert;
 
 /**
  * Class ShippingCategoryProductVariantAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\ProductVariant
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class ShippingCategoryProductVariantAction implements ResourceActionInterface
 {
-    const SHIPPING_CATEGORY_PRODUCT_VARIANT = 'shipping_category_product_variant';
-    public function __construct(protected ShippingCategoryRepositoryInterface $shippingCategoryRepository) {
+    public const SHIPPING_CATEGORY_PRODUCT_VARIANT = 'shipping_category_product_variant';
 
+    public function __construct(private ShippingCategoryRepositoryInterface $shippingCategoryRepository)
+    {
     }
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     */
+
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductVariantInterface) return;
+        Assert::isInstanceOf($resource, ProductVariantInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $shippingCategoryCode = $configuration[ShippingCategoryConfigurationType::_SHIPPING_CATEGORY_FIELD] ?? null;
 
-        if(empty($shippingCategoryCode)) return;
+        if (empty($shippingCategoryCode)) {
+            return;
+        }
 
         $shippingCategory = $this->shippingCategoryRepository->findOneByCode($shippingCategoryCode);
 
-        if(!$shippingCategory instanceof ShippingCategoryInterface) return;
+        Assert::isInstanceOf($shippingCategory, ShippingCategoryInterface::class);
 
         $resource->setShippingCategory($shippingCategory);
     }

@@ -8,7 +8,7 @@
     </div>
     {% endif %}
     <a class="item" href="{{ path('sylius_admin_taxon_update', {'id' : taxon.id}) }}">
-        <div class="ui yellow horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
+        <div class="ui horizontal tiny label">{{ 'sylius.ui.enabled'|trans }}</div>
         {% if taxon.enabled  %}
             {{ 'sylius.ui.yes_label'|trans }}
         {% else %}

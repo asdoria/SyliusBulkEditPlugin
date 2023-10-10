@@ -14,55 +14,50 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
-use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
-use Doctrine\ORM\EntityManagerInterface;
+use sdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Model\TaxonInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class RemoveProductTaxonAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Product
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class RemoveProductTaxonAction implements ResourceActionInterface
 {
-    const REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
+    public const REMOVE_PRODUCT_TAXON = 'remove_product_taxon';
 
     use TaxonRepositoryTrait;
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductInterface) return;
+        Assert::isInstanceOf($resource, ProductInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
 
-        if (empty($taxonCode)) return;
+        if (empty($taxonCode)) {
+            return;
+        }
 
-        $taxon     = $this->getTaxonRepository()->findOneByCode($taxonCode);
+        $taxon = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
-        if (!$taxon instanceof TaxonInterface) return;
+        Assert::isInstanceOf($taxon, TaxonInterface::class);
 
         $productTaxon = $resource->getProductTaxons()
-            ->filter(fn($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
+            ->filter(fn ($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
 
-        if (empty($productTaxon)) return;
+        if (empty($productTaxon)) {
+            return;
+        }
 
         $resource->removeProductTaxon($productTaxon);
     }
-
 }

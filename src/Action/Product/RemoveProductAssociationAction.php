@@ -14,77 +14,67 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\AssociationsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
-use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Product\Model\ProductAssociationInterface;
 use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Repository\ProductAssociationTypeRepositoryInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Taxonomy\Model\TaxonInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class RemoveProductAssociationAction
- * @package Asdoria\SyliusBulkEditPlugin\Action\Product
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class RemoveProductAssociationAction implements ResourceActionInterface
 {
-    const REMOVE_PRODUCT_ASSOCIATION = 'remove_product_association';
+    public const REMOVE_PRODUCT_ASSOCIATION = 'remove_product_association';
 
-    /**
-     * @param ProductAssociationTypeRepositoryInterface $associationTypeRepository
-     */
     public function __construct(
-        protected ProductAssociationTypeRepositoryInterface $associationTypeRepository,
-        protected ProductRepositoryInterface $productRepository
-    )
-    {
+        private ProductAssociationTypeRepositoryInterface $associationTypeRepository,
+        private ProductRepositoryInterface $productRepository,
+    ) {
     }
 
-    /**
-     * @param ResourceInterface             $resource
-     * @param BulkEditNotificationInterface $message
-     *
-     * @return void
-     */
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
-        if (!$resource instanceof ProductInterface) return;
+        Assert::isInstanceOf($resource, ProductInterface::class);
 
         $configuration = $message->getConfiguration();
 
-        if (empty($configuration)) return;
+        if (empty($configuration)) {
+            return;
+        }
 
         $associationTypeCode = $configuration[AssociationsConfigurationType::_ASSOCIATION_TYPE_FIELD] ?? null;
-        $productIds          = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
+        $productIds = $configuration[AssociationsConfigurationType::_PRODUCTS_FIELD] ?? null;
 
-        if(empty($associationTypeCode)) return;
+        if (empty($associationTypeCode)) {
+            return;
+        }
 
-        $associationType     = $this->associationTypeRepository->findOneByCode($associationTypeCode);
+        $associationType = $this->associationTypeRepository->findOneByCode($associationTypeCode);
 
-        if (!$associationType instanceof ProductAssociationTypeInterface) return;
+        Assert::isInstanceOf($associationType, ProductAssociationTypeInterface::class);
 
         $productAssociation = $resource->getAssociations()
             ->matching(Criteria::create()->where(Criteria::expr()->eq('type', $associationType)))->first();
 
-        if (!$productAssociation instanceof ProductAssociationInterface) return;
+        Assert::isInstanceOf($productAssociation, ProductAssociationInterface::class);
 
         if (empty($productIds)) {
             $productAssociation->clearAssociatedProducts();
+
             return;
         }
 
         foreach (explode(',', $productIds) as $productId) {
             $product = $this->productRepository->find($productId);
-            if(!$product instanceof ProductInterface) continue;
+
+            Assert::isInstanceOf($product, ProductInterface::class);
+
             $productAssociation->removeAssociatedProduct($product);
         }
     }

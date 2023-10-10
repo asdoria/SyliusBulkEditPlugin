@@ -19,26 +19,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class EnabledConfigurationType.
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class EnabledConfigurationType extends AbstractType
 {
-    const _ENABLED_FIELD = 'enabled';
+    public const _ENABLED_FIELD = 'enabled';
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
-                'label'    => 'asdoria_bulk_edit.ui.form.product.enabled',
+                'label' => 'asdoria_bulk_edit.ui.form.product.enabled',
             ]);
     }
 }

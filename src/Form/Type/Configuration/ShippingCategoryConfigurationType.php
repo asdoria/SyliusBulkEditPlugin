@@ -16,7 +16,6 @@ namespace Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
 use Sylius\Component\Core\Repository\ShippingCategoryRepositoryInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
@@ -24,40 +23,29 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ShippingCategoryConfigurationType
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class ShippingCategoryConfigurationType extends AbstractType
 {
-    const _SHIPPING_CATEGORY_FIELD = 'shipping_category';
+    public const _SHIPPING_CATEGORY_FIELD = 'shipping_category';
 
-    /**
-     * @param ShippingCategoryRepositoryInterface $shippingCategoryRepository
-     */
-    public function __construct(protected ShippingCategoryRepositoryInterface $shippingCategoryRepository) {
+    public function __construct(protected ShippingCategoryRepositoryInterface $shippingCategoryRepository)
+    {
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $taxCategoryField = $builder
             ->create(self::_SHIPPING_CATEGORY_FIELD, ShippingCategoryChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                'attr'        => ['class' => 'ui search dropdown'],
+                'attr' => ['class' => 'ui search dropdown'],
             ])
             ->addModelTransformer(new ReversedTransformer(new ResourceToIdentifierTransformer($this->shippingCategoryRepository, 'code')));
 
         $builder->add($taxCategoryField);
-
     }
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

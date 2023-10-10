@@ -12,26 +12,21 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\DependencyInjection;
 
-use Asdoria\SyliusBulkEditPlugin\DependencyInjection\Compiler\BulkEditContextInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Class Configuration
- * @package Asdoria\SyliusBulkEditPlugin\DependencyInjection
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class Configuration implements ConfigurationInterface
 {
-
     /**
      * @psalm-suppress UnusedVariable
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('asdoria_bulk_edit');
-        $rootNode    = $treeBuilder->getRootNode();
+        $rootNode = $treeBuilder->getRootNode();
 
         return $treeBuilder;
     }

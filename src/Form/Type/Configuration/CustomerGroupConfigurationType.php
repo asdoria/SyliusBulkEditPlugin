@@ -20,30 +20,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class CustomerGroupConfigurationType.
- * @package Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 class CustomerGroupConfigurationType extends AbstractType
 {
-    const _CUSTOMER_GROUP_FIELD = 'customerGroup';
+    public const _CUSTOMER_GROUP_FIELD = 'customerGroup';
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(self::_CUSTOMER_GROUP_FIELD, CustomerGroupCodeChoiceType::class, [
                 'constraints' => [new NotBlank(['groups' => ['sylius']])],
-                'attr'        => ['class' => 'ui search dropdown'],
+                'attr' => ['class' => 'ui search dropdown'],
             ]);
     }
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

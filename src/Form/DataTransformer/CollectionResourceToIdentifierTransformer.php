@@ -24,19 +24,14 @@ use Webmozart\Assert\Assert;
 
 /**
  * Class CollectionResourceToIdentifierTransformer
- * @package Asdoria\SyliusBulkEditPlugin\Form\DataTransformer
- *
- * @author  Philippe Vesin <pve.asdoria@gmail.com>
  */
 final class CollectionResourceToIdentifierTransformer implements DataTransformerInterface
 {
-
     public function __construct(
         protected RepositoryInterface $repository,
-        protected string              $identifier = 'id',
-        protected string              $delimiter = ','
-    )
-    {
+        protected string $identifier = 'id',
+        protected string $delimiter = ',',
+    ) {
     }
 
     /**
@@ -73,8 +68,10 @@ final class CollectionResourceToIdentifierTransformer implements DataTransformer
     /** @param string|null $value */
     public function reverseTransform($value): Collection
     {
-        if(empty($value)) return new ArrayCollection();
-        
+        if (empty($value)) {
+            return new ArrayCollection();
+        }
+
         if (!is_string($value)) {
             throw new TransformationFailedException(
                 sprintf(
