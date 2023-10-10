@@ -12,8 +12,8 @@ asdoria_bulk_edit:
             select: Select a attribute...
         set_attribute_value: Add/Edit Attribute value
         remove_attribute_value: Delete Attribute value
-        add_product_taxon: Add Taxon
-        remove_product_taxon: Delete Taxon
+        add_product_taxon: Add Product Taxon
+        remove_product_taxon: Delete Product Taxon
         add_product_association: Add Association Type
         remove_product_association: Delete Association Type
         set_main_taxon: Edit Main Taxon

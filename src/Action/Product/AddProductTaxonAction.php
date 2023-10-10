@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\EntityManagerTrait;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
@@ -50,25 +50,27 @@ final class AddProductTaxonAction implements ResourceActionInterface
             return;
         }
 
-        $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
+        $taxonCodes = $configuration[TaxonsConfigurationType::_TAXONS_FIELD] ?? null;
 
-        if (empty($taxonCode)) {
+        if (empty($taxonCodes) || !is_array($taxonCodes)) {
             return;
         }
 
-        $taxon = $this->getTaxonRepository->findOneByCode($taxonCode);
+        foreach ($taxonCodes as $taxonCode) {
+            $taxon = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
-        Assert::isInstanceOf($taxon, TaxonInterface::class);
+            Assert::isInstanceOf($taxon, TaxonInterface::class);
 
-        if ($resource->hasTaxon($taxon)) {
-            return;
+            if ($resource->hasTaxon($taxon)) {
+                continue;
+            }
+
+            /** @var ProductTaxonInterface $productTaxon */
+            $productTaxon = $this->productTaxonFactory->createNew();
+            $productTaxon->setProduct($resource);
+            $productTaxon->setTaxon($taxon);
+            $resource->addProductTaxon($productTaxon);
+            $this->getEntityManager()->persist($productTaxon);
         }
-
-        /** @var ProductTaxonInterface $productTaxon */
-        $productTaxon = $this->productTaxonFactory->createNew();
-        $productTaxon->setProduct($resource);
-        $productTaxon->setTaxon($taxon);
-        $resource->addProductTaxon($productTaxon);
-        $this->getEntityManager()->persist($productTaxon);
     }
 }

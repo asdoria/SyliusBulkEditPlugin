@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\Product;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\TaxonsConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Asdoria\SyliusBulkEditPlugin\Traits\TaxonRepositoryTrait;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -40,23 +41,25 @@ final class RemoveProductTaxonAction implements ResourceActionInterface
             return;
         }
 
-        $taxonCode = $configuration[TaxonConfigurationType::_TAXON_FIELD] ?? null;
+        $taxonCodes = $configuration[TaxonsConfigurationType::_TAXONS_FIELD] ?? null;
 
-        if (empty($taxonCode)) {
+        if (empty($taxonCodes)) {
             return;
         }
 
-        $taxon = $this->getTaxonRepository()->findOneByCode($taxonCode);
+        foreach ($taxonCodes as $taxonCode) {
+            $taxon = $this->getTaxonRepository()->findOneByCode($taxonCode);
 
-        Assert::isInstanceOf($taxon, TaxonInterface::class);
+            Assert::isInstanceOf($taxon, TaxonInterface::class);
 
-        $productTaxon = $resource->getProductTaxons()
-            ->filter(fn ($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
+            $productTaxon = $resource->getProductTaxons()
+                ->filter(fn($current) => $current->getTaxon()->getId() === $taxon->getId())->first();
 
-        if (empty($productTaxon)) {
-            return;
+            if (empty($productTaxon)) {
+                continue;
+            }
+
+            $resource->removeProductTaxon($productTaxon);
         }
-
-        $resource->removeProductTaxon($productTaxon);
     }
 }
