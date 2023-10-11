@@ -52,7 +52,7 @@ php bin/console messenger:consume asdoria_bulk_edit
 
 ## Demo
 
-You can try the BulkEdit plugin online by following this link: [here!](https://demo-sylius.asdoria.fr/en_US/bulk-edit).
+You can try the BulkEdit plugin online by following this link: [here!](https://demo-sylius.asdoria.fr/admin/bulk-edit/products).
 
 Note that we have developed several other open source plugins for Sylius, whose demos and documentation are listed on the [following page](https://asdoria.github.io/).
 
