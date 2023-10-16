@@ -50,6 +50,55 @@ imports:
 php bin/console messenger:consume asdoria_bulk_edit
 ```
 
+## Feature
+
+```yaml
+
+    Product Variants: 
+        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/product-variants
+
+        Shipping Categories:
+            - Edit Shipping Category
+            - Enabled/Disabled Shipping required
+        Tax Categories:
+            - Modify Tax Category 
+        Product Variants:
+            - Enabled/Disabled Variant
+            - Enabled/Disabled Tracked
+            - Modify Property (width,height,depth,weight)
+
+    Product:
+        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/products
+
+        Association:
+            - Add Association Type
+            - Delete Association Type
+        Attributes:
+            - Add/Edit Attribute value 
+            - Delete Attribute value 
+        Product:
+            - Enabled/Disabled Product
+        Taxons:
+            - Add Product Taxon
+            - Delete Product Taxon
+            - Edit Main Taxon
+
+    Taxon:
+        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/taxons
+
+        Taxons:
+            - Enabled/Disabled Taxon
+            - Edit Parent Taxon
+
+    Customer:
+        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/customers
+        
+        Customer:
+            - Add/Edit the group
+        Shop Users:
+            - Enabled/Disabled Shop User
+```
+
 ## Demo
 
 You can try the BulkEdit plugin online by following this link: [here!](https://demo-sylius.asdoria.fr/admin/bulk-edit/products).
