@@ -1,19 +1,13 @@
-<p align="center">
-</p>
 
 ![Logo Asdoria](doc/asdoria.jpg)
 
 <h1 align="center">Asdoria BulkEdit Plugin</h1>
 
-<p align="center">Simply BulkEdit's Managment into Sylius Shop</p>
+<p align="center">Simple bulk edit your Sylius shop resources</p>
 
 <div style="max-width: 75%; height: auto; margin: auto">
 
 ![Bulk edit](doc/bulk-edit-plugin.png)
-
-</div>
-
-<div style="max-width: 75%; height: auto; margin: auto">
 
 </div>
 
@@ -22,10 +16,10 @@
 ## Installation
 
 ---
-1. run `composer require asdoria/sylius-bulk-edit-plugin`
+1. Run `composer require asdoria/sylius-bulk-edit-plugin`
 
 
-2. Add the bundle in `config/bundles.php`.
+2. Register the bundle in `config/bundles.php`.
 
 ```PHP
 Asdoria\SyliusBulkEditPlugin\AsdoriaSyliusBulkEditPlugin::class => ['all' => true],
@@ -44,60 +38,52 @@ imports:
     - { resource: "@AsdoriaSyliusBulkEditPlugin/config/config.yaml"}
 ```
 
-
-5. Synchronous messenger transport for consume message
+5. Run the messenger consumer
 ```bash
 php bin/console messenger:consume asdoria_bulk_edit
 ```
 
-## Feature
+## Features
 
-```yaml
+#### Product Variant: 
+- DEMO: https://demo-sylius.asdoria.fr/admin/bulk-edit/product-variants
+- Shipping Categories:
+    - Edit shipping category
+    - Enable / disable shipping requirement
+- Tax Categories:
+    - Edit Tax Category 
+- Product Variants:
+    - Enable / disable variant
+    - Enable / disable tracked
+    - Edit options (width, height, depth, weight)
 
-    Product Variants: 
-        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/product-variants
+#### Product:
+- DEMO: https://demo-sylius.asdoria.fr/admin/bulk-edit/products
+- Associations:
+    - Add association type
+    - Delete association type
+- Attributes:
+    - Add / edit attribute value 
+    - Delete attribute value 
+- Products:
+    - Enable / disable product
+- Taxons:
+    - Add product taxon
+    - Delete product taxon
+    - Edit main taxon
 
-        Shipping Categories:
-            - Edit Shipping Category
-            - Enabled/Disabled Shipping required
-        Tax Categories:
-            - Modify Tax Category 
-        Product Variants:
-            - Enabled/Disabled Variant
-            - Enabled/Disabled Tracked
-            - Modify Property (width,height,depth,weight)
+#### Taxon:
+- DEMO: https://demo-sylius.asdoria.fr/admin/bulk-edit/taxons
+- Taxons:
+    - Enable / disable taxon
+    - Edit parent taxon
 
-    Product:
-        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/products
-
-        Association:
-            - Add Association Type
-            - Delete Association Type
-        Attributes:
-            - Add/Edit Attribute value 
-            - Delete Attribute value 
-        Product:
-            - Enabled/Disabled Product
-        Taxons:
-            - Add Product Taxon
-            - Delete Product Taxon
-            - Edit Main Taxon
-
-    Taxon:
-        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/taxons
-
-        Taxons:
-            - Enabled/Disabled Taxon
-            - Edit Parent Taxon
-
-    Customer:
-        demo: https://demo-sylius.asdoria.fr/admin/bulk-edit/customers
-        
-        Customer:
-            - Add/Edit the group
-        Shop Users:
-            - Enabled/Disabled Shop User
-```
+#### Customer:
+- DEMO: https://demo-sylius.asdoria.fr/admin/bulk-edit/customers
+- Customers:
+    - Add / edit group
+- Shop Users:
+    - Enable / disable shop user
 
 ## Demo
 
@@ -107,7 +93,7 @@ Note that we have developed several other open source plugins for Sylius, whose 
 
 ## Usage
 
-1. In the admin office, go to /admin/bulk-edit/products route.
+1. Go to /admin/bulk-edit/products
 
 
 

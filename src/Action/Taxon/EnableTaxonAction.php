@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action\Taxon;
 
-use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
+use Asdoria\SyliusBulkEditPlugin\Action\EnableAction;
 
 /**
- * Class EnabledProductAction.
+ * Class EnableProductAction.
  */
-final class EnabledTaxonAction extends EnabledAction
+final class EnableTaxonAction extends EnableAction
 {
-    public const ENABLED_TAXON = 'enabled_taxon';
+    public const ENABLE_TAXON = 'enable_taxon';
 }

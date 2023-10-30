@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Asdoria\SyliusBulkEditPlugin\Action\ProductVariant;
 
 use Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface;
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -37,7 +37,7 @@ final class TrackedProductVariantAction implements ResourceActionInterface
             return;
         }
 
-        $enabled = $configuration[EnabledConfigurationType::_ENABLED_FIELD] ?? null;
+        $enabled = $configuration[EnableConfigurationType::_ENABLED_FIELD] ?? null;
 
         $resource->setTracked(filter_var($enabled, \FILTER_VALIDATE_BOOLEAN));
     }

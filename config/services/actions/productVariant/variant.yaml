@@ -1,14 +1,14 @@
 services:
-    asdoria_bulk_edit.action.enabled_product_variant:
-        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnabledProductVariantAction
+    asdoria_bulk_edit.action.enable_product_variant:
+        class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnableProductVariantAction
         public: true
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnabledProductVariantAction::ENABLED_PRODUCT_VARIANT
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\EnableProductVariantAction::ENABLE_PRODUCT_VARIANT
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
-                label: asdoria_bulk_edit.form.enabled_product_variant
+                label: asdoria_bulk_edit.form.enable_product_variant
                 label_group: 'asdoria_bulk_edit.ui.label_group.product_variants'
-                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType
                 
     asdoria_bulk_edit.action.tracked_product_variant:
         class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\TrackedProductVariantAction
@@ -19,7 +19,7 @@ services:
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
                 label: asdoria_bulk_edit.form.tracked_product_variant
                 label_group: 'asdoria_bulk_edit.ui.label_group.product_variants'
-                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType
                 
     asdoria_bulk_edit.action.property_product_variant:
         class: Asdoria\SyliusBulkEditPlugin\Action\ProductVariant\PropertyProductVariantAction

@@ -48,7 +48,7 @@ final class BulkEditType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'required' => true,
                 'label' => 'asdoria_bulk_edit.form.type.header',
-                'placeholder' => 'asdoria_bulk_edit.ui.please_selected_item',
+                'placeholder' => 'asdoria_bulk_edit.ui.select_action',
                 'constraints' => [new Valid([], ['sylius'])],
                 'choice_loader' => new CallbackChoiceLoader(function () use ($options) {
                     return $this->typeChoices[$options['context']] ?? [];

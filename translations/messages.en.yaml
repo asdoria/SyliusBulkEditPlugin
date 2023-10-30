@@ -9,49 +9,49 @@ asdoria_bulk_edit:
                 header: Bulk Edit
     form:
         attribute:
-            select: Select a attribute...
-        set_attribute_value: Add/Edit Attribute value
-        remove_attribute_value: Delete Attribute value
-        add_product_taxon: Add Product Taxon
-        remove_product_taxon: Delete Product Taxon
-        add_product_association: Add Association Type
-        remove_product_association: Delete Association Type
-        set_main_taxon: Edit Main Taxon
-        enabled_product: Enabled/Disabled Product
-        enabled_taxon: Enabled/Disabled Taxon
-        enabled_shop_user: Enabled/Disabled Shop User
-        set_parent_taxon: Edit Parent Taxon
-        set_customer_group: Add/Edit the group
-        enabled_product_variant: Enabled/Disabled Variant
-        tracked_product_variant: Enabled/Disabled Tracked
-        property_product_variant: Modify Property (width,height,depth,weight)
-        tax_category_product_variant: Edit Tax Category
-        shipping_category_product_variant: Edit Shipping Category
-        shipping_required_product_variant: Enabled/Disabled Shipping required
+            select: Select an attribute...
+        set_attribute_value: Add / edit attribute value
+        remove_attribute_value: Delete attribute value
+        add_product_taxon: Add product taxon
+        remove_product_taxon: Delete product taxon
+        add_product_association: Add association type
+        remove_product_association: Delete association type
+        set_main_taxon: Edit main taxon
+        enable_product: Enable / disable product
+        enable_taxon: Enable / disable taxon
+        enable_shop_user: Enable / disable shop user
+        set_parent_taxon: Edit parent taxon
+        set_customer_group: Add / edit customer group
+        enable_product_variant: Enable / disable variant
+        tracked_product_variant: Enable / disabled tracked
+        property_product_variant: Edit property (width, height, depth, weight)
+        tax_category_product_variant: Edit tax category
+        shipping_category_product_variant: Edit shipping category
+        shipping_required_product_variant: Enable / disable shipping requirement
         configuration:
             locale: Locale
         type:
-            header: Choose an Action
+            header: Choose an action
     ui:
         error_process: An error occurred while processing your request
-        shipping_required: Shipping Required
+        shipping_required: Shipping required
         label_group:
-            association_types: Association
+            association_types: Associations
             taxons: Taxons
             attributes: Attributes
             products: Products
-            product_variants: Product Variants
-            tax_categories: Tax Categories
-            shipping_categories: Shipping Categories
-            shop_users: Shop Users
-            customers: Customer
+            product_variants: Product variants
+            tax_categories: Tax categories
+            shipping_categories: Shipping categories
+            shop_users: Shop users
+            customers: Customers
         loading: Loading
-        please_selected_item: Please selected item
+        select_action: Please select an item
         form:
             choice:
                 taxonomy_configuration:
-                    taxons: Select categories
-                    taxon: Select a Category
+                    taxons: Select taxons
+                    taxon: Select a taxon
             product:
                 enabled: Enabled
             product_variant:
@@ -59,7 +59,7 @@ asdoria_bulk_edit:
         save_action: Edit
         confirmation: Confirmation
         alert: Alert
-        please_to_validate_choice:  Are you sure you want to apply this action to those items ?
+        validate_choice:  Are you sure you want to apply this action to those items?
         confirmation_success: Please wait for your request to be processed
-        alert_choice_with_empty_resources:  Attention No Resource has been selected yet.
+        alert_choice_with_empty_resources: Warning, no resource has been selected yet
         please_select_items: Please select an item to continue

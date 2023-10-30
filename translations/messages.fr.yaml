@@ -4,53 +4,53 @@ asdoria_bulk_edit:
             asdoria_bulk_edit:
                 products: Produits
                 taxons: Taxons
-                product_variants: Variants
+                product_variants: Variantes de produit
                 customers: Clients
                 header: Edition en masse
     form:
         attribute:
-            select: Selectionner un attribute...
-        set_attribute_value: Ajouter/Modifier une valeur d'Attribut
-        add_product_taxon: Ajouter un Taxon du produit
-        remove_product_taxon: Supprimer un Taxon du produit
-        set_main_taxon: Modifier le Taxon principal
-        add_product_association: Ajouter Une Association
-        remove_product_association: Supprimer Une Association
-        enabled_product: Activer/Desactiver un Produit
-        enabled_taxon: Enabled/Disabled Taxon
-        enabled_shop_user: Enabled/Disabled Utilisateur de la boutique
-        set_parent_taxon: Modifier le Taxon Parent
-        set_customer_group: Ajouter/Modifier le group
-        enabled_product_variant: Activer/Desactiver la Variant
-        tracked_product_variant: Activer/Desactiver le Suivi des stocks
-        property_product_variant: Modifier une Propriété (Hauteur,Largeur,Profondeur,Poids)
-        tax_category_product_variant: Modifier la Categorie de Taxe
-        shipping_category_product_variant: Modifier la Categorie d'expedition
-        shipping_required_product_variant: Activer/Desactiver Expedition Requise
+            select: Selectionner un attribut...
+        set_attribute_value: Ajouter / modifier une valeur d'attribut
+        add_product_taxon: Ajouter un taxon de produit
+        remove_product_taxon: Supprimer un taxon de produit
+        set_main_taxon: Modifier le taxon principal
+        add_product_association: Ajouter une association
+        remove_product_association: Supprimer une association
+        enable_product: Activer / désactiver le produit
+        enable_taxon: Activer / désactiver le taxon
+        enable_shop_user: Activer / désactiver l'utilisateur
+        set_parent_taxon: Modifier le taxon parent
+        set_customer_group: Ajouter / modifier le groupe
+        enable_product_variant: Activer / désactiver la variante de produit
+        tracked_product_variant: Activer / désactiver le suivi des stocks
+        property_product_variant: Modifier une propriété (largeur, hauteur, profondeur, poids)
+        tax_category_product_variant: Modifier la catégorie de taxe
+        shipping_category_product_variant: Modifier la catégorie d'expédition
+        shipping_required_product_variant: Activer / désactiver l'expédition requise
         configuration:
             locale: Locale
         type:
-            header: Choisir une Action
+            header: Choisir une action
     ui:
         error_process: Une erreur s'est produite lors du traitement de votre demande
         shipping_required: Expédition requise
         label_group:
-            association_types: Association
+            association_types: Associations
             taxons: Taxons
-            attributes: Attributes
-            products: Products
-            product_variants: Product Variants
-            tax_categories: Categorie de Taxes
-            shipping_categories: Categorie d'expedition
-            shop_users: Utilisateurs de la boutique
+            attributes: Attributs
+            products: Produits
+            product_variants: Variantes de produit
+            tax_categories: Catégorie de taxes
+            shipping_categories: Catégorie d'expédition
+            shop_users: Utilisateurs
             customers: Clients
         loading: Chargement
-        please_selected_item: Choisir une Action
+        select_action: Choisir une action
         form:
             choice:
                 taxonomy_configuration:
-                    taxons: Selectionnez des Catégories
-                    taxon: Selectionnez une Catégorie
+                    taxons: Sélectionner des taxons
+                    taxon: Sélectionner un taxon
             product:
                 enabled: Activé
             product_variant:
@@ -58,7 +58,7 @@ asdoria_bulk_edit:
         save_action: Modifier
         confirmation: Confirmation
         alert: Alerte
-        please_to_validate_choice: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ?
+        validate_choice: Êtes-vous sûr de vouloir appliquer cette action à ces éléments ?
         confirmation_success: Veuillez attendre le traitement de votre demande
-        alert_choice_with_empty_resources: Attention Aucune ressource n'a encore été sélectionnée.
-        please_select_items: Veuillez sélectionnée un item pour continuée
+        alert_choice_with_empty_resources: Attention, aucune ressource n'a été sélectionnée
+        please_select_items: Veuillez sélectionner un élément pour continuer
