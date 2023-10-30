@@ -18,9 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class EnabledConfigurationType.
+ * Class EnableConfigurationType.
  */
-class EnabledConfigurationType extends AbstractType
+class EnableConfigurationType extends AbstractType
 {
     public const _ENABLED_FIELD = 'enabled';
 

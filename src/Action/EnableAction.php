@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action;
 
-use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType;
+use Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\ToggleableInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * Class EnabledAction.
+ * Class EnableAction.
  */
-abstract class EnabledAction implements ResourceActionInterface
+abstract class EnableAction implements ResourceActionInterface
 {
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {
@@ -34,7 +34,7 @@ abstract class EnabledAction implements ResourceActionInterface
             return;
         }
 
-        $enabled = $configuration[EnabledConfigurationType::_ENABLED_FIELD] ?? null;
+        $enabled = $configuration[EnableConfigurationType::_ENABLED_FIELD] ?? null;
 
         $resource->setEnabled(filter_var($enabled, \FILTER_VALIDATE_BOOLEAN));
     }

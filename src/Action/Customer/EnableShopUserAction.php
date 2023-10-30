@@ -13,7 +13,7 @@ namespace Asdoria\SyliusBulkEditPlugin\Action\Customer;
  * file that was distributed with this source code.
  */
 
-use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
+use Asdoria\SyliusBulkEditPlugin\Action\EnableAction;
 use Asdoria\SyliusBulkEditPlugin\Message\BulkEditNotificationInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
@@ -21,11 +21,11 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * Class EnabledShopUserAction.
+ * Class EnableShopUserAction.
  */
-final class EnabledShopUserAction extends EnabledAction
+final class EnableShopUserAction extends EnableAction
 {
-    public const ENABLED_SHOP_USER = 'enabled_shop_user';
+    public const ENABLE_SHOP_USER = 'enable_shop_user';
 
     public function handle(ResourceInterface $resource, BulkEditNotificationInterface $message): void
     {

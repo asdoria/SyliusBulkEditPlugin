@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Asdoria\SyliusBulkEditPlugin\Action\ProductVariant;
 
-use Asdoria\SyliusBulkEditPlugin\Action\EnabledAction;
+use Asdoria\SyliusBulkEditPlugin\Action\EnableAction;
 
 /**
- * Class EnabledProductVariantAction
+ * Class EnableProductVariantAction
  */
-final class EnabledProductVariantAction extends EnabledAction
+final class EnableProductVariantAction extends EnableAction
 {
-    public const ENABLED_PRODUCT_VARIANT = 'enabled_product_variant';
+    public const ENABLE_PRODUCT_VARIANT = 'enable_product_variant';
 }

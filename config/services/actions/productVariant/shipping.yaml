@@ -20,4 +20,4 @@ services:
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_VARIANT_CONTEXT
                 label: asdoria_bulk_edit.form.shipping_required_product_variant
                 label_group: 'asdoria_bulk_edit.ui.label_group.shipping_categories'
-                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType

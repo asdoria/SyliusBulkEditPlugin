@@ -1,14 +1,14 @@
 services:
-    asdoria_bulk_edit.action.enabled_taxon:
-        class: Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnabledTaxonAction
+    asdoria_bulk_edit.action.enable_taxon:
+        class: Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnableTaxonAction
         public: true
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnabledTaxonAction::ENABLED_TAXON
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Taxon\EnableTaxonAction::ENABLE_TAXON
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::TAXON_CONTEXT
-                label: asdoria_bulk_edit.form.enabled_taxon
+                label: asdoria_bulk_edit.form.enable_taxon
                 label_group: 'asdoria_bulk_edit.ui.label_group.taxons'
-                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType
                 
     asdoria_bulk_edit.action.parent_taxon:
         class: Asdoria\SyliusBulkEditPlugin\Action\Taxon\SetParentTaxonAction

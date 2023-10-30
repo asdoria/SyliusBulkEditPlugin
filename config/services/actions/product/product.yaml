@@ -1,11 +1,11 @@
 services:
-    asdoria_bulk_edit.action.enabled_product:
-        class: Asdoria\SyliusBulkEditPlugin\Action\Product\EnabledProductAction
+    asdoria_bulk_edit.action.enable_product:
+        class: Asdoria\SyliusBulkEditPlugin\Action\Product\EnableProductAction
         public: true
         tags:
             -   name: asdoria_bulk_edit.action
-                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\EnabledProductAction::ENABLED_PRODUCT
+                type: !php/const Asdoria\SyliusBulkEditPlugin\Action\Product\EnableProductAction::ENABLE_PRODUCT
                 type_identifier: !php/const Asdoria\SyliusBulkEditPlugin\Action\ResourceActionInterface::PRODUCT_CONTEXT
-                label: asdoria_bulk_edit.form.enabled_product
+                label: asdoria_bulk_edit.form.enable_product
                 label_group: 'asdoria_bulk_edit.ui.label_group.products'
-                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnabledConfigurationType
+                form_type: Asdoria\SyliusBulkEditPlugin\Form\Type\Configuration\EnableConfigurationType
