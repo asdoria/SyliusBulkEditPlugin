@@ -18,6 +18,19 @@ sylius_ui:
                 scripts:
                     template: "@AsdoriaSyliusBulkEditPlugin/Admin/_stylesheets.html.twig"
                     priority: 10
+        asdoria_bulk_edit.grid:
+            blocks:
+                content:                    
+                    template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/_content.html.twig"
+                    priority: 10
+        asdoria_bulk_edit.grid.body:
+            blocks:
+                navigation:
+                    template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Body/_navigation.html.twig"
+                    priority: 30
+                table:
+                    template: "@SyliusUi/Grid/Body/_table.html.twig"
+                    priority: 20
 
 framework:
     assets:

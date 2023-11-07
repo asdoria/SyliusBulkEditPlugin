@@ -11,3 +11,4 @@ asdoria_bulk_edit_admin_product_index:
             template: '@AsdoriaSyliusBulkEditPlugin/Admin/BulkEdit/index.html.twig'
             vars:
                 icon: list alternate outline
+                scroll_route: asdoria_bulk_edit_admin_ajax_product_index

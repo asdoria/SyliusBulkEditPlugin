@@ -1,0 +1,10 @@
+asdoria_bulk_edit_admin_ajax_taxon_index:
+    path: /taxons
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.taxon::indexAction
+        _sylius:
+            template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Body/_rows.html.twig"
+            grid: asdoria_bulk_edit_admin_taxon
+    options:
+        expose: true

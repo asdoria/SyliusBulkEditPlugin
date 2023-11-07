@@ -1,0 +1,10 @@
+asdoria_bulk_edit_admin_ajax_product_variant_index:
+    path: /product-variants
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product_variant::indexAction
+        _sylius:
+            template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Body/_rows.html.twig"
+            grid: asdoria_bulk_edit_admin_product_variant
+    options:
+        expose: true
