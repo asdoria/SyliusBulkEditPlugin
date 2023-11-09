@@ -1,10 +1,17 @@
 parameters:
     env(ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_DSN): 'doctrine://default'
     env(ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_FAILED_DSN): 'doctrine://default?queue_name=asdoria_bulk_edit_failed'
+    env(ASDORIA_BULK_EDIT_INFINITE_SCROLL): 0
     asdoria_messenger_transport_bulk_edit_dsn: '%env(resolve:ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_DSN)%'
     asdoria_messenger_transport_bulk_edit_failed_dsn: '%env(resolve:ASDORIA_MESSENGER_TRANSPORT_BULK_EDIT_FAILED_DSN)%'
+    asdoria_bulk_edit_infinite_scroll: '%env(resolve:bool:ASDORIA_BULK_EDIT_INFINITE_SCROLL)%'
+    
 imports:
     - { resource: "grids/*.yaml" }
+
+twig:
+    globals:
+        asdoria_bulk_edit_infinite_scroll: '%asdoria_bulk_edit_infinite_scroll%'
 
 sylius_ui:
     events:
