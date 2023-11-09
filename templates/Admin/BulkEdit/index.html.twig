@@ -9,7 +9,20 @@
 {% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
 
 {% block content %}
-    {{ sylius_grid_render(resources, '@SyliusAdmin/Grid/_default.html.twig') }}
+    {% if asdoria_bulk_edit_infinite_scroll == 1 %}
+        <div class="js-infinite-scroll"
+             data-path="{{ path(configuration.vars.scroll_route)|default('#') }}"
+             data-max-pages="{{ resources.data.getNbPages() }}">
+            {{ sylius_grid_render(resources, '@AsdoriaSyliusBulkEditPlugin/Admin/Grid/_default.html.twig') }}
+        </div>
+        <div class="js-infinite-scroll-loading">
+            {% for i in range(0, 3) %}
+                <div class="Loader-block" style="margin-bottom: 0.25rem; height: 236px"></div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ sylius_grid_render(resources, '@SyliusAdmin/Grid/_default.html.twig') }}
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}

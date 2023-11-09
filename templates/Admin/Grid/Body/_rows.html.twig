@@ -1,0 +1,8 @@
+{% import '@SyliusUi/Macro/table.html.twig' as table %}
+
+{% set definition = resources.definition %}
+{% set data = resources.data %}
+
+{% for row in data %}
+    {{ table.row(resources, definition, row) }}
+{% endfor %}

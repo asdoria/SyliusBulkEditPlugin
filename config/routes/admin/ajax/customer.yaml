@@ -1,0 +1,10 @@
+asdoria_bulk_edit_admin_ajax_customer_index:
+    path: /customers
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer::indexAction
+        _sylius:
+            template: "@AsdoriaSyliusBulkEditPlugin/Admin/Grid/Body/_rows.html.twig"
+            grid: asdoria_bulk_edit_admin_customer
+    options:
+        expose: true
