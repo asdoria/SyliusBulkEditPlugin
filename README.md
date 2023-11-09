@@ -96,4 +96,15 @@ Note that we have developed several other open source plugins for Sylius, whose 
 1. Go to /admin/bulk-edit/products
 
 
+## Enable/Disable infinite scroll
+Use env variable `ASDORIA_BULK_EDIT_INFINITE_SCROLL`
 
+Enable :
+```yaml
+ASDORIA_BULK_EDIT_INFINITE_SCROLL=1
+```
+
+Disable :
+```yaml
+ASDORIA_BULK_EDIT_INFINITE_SCROLL=0
+```
